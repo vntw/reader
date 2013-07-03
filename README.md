@@ -10,6 +10,8 @@ changes here and there ('Watch later', Filters would be great too, and so on...)
 
 I don´t need/want the 20+ like/share options like Twitter, Facebook, ..., so this stuff won´t make it in this app.
 
+## Features
+
 ## Contribute
 
 Yes please :P
