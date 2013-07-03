@@ -1,0 +1,7 @@
+.idea/
+composer.phar
+composer.lock
+/vendor/
+/web/static/img/subscription-icons/gen
+/nbproject
+/cache/

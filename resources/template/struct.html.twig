@@ -1,0 +1,26 @@
+{% set activePage = activePage|default(null) %}
+<!DOCTYPE html>
+<html class="no-js{% if activePage %} page-{{ activePage }}{% endif %}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Reader</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+		<link href="/static/css/vendor/bootstrap.css" rel="stylesheet">
+		<link href="/static/css/vendor/font-awesome.css" rel="stylesheet">
+		<link href="/static/css/vendor/bootstrap-responsive.css" rel="stylesheet">
+		<link href="/static/css/bootstrap-custom.css" rel="stylesheet">
+	</head>
+	<body>
+
+		{% block main %}{% endblock %}
+
+		<script src="/static/js/vendor/jquery-git2.js"></script>
+		<script src="/static/js/vendor/bootstrap.js"></script>
+		<script src="/static/js/vendor/jquery.pjax.js"></script>
+		<script src="/static/js/reader.js"></script>
+		<script src="/static/js/main.js"></script>
+
+	</body>
+</html>

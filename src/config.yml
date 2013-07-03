@@ -1,0 +1,9 @@
+db:
+  host: localhost
+  dbname: rssreader
+  user: root
+  password: ssc7
+
+locales:
+  - de_DE
+  - en_GB

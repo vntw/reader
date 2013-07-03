@@ -1,0 +1,94 @@
+{% extends 'struct.html.twig' %}
+
+{% block main %}
+    <header>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="brand" href="/"><i class="icon-book"></i> Reader</a>
+
+                    <form action="/search" class="input-append" method="post" style="margin: 0 auto;">
+                        <input autocomplete="off" name="search" class="input-medium" type="text" placeholder="{{ 'Search'|trans }}"/>
+                        <button type="submit" class="btn">
+                            <i class="icon-search"></i>
+                        </button>
+                    </form>
+
+                    <ul class="nav user_menu pull-right">
+                        {#<li class="dropdown">#}
+                        {#<a href="#" class="dropdown-toggle" data-toggle="dropdown">#}
+                        {#<img src="img/user_avatar.png" alt="" class="user_avatar">Johny Smith<b class="caret"></b>#}
+                        {#</a>#}
+                        {#<ul class="dropdown-menu">#}
+                        {#<li><a href="index.php?uid=1&amp;page=user_profile">My Profile</a></li>#}
+                        {#<li><a href="javascrip:void(0)">Another action</a></li>#}
+                        {#<li class="divider"></li>#}
+                        {#<li><a href="index.php">Log Out</a></li>#}
+                        {#</ul>#}
+                        {#</li>
+                        <li class="divider-vertical hidden-phone hidden-tablet"></li>#}
+                        <li>
+                            <a href="#modal-info-box" data-toggle="modal">
+                                <i class="icon-info-sign"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-flag"></i> <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/locale/de_DE"><i class="flag-de"></i> Deutsch</a>
+                                </li>
+                                <li>
+                                    <a href="/"><i class="flag-fi"></i> Finnisch</a>
+                                </li>
+                                <li>
+                                    <a href="/locale/en_GB"><i class="flag-gb"></i> Englisch</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="/"><i class="icon-cogs"></i> Settings</a></li>
+                    </ul>
+
+                    <ul class="nav">
+                        <li>
+                            <a href="#modal-info-box" data-toggle="modal" class="add-subscription">
+                                <i class="icon-plus"></i> Add Subscription
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <i class="icon-list-alt icon-white"></i>
+                                Navigation <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/">Sub nav</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="modal-info-box" class="modal hide fade" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Keyboard Shortcuts</h3>
+            </div>
+            <div class="modal-body">
+                <p>One fine body…</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn">Got It!</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="row-fluid">
+        {% block content %}{% endblock %}
+    </div>
+    </div>
+
+    {% block sidebar %}{% endblock %}
+{% endblock %}
