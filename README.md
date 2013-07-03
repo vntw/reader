@@ -8,9 +8,15 @@ You may ask why yet another RSS Reader? Well, first of all it is the perfect opp
 libraries like Silex and Doctrine. I was a long-time Google Reader user so I`ll try to create basically the same experience with some
 changes here and there ('Watch later', Filters would be great too, and so on...).
 
-I don´t need/want the 20+ like/share options like Twitter, Facebook, ..., so this stuff won´t make it in this app.
+I don´t need/want the 20+ like/share options like Twitter, Facebook, ..., so this stuff won´t make it into this app.
 
 ## Features
+* Navigating via AJAX (PJAX)
+* Watch Later/Favorites
+* Filters/Notifications/Priorities
+* Multilanguage
+* CLI App
+* and more...
 
 ## Contribute
 
