@@ -11,194 +11,245 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Item
 {
 
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+	/**
+	 * @Id
+	 * @Column(type="integer")
+	 * @GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
 
-    /**
-     * @Column(type="string", length=32, unique=true)
-     */
-    private $uid;
+	/**
+	 * @Column(type="string", length=32, unique=true)
+	 */
+	private $uid;
 
-    /**
-     * @Column(type="string", length=255)
-     */
-    private $title;
+	/**
+	 * @Column(type="string", length=255)
+	 */
+	private $title;
 
-    /**
-     * @Column(type="text")
-     */
-    private $content;
+	/**
+	 * @Column(type="text")
+	 */
+	private $content;
 
-    /**
-     * @Column(type="string", length=255,nullable=true)
-     */
-    private $link;
+	/**
+	 * @Column(type="string", length=255,nullable=true)
+	 */
+	private $link;
 
-    /**
-     * @Column(type="datetime")
-     */
-    private $date;
+	/**
+	 * @Column(type="datetime")
+	 */
+	private $date;
 
-    /**
-     * @ManyToOne(targetEntity="Subscription")
-     * @JoinColumn(name="subscription_id", referencedColumnName="id", nullable=false)
-     */
-    private $subscription;
+	/**
+	 * @ManyToOne(targetEntity="Subscription")
+	 * @JoinColumn(name="subscription_id", referencedColumnName="id", nullable=false)
+	 */
+	private $subscription;
 
-    /**
-     * @Column(type="boolean")
-     */
-    private $unread;
+	/**
+	 * @Column(type="boolean")
+	 */
+	private $read;
 
-    public function __construct()
-    {
-        $this->date = new \DateTime();
-        $this->subscription = new ArrayCollection();
-    }
+	/**
+	 * @Column(type="boolean")
+	 */
+	private $saved;
 
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	/**
+	 * @Column(type="boolean")
+	 */
+	private $favourite;
 
-    /**
-     * @param  string $uid
-     * @return Item
-     */
-    public function setUid($uid)
-    {
-        $this->uid = $uid;
+	public function __construct()
+	{
+		$this->date = new \DateTime();
+		$this->subscription = new ArrayCollection();
+		$this->read = false;
+		$this->saved = false;
+		$this->favourite = false;
+	}
 
-        return $this;
-    }
+	/**
+	 * @return string
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 
-    /**
-     * @return string
-     */
-    public function getUid()
-    {
-        return $this->uid;
-    }
+	/**
+	 * @param  string $uid
+	 * @return Item
+	 */
+	public function setUid($uid)
+	{
+		$this->uid = $uid;
 
-    /**
-     * @param  string $title
-     * @return Item
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * @return string
+	 */
+	public function getUid()
+	{
+		return $this->uid;
+	}
 
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
+	/**
+	 * @param  string $title
+	 * @return Item
+	 */
+	public function setTitle($title)
+	{
+		$this->title = $title;
 
-    /**
-     * @param  string $content
-     * @return Item
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * @return string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
 
-    /**
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
+	/**
+	 * @param  string $content
+	 * @return Item
+	 */
+	public function setContent($content)
+	{
+		$this->content = $content;
 
-    /**
-     * @param  string $link
-     * @return Item
-     */
-    public function setLink($link)
-    {
-        $this->link = $link;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * @return string
+	 */
+	public function getContent()
+	{
+		return $this->content;
+	}
 
-    /**
-     * @return string
-     */
-    public function getLink()
-    {
-        return $this->link;
-    }
+	/**
+	 * @param  string $link
+	 * @return Item
+	 */
+	public function setLink($link)
+	{
+		$this->link = $link;
 
-    /**
-     * @param  \DateTime $date
-     * @return Item
-     */
-    public function setDate(\DateTime $date)
-    {
-        $this->date = $date;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * @return string
+	 */
+	public function getLink()
+	{
+		return $this->link;
+	}
 
-    /**
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
+	/**
+	 * @param  \DateTime $date
+	 * @return Item
+	 */
+	public function setDate(\DateTime $date)
+	{
+		$this->date = $date;
 
-    /**
-     * @param  Subscription $subscription
-     * @return Item
-     */
-    public function setSubscription(Subscription $subscription)
-    {
-        $this->subscription = $subscription;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * @return \DateTime
+	 */
+	public function getDate()
+	{
+		return $this->date;
+	}
 
-    /**
-     * @return Subscription
-     */
-    public function getSubscription()
-    {
-        return $this->subscription;
-    }
+	/**
+	 * @param  Subscription $subscription
+	 * @return Item
+	 */
+	public function setSubscription(Subscription $subscription)
+	{
+		$this->subscription = $subscription;
 
-    /**
-     * @param  bool $unread
-     * @return Item
-     */
-    public function setUnread($unread)
-    {
-        $this->unread = $unread;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * @return Subscription
+	 */
+	public function getSubscription()
+	{
+		return $this->subscription;
+	}
 
-    /**
-     * @return bool
-     */
-    public function getUnread()
-    {
-        return $this->unread;
-    }
+	/**
+	 * @param  bool $read
+	 * @return Item
+	 */
+	public function setRead($read)
+	{
+		$this->read = $read;
+
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getRead()
+	{
+		return $this->read;
+	}
+
+	/**
+	 * @param bool $saved
+	 * @return Item
+	 */
+	public function setSaved($saved)
+	{
+		$this->saved = $saved;
+
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getSaved()
+	{
+		return $this->saved;
+	}
+
+	/**
+	 * @param bool $favourite
+	 * @return Item
+	 */
+	public function setFavourite($favourite)
+	{
+		$this->favourite = $favourite;
+
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getFavourite()
+	{
+		return $this->favourite;
+	}
 
 }

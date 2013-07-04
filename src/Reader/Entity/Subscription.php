@@ -215,9 +215,9 @@ class Subscription
     {
         if (null === $this->unreadItems || $force) {
             $qb = $em->createQueryBuilder();
-            $qb->select('count(i.unread)')
+            $qb->select('count(i.read)')
                 ->from('Reader\\Entity\\Item', 'i')
-                ->where('i.unread = 1')
+                ->where('i.read = 0')
                 ->andWhere('i.subscription = :id')
                 ->setParameter('id', $this->getId(), Type::INTEGER);
 

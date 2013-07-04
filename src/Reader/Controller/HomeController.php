@@ -2,7 +2,6 @@
 
 namespace Reader\Controller;
 
-use Reader\Tag\Tree;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,8 +34,6 @@ class HomeController implements ControllerProviderInterface
 
 		/* @var $entityManager \Doctrine\ORM\EntityManager */
 
-		$tagTree = new Tree($entityManager);
-
 		$qb = $entityManager->createQueryBuilder();
 		$items = $qb->select('i')
 			->from('Reader\\Entity\\Item', 'i')
@@ -52,7 +49,6 @@ class HomeController implements ControllerProviderInterface
 		}
 
 		return $app['twig']->render('home.html.twig', array(
-			'tagTree' => $tagTree->build(),
 			'items' => $items->getQuery()->getResult()
 		));
 	}

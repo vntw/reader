@@ -1,0 +1,11 @@
+<div class="row-fluid">
+    <div class="span12">
+        <h3>{{ 'Search'|trans }}</h3>
+
+        {% if query|length > 0 %}
+            {{ query }}
+        {% else %}
+            Nothing to see here...
+        {% endif %}
+    </div>
+</div>

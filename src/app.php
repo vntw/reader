@@ -2,7 +2,14 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Reader\Controller\HomeController;
+use Reader\Controller\AboutController;
+use Reader\Controller\SubscriptionController;
+use Reader\Controller\CollectController;
+use Reader\Controller\SearchController;
+use Reader\Controller\UserController;
 use Reader\Provider\PjaxProvider;
+use Reader\Tag\TreeTwigExtension;
 use Silex\Application;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\MonologServiceProvider;
@@ -18,11 +25,12 @@ use Symfony\Component\Translation\Loader\YamlFileLoader;
 $app = new Application();
 
 // routes
-$app->mount('', new \Reader\Controller\HomeController());
-$app->mount('', new \Reader\Controller\AboutController());
-$app->mount('', new \Reader\Controller\SubscriptionController());
-$app->mount('', new \Reader\Controller\CollectController());
-$app->mount('', new \Reader\Controller\SearchController());
+$app->mount('', new HomeController());
+$app->mount('', new AboutController());
+$app->mount('', new SubscriptionController());
+$app->mount('', new CollectController());
+$app->mount('', new SearchController());
+$app->mount('', new UserController());
 
 
 $app['debug'] = true;
@@ -54,7 +62,7 @@ $app->register(new DoctrineOrmServiceProvider, array(
 			array(
 				'type' => 'annotation',
 				'namespace' => 'Reader\\Entity',
-				'path' => __DIR__ . '/Entity',
+				'path' => __DIR__ . '/Reader/Entity',
 			)
 		)
 	),
@@ -80,6 +88,10 @@ $app['twig'] = $app->share($app->extend('twig', function ($twig, $app) {
 
 	return $twig;
 }));
+
+$app->before(function () use ($app) {
+	$app['twig']->addExtension(new TreeTwigExtension($app));
+});
 
 $app->register(new TranslationServiceProvider(), array(
 	'locale_fallback' => 'en_GB'

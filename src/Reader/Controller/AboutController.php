@@ -27,11 +27,7 @@ class AboutController implements ControllerProviderInterface
 			if ($app['app.pjax']->hasHeader($request)) {
 				$data = $app['twig']->render('blocks/about.inc.html.twig');
 			} else {
-				$tree = new Tree($app['orm.em']);
-
-				$data = $app['twig']->render('about.html.twig', array(
-					'tagTree' => $tree->build()
-				));
+				$data = $app['twig']->render('about.html.twig');
 			}
 
 			return $data;

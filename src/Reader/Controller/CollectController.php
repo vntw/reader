@@ -56,8 +56,7 @@ class CollectController implements ControllerProviderInterface
         if ($app['app.pjax']->hasHeader($request)) {
             return $app['twig']->render('blocks/collect_overview.inc.html.twig', array('subscriptions' => $results));
         }else{
-            $tree=new \Reader\Tag\Tree($entityManager);
-            return $app['twig']->render('collect/collect_overview.html.twig', array('subscriptions' => $results, 'tagTree'=>$tree->build()));
+            return $app['twig']->render('collect/collect_overview.html.twig', array('subscriptions' => $results));
         }
     }
 

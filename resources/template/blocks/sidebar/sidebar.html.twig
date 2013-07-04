@@ -1,63 +1,40 @@
- <div class="sidebar" style="">
-    <div class="antiScroll" style="">
-        <div class="antiscroll-inner" style="">
-            <div class="antiscroll-content" style="">
+<div class="sidebar">
+    <div class="antiScroll">
+        <div class="antiscroll-inner">
+            <div class="antiscroll-content">
                 <div class="sidebar_inner">
                     <ul id="proto" class="nav nav-list">
                         <li class="nav-header">Overview</li>
                         <li class="active">
-                            <a href="{{ index_url }}"><i class="icon-home"></i> Home</a>
+                            <a href="{{ index_url }}" data-section="home">
+                                <i class="icon-home"></i> Home
+                            </a>
                         </li>
                         <li>
-                            <a href="/about"><i class="icon-info-sign"></i> About</a>
+                            <a href="/about" data-section="about">
+                                <i class="icon-info-sign"></i> About
+                            </a>
                         </li>
                         <li>
-                            <a href="/collect"><i class="icon-refresh"></i> Collect</a>
-                        </li>
-                        <li>
-                            <a href="/search"><i class="icon-search"></i> Search</a>
+                            <a href="/collect" data-section="collect">
+                                <i class="icon-refresh"></i> Collect
+                            </a>
                         </li>
                         <li class="divider"></li>
                         <li class="nav-header">Reader</li>
-                        <li><a href="/"><i class="icon-star"></i> Favourites</a></li>
-                        <li><a href="/"><i class="icon-time"></i> Read Later</a></li>
+                        <li>
+                            <a href="/favourites" data-section="favourites">
+                                <i class="icon-star"></i> Favourites
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/saved" data-section="saved">
+                                <i class="icon-time"></i> Read Later
+                            </a>
+                        </li>
                         <li class="divider"></li>
                     </ul>
-                    <ul class="nav nav-list tag-tree">
-                        {#{% include 'tagtree.html.twig' %}#}
-                        <li class="nav-header">Subscriptions</li>
-
-                        {% for tag in tagTree %}
-                            {% if tag.subs|length > 0 %}
-                                <li class="nav-sub-holder">
-                                    <a href="/tag/{{ tag.id }}" class="tag-container">
-                                        <i class="icon-folder-close"></i> {{ tag.name }}
-                                        <span class="tag-count">({{ tag.unread }})</span>
-                                    </a>
-                                    <ul class="nav-collapse">
-                                        {% for sub in tag.subs %}
-                                            <li>
-                                                <a href="/subscription/{{ sub.id }}"{% if sub.unread > 0 %} class="tag-new-items"{% endif %}>
-                                                    {% if sub.icon %}
-                                                        <img src="/static/img/subscription-icons/gen/{{ sub.icon }}.png" alt=""/>
-                                                    {% else %}
-                                                        <img src="/static/img/subscription-icons/default.png" alt=""/>
-                                                    {% endif %}
-
-                                                    <span class="tag-sub-name">{{ sub.name }}</span>
-                                                    <span class="tag-sub-count">({{ sub.unread }})</span>
-                                                </a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                            {% else %}
-                                <li>
-                                    <a href="/"><i class="icon-folder-close"></i> Games</a>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
+                    {% include 'blocks/sidebar/tagtree.html.twig' %}
                 </div>
             </div>
         </div>

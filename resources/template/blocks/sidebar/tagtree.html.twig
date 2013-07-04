@@ -1,46 +1,35 @@
-{% block sidebar %}
-    <div class="span2 sideBar">
-        <ul>
-            <li data-link="home" class="active">
-                <figure>
-                    <i class='icon-home'></i>
+<ul class="nav nav-list tag-tree">
+    <li class="nav-header">Subscriptions</li>
 
-                    <div class='menuText'>Home</div>
-                </figure>
-            </li>
-            <li data-link="features">
-                <figure><i class='icon-star'></i>
+    {% set tagTree = buildTagTree() %}
+    {% for tag in tagTree %}
+        {% if tag.subs|length > 0 %}
+            <li class="nav-sub-holder">
+                <a href="/tag/{{ tag.id }}" class="tag-container">
+                    <i class="icon-folder-close"></i> {{ tag.name }}
+                    <span class="tag-count">({{ tag.unread }})</span>
+                </a>
+                <ul class="nav-collapse">
+                    {% for sub in tag.subs %}
+                        <li>
+                            <a href="/subscription/{{ sub.id }}"{% if sub.unread > 0 %} class="tag-new-items"{% endif %}>
+                                {% if sub.icon %}
+                                    <img src="/static/img/subscription-icons/gen/{{ sub.icon }}.png" alt=""/>
+                                {% else %}
+                                    <img src="/static/img/subscription-icons/default.png" alt=""/>
+                                {% endif %}
 
-                    <div class='menuText'>Features</div>
-                </figure>
+                                <span class="tag-sub-name">{{ sub.name }}</span>
+                                <span class="tag-sub-count">({{ sub.unread }})</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </li>
-            <li data-link="features">
-                <figure><i class='icon-info-sign'></i> About
-                </figure>
+        {% else %}
+            <li>
+                <a href="/"><i class="icon-folder-close"></i> Games</a>
             </li>
-            <hr/>
-            {% for tag in tagTree %}
-                <li data-link="home" class="{% if tag.subs|length > 0 %}dropper{% endif %}">
-                    <figure>
-                        <i class='{% if tag.subs|length > 0 %}icon-th{% else %}icon-home{% endif %}'></i> {{ tag.t.name }}
-                    </figure>
-                    {% if tag.subs|length > 0 %}
-                        <ul class='subSide'>
-                            {% for sub in tag.subs %}
-                                <li>
-                                    {% if sub.icon %}
-                                    <img src="/static/img/subscription-icons/{{ sub.icon }}.png" alt="" />
-                                    {% else %}
-                                        <img src="/static/img/015.png" alt="" />
-                                    {% endif %}
-
-                                    {{ sub.name }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endblock %}
+        {% endif %}
+    {% endfor %}
+</ul>

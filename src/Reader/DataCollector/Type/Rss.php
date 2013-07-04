@@ -88,7 +88,7 @@ class Rss extends DataCollector
                 ->setDate(new \DateTime($itemDate))
                 ->setLink($feedItem->get_link())
                 ->setContent($content)
-                ->setUnread(true);
+                ->setRead(false);
 
             $entityManager->persist($item);
             $stats['inserted']++;
