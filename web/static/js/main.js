@@ -1,23 +1,13 @@
 $(function () {
 
-    /* globals */
-    var resizeTimer,
-        headerForm = $('header div.navbar form');
-
+    var resizeTimer;
     $(window).resize(function () {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(fixLayout, 100);
+        resizeTimer = setTimeout(Reader.Layout.Fix, 100);
     });
+    Reader.Layout.Fix();
 
-    function fixLayout() {
-        var height = $(window).height();
-
-        $('div.sidebar').height(height - 43);
-        $('div.main-content').height(height - 88);
-        headerForm.css('margin-left', -headerForm.outerWidth() / 2);
-    }
-
-    $('a.tag-container').on('click', function (e) {
+    $(document).on('click', 'a.tag-container', function (e) {
         e.preventDefault();
 
         var $this = $(this),
@@ -32,64 +22,60 @@ $(function () {
         }
     });
 
-    $('div.item i.icon-star-empty').on('click', function (e) {
+    $(document).on('click', 'div.item a.item-favourite i', function (e) {
         e.preventDefault();
 
         var $this = $(this),
-            $item = $this.parents('div.item');
+            $item = $this.parents('div.item'),
+            add = $this.hasClass('icon-star-empty');
 
-        if ($this.hasClass('icon-star-empty')) {
+        Reader.Items.Mark(Reader.Items.Funcs.FAVOURITES, (add ? 'add' : 'del'), $item.data('item-id'));
+
+        if (add) {
             $this.addClass('icon-star').removeClass('icon-star-empty');
         } else {
             $this.addClass('icon-star-empty').removeClass('icon-star');
         }
-
-        console.log('Saving favourite: ' + $item.data('item-id'));
-
     });
 
-    $('div.item i.icon-eye-open').on('click', function (e) {
+    $(document).on('click', 'div.item a.item-markread i', function (e) {
         e.preventDefault();
 
         var $this = $(this),
-            $item = $this.parents('div.item');
+            $item = $this.parents('div.item'),
+            add = $this.hasClass('icon-eye-open');
 
-        if ($this.hasClass('icon-eye-open')) {
+        Reader.Items.Mark(Reader.Items.Funcs.READ, (add ? 'add' : 'del'), $item.data('item-id'));
+
+        if (add) {
             $this.addClass('icon-eye-close').removeClass('icon-eye-open');
             $item.find('span.item-title').removeClass('unread');
         } else {
             $this.addClass('icon-eye-open').removeClass('icon-eye-close');
             $item.find('span.item-title').addClass('unread');
         }
-
-        console.log('Marking read: ' + $item.data('item-id'));
     });
 
-    $('div.item-title, div.item-sub-name, div.item-preview, div.item-date').on('click', function () {
+    $(document).on('click', 'div.item a.item-save i', function (e) {
+        e.preventDefault();
+
+        var $this = $(this),
+            $item = $this.parents('div.item'),
+            add = $this.hasClass('icon-time');
+
+        Reader.Items.Mark(Reader.Items.Funcs.SAVED, (add ? 'add' : 'del'), $item.data('item-id'));
+
+        if (add) {
+            $this.addClass('icon-ok-sign').removeClass('icon-time');
+        } else {
+            $this.addClass('icon-time').removeClass('icon-ok-sign');
+        }
+    });
+
+    $(document).on('click', 'span.item-title, span.item-preview, div.item-sub-name, div.item-date', function (e) {
         var $this = $(this),
             $item = $this.parents('div.item');
 
         $('div.item-container', $item).toggleClass('hide');
     });
-
-    $('div#login-panel form').on('submit', function (e) {
-        e.preventDefault();
-
-        var $this = $(this);
-
-        $.post($this.prop('action'), $this.serialize(), function (result) {
-            var html = '';
-
-            if (!result.success) {
-                html = '<div class="alert alert-error">' + result.error + '</div>';
-                $('div.login-result').html(html).fadeIn();
-            } else {
-                html = '<div class="alert alert-success">Successfully logged in!</div>';
-                $('div.login-result').html(html).fadeIn();
-                window.location = '/';
-            }
-        }, 'json');
-    });
-
-    fixLayout();
 });

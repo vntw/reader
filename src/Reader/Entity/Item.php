@@ -50,7 +50,7 @@ class Item
 	private $subscription;
 
 	/**
-	 * @Column(type="boolean")
+	 * @Column(name="rread", type="boolean")
 	 */
 	private $read;
 

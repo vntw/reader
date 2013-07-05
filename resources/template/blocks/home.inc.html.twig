@@ -18,13 +18,13 @@
                         <div class="item-date">{{ item.date|date('Y-m-d') }}</div>
                         <div class="item-icons">
                             <a class="item-favourite" href="">
-                                <i class="icon-star-empty"></i>
+                                <i class="{% if item.favourite %}icon-star{% else %}icon-star-empty{% endif %}"></i>
                             </a>
-                            <a class="item-mark-read" href="">
-                                <i class="icon-eye-open"></i>
+                            <a class="item-markread" href="">
+                                <i class="{% if item.read %}icon-eye-open{% else %}icon-eye-close{% endif %}"></i>
                             </a>
-                            <a class="item-mark-read" href="">
-                                <i class="icon-time"></i>
+                            <a class="item-save" href="">
+                                <i class="{% if item.saved %}icon-ok-sign{% else %}icon-time{% endif %}"></i>
                             </a>
                             <a class="item-external" href="{{ item.link }}" target="_blank">
                                 <i class="icon-share"></i>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="item-sub-name">{{ item.subscription.name }}</div>
                         <div>
-                            <span class="item-title unread">
+                            <span class="item-title{% if not    item.read %} unread{% endif %}">
                                 {{ item.title }}
                             </span>
                             <span class="item-preview">

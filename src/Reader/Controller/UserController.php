@@ -41,7 +41,8 @@ class UserController implements ControllerProviderInterface
 		return $router;
 	}
 
-	public function createFavsView(Request $request, Application $app) {
+	public function createFavsView(Request $request, Application $app)
+	{
 		$entityManager = $app['orm.em'];
 
 		/* @var $entityManager \Doctrine\ORM\EntityManager */
@@ -66,7 +67,8 @@ class UserController implements ControllerProviderInterface
 		));
 	}
 
-	public function createSavedView(Request $request, Application $app) {
+	public function createSavedView(Request $request, Application $app)
+	{
 		$entityManager = $app['orm.em'];
 
 		/* @var $entityManager \Doctrine\ORM\EntityManager */
@@ -126,7 +128,7 @@ class UserController implements ControllerProviderInterface
 		$entityManager->persist($item);
 		$entityManager->flush();
 
-		return new JsonResponse(array('test'=>'dsfds'));
+		return new JsonResponse(array('test' => 'dsfds'));
 	}
 
 }
