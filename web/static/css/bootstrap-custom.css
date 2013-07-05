@@ -27,20 +27,36 @@ a:hover {
 /* CUSTOM STYLES */
 
 @font-face {
-    font-family: Helvetica;
+    /*font-family: Helvetica;*/
+    font-family: 'Roboto', sans-serif;
     font-weight: normal;
     font-style: normal;
 }
 
 body {
     overflow: hidden;
+    font-family: 'Roboto', sans-serif;
 }
 
 .modal-backdrop {
 	background-color: #fff;
 }
 .modal-backdrop.fade.in {
-	opacity: 0.4;
+    opacity: 0.75;
+}
+.modal {
+    -webkit-box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    border: 1px solid rgba(0,0,0,.333);
+    border-radius: 0;
+    padding: 30px 42px;
+}
+.modal-header {
+    border: 0;
+}
+.modal-footer {
+    background: 0;
+    border: 0;
 }
 
 header .navbar form {
@@ -52,6 +68,10 @@ header .navbar form {
 
 header .navbar form input {
     width: 300px;
+}
+
+header .navbar .brand {
+    font-weight: 400;
 }
 
 .sidebar {
@@ -196,6 +216,9 @@ div.sidebar li.nav-sub-holder ul li a.tag-new-items:hover {
     height: 30px;
     overflow: hidden;
     cursor: pointer;
+}
+.item .item-collapsed.collapsed {
+    background-color: #FFF2CA;
 }
 
 .item .item-sub-name {

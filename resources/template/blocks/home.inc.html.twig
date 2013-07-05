@@ -1,49 +1,31 @@
 <div class="row-fluid">
     <div class="span12">
-        <h3>What´s new?</h3>
-        <h4>{{ 'Hello'|trans }}</h4>
+        <h3>
+            {{ 'title_latest_items'|trans }}
+
+            <div class="btn-group pull-right">
+                <buton class="btn">Mark as read</buton>
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    Action
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#">A</a>
+                    </li>
+                    <li>
+                        <a href="#">B</a>
+                    </li>
+                    <li>
+                        <a href="#">C</a>
+                    </li>
+                </ul>
+            </div>
+        </h3>
 
         {% if items|length > 0 %}
             {% for item in items %}
-                <div class="item" data-item-id="{{ item.id }}">
-                    <div class="item-collapsed">
-                        <div class="item-advanced">
-                            <a href="">
-                                <i class="icon-star-empty"></i>
-                            </a>
-                            <a href="{{ item.link }}" target="_blank">
-                                <i class="icon-share"></i>
-                            </a>
-                        </div>
-                        <div class="item-date">{{ item.date|date('Y-m-d') }}</div>
-                        <div class="item-icons">
-                            <a class="item-favourite" href="">
-                                <i class="{% if item.favourite %}icon-star{% else %}icon-star-empty{% endif %}"></i>
-                            </a>
-                            <a class="item-markread" href="">
-                                <i class="{% if item.read %}icon-eye-open{% else %}icon-eye-close{% endif %}"></i>
-                            </a>
-                            <a class="item-save" href="">
-                                <i class="{% if item.saved %}icon-ok-sign{% else %}icon-time{% endif %}"></i>
-                            </a>
-                            <a class="item-external" href="{{ item.link }}" target="_blank">
-                                <i class="icon-share"></i>
-                            </a>
-                        </div>
-                        <div class="item-sub-name">{{ item.subscription.name }}</div>
-                        <div>
-                            <span class="item-title{% if not    item.read %} unread{% endif %}">
-                                {{ item.title }}
-                            </span>
-                            <span class="item-preview">
-                                &nbsp;-&nbsp;{{ item.content|striptags|truncate(120) }}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="item-container hide">
-                        {{ item.content|raw }}
-                    </div>
-                </div>
+                {% include 'blocks/element/item.html.twig' %}
             {% endfor %}
         {% else %}
             Nothing to see here...

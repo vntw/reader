@@ -1,0 +1,39 @@
+<div class="item" data-item-id="{{ item.id }}">
+    <div class="item-collapsed">
+        <div class="item-advanced">
+            <a href="">
+                <i class="icon-star-empty"></i>
+            </a>
+            <a href="{{ item.link }}" target="_blank">
+                <i class="icon-share"></i>
+            </a>
+        </div>
+        <div class="item-date">{{ item.date|date('Y-m-d') }}</div>
+        <div class="item-icons">
+            <a class="item-favourite" href="">
+                <i class="{% if item.favourite %}icon-star{% else %}icon-star-empty{% endif %}"></i>
+            </a>
+            <a class="item-markread" href="">
+                <i class="{% if item.read %}icon-eye-close{% else %}icon-eye-open{% endif %}"></i>
+            </a>
+            <a class="item-save" href="">
+                <i class="{% if item.saved %}icon-ok-sign{% else %}icon-time{% endif %}"></i>
+            </a>
+            <a class="item-external" href="{{ item.link }}" target="_blank">
+                <i class="icon-share"></i>
+            </a>
+        </div>
+        <div class="item-sub-name">{{ item.subscription.name }}</div>
+        <div>
+            <span class="item-title{% if not item.read %} unread{% endif %}">
+                {{ item.title }}
+            </span>
+            <span class="item-preview">
+                &nbsp;-&nbsp;{{ item.content|striptags|truncate(120) }}
+            </span>
+        </div>
+    </div>
+    <div class="item-container hide">
+        {{ item.content|raw }}
+    </div>
+</div>

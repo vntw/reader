@@ -1,3 +1,15 @@
-Hello: Hallo
-Login: de
-Username: Benutzer
+title_latest_items: Neue Artikel
+
+sidebar_header_general: Übersicht
+sidebar_home: Neues
+sidebar_about: Über Reader
+sidebar_collect: Feeds aktualisieren
+
+sidebar_favourites: Favoriten
+sidebar_read_later: Später lesen
+
+sidebar_header_reader: Reader
+sidebar_header_subscriptions: Subscriptions
+
+locale_de_DE: Deutsch (de_DE)
+locale_en_GB: Englisch (en_GB)

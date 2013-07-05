@@ -97,6 +97,7 @@ $app->register(new TranslationServiceProvider(), array(
 	'locale_fallback' => 'en_GB'
 ));
 $app['translator'] = $app->share($app->extend('translator', function ($translator, $app) {
+	/* @var \Symfony\Component\Translation\Trannslator $translator */
 	$translator->addLoader('yaml', new YamlFileLoader());
 
 	$translator->addResource('yaml', __DIR__ . '/../resources/locale/de_DE.yml', 'de_DE');
@@ -107,11 +108,14 @@ $app['translator'] = $app->share($app->extend('translator', function ($translato
 
 $locale = $app['session']->get('session.locale');
 
-if (isset($locale)) {
+if ($locale) {
 	$app['locale'] = $locale;
 } else {
 	$app['locale'] = $app['locale_fallback'];
 }
+
+$app['translator']->setLocale($app['locale']);
+
 
 $app->register(new MonologServiceProvider(), array(
 	'monolog.logfile' => __DIR__ . '/../resources/log/app.log',

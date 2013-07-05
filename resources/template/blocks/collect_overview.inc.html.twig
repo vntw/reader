@@ -1,15 +1,24 @@
 <div class="row-fluid">
     <div class="span12">
         <h3>Collect Subscriptions</h3>
-		<ul>
-			{% for subscription in subscriptions %}
-			<li>
-				<label>
-					<input type="checkbox" />
-					{{ subscription.name }}
-				</label>
-			</li>
-			{% endfor %}
-		</ul>
+
+        <form action="" method="post">
+            <ul class="inline">
+                {% for sub in subscriptions %}
+                    <li>
+                        <label>
+                            <input type="checkbox"/>
+                            {% if sub.icon %}
+                                <img src="/static/img/subscription-icons/gen/{{ sub.icon }}.png" alt=""/>
+                            {% else %}
+                                <img src="/static/img/subscription-icons/default.png" alt=""/>
+                            {% endif %}
+                            {{ sub.name }}
+                        </label>
+                    </li>
+                {% endfor %}
+            </ul>
+            <button type="submit" name="collect" class="btn">Collect Subsriptions</button>
+        </form>
     </div>
 </div>

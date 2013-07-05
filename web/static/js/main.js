@@ -76,6 +76,7 @@ $(function () {
         var $this = $(this),
             $item = $this.parents('div.item');
 
+        $('div.item-collapsed', $item).toggleClass('collapsed');
         $('div.item-container', $item).toggleClass('hide');
     });
 });
