@@ -6,7 +6,7 @@ use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class SubscriptionController implements ControllerProviderInterface
+class ListController implements ControllerProviderInterface
 {
 
 	/**
@@ -21,17 +21,8 @@ class SubscriptionController implements ControllerProviderInterface
 		$router = $app['controllers_factory'];
 		/* @var $router Application */
 
-		$router->get('/subscription', function (Request $request) use ($app) {
-			return $app['twig']->render('about.html.twig');
-		});
 
-		$router->get('/subscription/add', function (Request $request) use ($app) {
-			if (!$request->isXmlHttpRequest()) {
-				$app->abort(400, 'LOL');
-			}
-		});
-
-//		$router->get('/list/{id}', function (Request $request) use ($app) {
+//		$router->get('/list/{type}/{action}/{id}', function (Request $request) use ($app) {
 //			$entityManager = $app['orm.em'];
 //
 //			/* @var $entityManager \Doctrine\ORM\EntityManager */
