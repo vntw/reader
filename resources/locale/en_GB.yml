@@ -5,10 +5,13 @@ sidebar_home: What´s New?
 sidebar_about: About Reader
 sidebar_collect: Update Feeds
 
+sidebar_header_reader: Reader
 sidebar_favourites: Favourites
 sidebar_read_later: Read Later
 
-sidebar_header_reader: Reader
+title_favourites: Favourites
+title_saved: Read later
+
 sidebar_header_subscriptions: Subscriptions
 
 locale_de_DE: German (de_DE)

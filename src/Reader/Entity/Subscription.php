@@ -12,237 +12,238 @@ use Doctrine\ORM\EntityManager;
  **/
 class Subscription
 {
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+	/**
+	 * @Id
+	 * @Column(type="integer")
+	 * @GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
 
-    /**
-     * @Column(type="string", length=255)
-     */
-    private $name;
+	/**
+	 * @Column(type="string", length=255)
+	 */
+	private $name;
 
-    /**
-     * @Column(type="string", length=50, nullable=true)
-     */
-    private $icon;
+	/**
+	 * @Column(type="string", length=50, nullable=true)
+	 */
+	private $icon;
 
-    /**
-     * @Column(type="string")
-     */
-    private $url;
+	/**
+	 * @Column(type="string")
+	 */
+	private $url;
 
-    /**
-     * @Column(type="string")
-     */
-    private $feedUrl;
+	/**
+	 * @Column(type="string")
+	 */
+	private $feedUrl;
 
-    /**
-     * @Column(type="smallint")
-     */
-    private $type;
+	/**
+	 * @Column(type="smallint")
+	 */
+	private $type;
 
-    /**
-     * @OneToMany(targetEntity="Item", mappedBy="subscription", fetch="EXTRA_LAZY")
-     */
-    private $items;
+	/**
+	 * @OneToMany(targetEntity="Item", mappedBy="subscription", fetch="EXTRA_LAZY")
+	 */
+	private $items;
 
-    /**
-     * @ManyToMany(targetEntity="Tag", mappedBy="subscriptions")
-     */
-    private $tags;
+	/**
+	 * @ManyToMany(targetEntity="Tag", mappedBy="subscriptions")
+	 */
+	private $tags;
 
-    private $unreadItems;
+	private $unreadItems;
 
-    public function __construct()
-    {
-        $this->items = new ArrayCollection();
-        $this->tags = new ArrayCollection();
-    }
+	public function __construct()
+	{
+		$this->items = new ArrayCollection();
+		$this->tags = new ArrayCollection();
+	}
 
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	/**
+	 * @return string
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 
-    /**
-     * @param  string       $name
-     * @return Subscription
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
+	/**
+	 * @param  string $name
+	 * @return Subscription
+	 */
+	public function setName($name)
+	{
+		$this->name = $name;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+	/**
+	 * @return string
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
 
-    /**
-     * @param  string       $icon
-     * @return Subscription
-     */
-    public function setIcon($icon)
-    {
-        $this->icon = $icon;
+	/**
+	 * @param  string $icon
+	 * @return Subscription
+	 */
+	public function setIcon($icon)
+	{
+		$this->icon = $icon;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return string
-     */
-    public function getIcon()
-    {
-        return $this->icon;
-    }
+	/**
+	 * @return string
+	 */
+	public function getIcon()
+	{
+		return $this->icon;
+	}
 
-    /**
-     * @param  string       $url
-     * @return Subscription
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
+	/**
+	 * @param  string $url
+	 * @return Subscription
+	 */
+	public function setUrl($url)
+	{
+		$this->url = $url;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
+	/**
+	 * @return string
+	 */
+	public function getUrl()
+	{
+		return $this->url;
+	}
 
-    /**
-     * @param  string       $feedUrl
-     * @return Subscription
-     */
-    public function setFeedUrl($feedUrl)
-    {
-        $this->feedUrl = $feedUrl;
+	/**
+	 * @param  string $feedUrl
+	 * @return Subscription
+	 */
+	public function setFeedUrl($feedUrl)
+	{
+		$this->feedUrl = $feedUrl;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return string
-     */
-    public function getFeedUrl()
-    {
-        return $this->feedUrl;
-    }
+	/**
+	 * @return string
+	 */
+	public function getFeedUrl()
+	{
+		return $this->feedUrl;
+	}
 
-    /**
-     * @param  int          $type
-     * @return Subscription
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
+	/**
+	 * @param  int $type
+	 * @return Subscription
+	 */
+	public function setType($type)
+	{
+		$this->type = $type;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return int
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
+	/**
+	 * @return int
+	 */
+	public function getType()
+	{
+		return $this->type;
+	}
 
-    /**
-     * @param Item $items
-     */
-    public function addItems(Item $items)
-    {
-        $this->items[] = $items;
-    }
+	/**
+	 * @param Item $items
+	 */
+	public function addItems(Item $items)
+	{
+		$this->items[] = $items;
+	}
 
-    /**
-     * @return ItemCollection
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
+	/**
+	 * @return ItemCollection
+	 */
+	public function getItems()
+	{
+		return $this->items;
+	}
 
-    /**
-     * @param Tag $tag
-     */
-    public function addTag(Tag $tag)
-    {
-        $tag->addSubscription($this);
-        $this->tags[] = $tag;
-    }
+	/**
+	 * @param Tag $tag
+	 */
+	public function addTag(Tag $tag)
+	{
+		$tag->addSubscription($this);
+		$this->tags[] = $tag;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getTags()
+	{
+		return $this->tags;
+	}
 
-    /**
-     * @return bool
-     */
-    public function hasItems()
-    {
-        return $this->getItems()->count() > 0;
-    }
+	/**
+	 * @return bool
+	 */
+	public function hasItems()
+	{
+		return $this->getItems()->count() > 0;
+	}
 
-    /**
-     * @param  EntityManager $em
-     * @param  bool          $force
-     * @return int
-     */
-    public function countUnreadItems(EntityManager $em, $force = false)
-    {
-        if (null === $this->unreadItems || $force) {
-            $qb = $em->createQueryBuilder();
-            $qb->select('count(i.read)')
-                ->from('Reader\\Entity\\Item', 'i')
-                ->where('i.read = 0')
-                ->andWhere('i.subscription = :id')
-                ->setParameter('id', $this->getId(), Type::INTEGER);
+	/**
+	 * @param  EntityManager $em
+	 * @param  bool          $force
+	 * @return int
+	 */
+	public function countUnreadItems(EntityManager $em, $force = false)
+	{
+		if (null === $this->unreadItems || $force) {
+			$qb = $em->createQueryBuilder();
+			$qb->select('count(i.read)')
+				->from('Reader\\Entity\\Item', 'i')
+				->where('i.read = 0')
+				->andWhere('i.subscription = :id')
+				->setParameter('id', $this->getId(), Type::INTEGER);
 
-            $this->unreadItems = $qb->getQuery()->getSingleScalarResult();
-        }
+			$this->unreadItems = $qb->getQuery()->getSingleScalarResult();
+		}
 
-        return $this->unreadItems;
-    }
+		return $this->unreadItems;
+	}
 
-    public function countItems()
-    {
+	public function countItems()
+	{
 
-    }
+	}
 
-    public function toArray()
-    {
-        $hash = array();
+	public function toArray()
+	{
+		$hash = array();
 
-        $hash['id'] = $this->getId();
-        $hash['name'] = $this->getName();
-        $hash['icon'] = $this->getIcon();
-        $hash['type'] = $this->getType();
-        $hash['url'] = $this->getUrl();
-        $hash['feedUrl'] = $this->getFeedUrl();
+		$hash['id'] = $this->getId();
+		$hash['name'] = $this->getName();
+		$hash['icon'] = $this->getIcon();
+		$hash['type'] = $this->getType();
+		$hash['url'] = $this->getUrl();
+		$hash['host'] = str_replace('www.', '', parse_url($this->getUrl(), PHP_URL_HOST));
+		$hash['feedUrl'] = $this->getFeedUrl();
 
-        return $hash;
-    }
+		return $hash;
+	}
 }

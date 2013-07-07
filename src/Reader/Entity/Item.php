@@ -252,4 +252,18 @@ class Item
 		return $this->favourite;
 	}
 
+	public function toArray()
+	{
+		$hash = array();
+
+		$hash['id'] = $this->getId();
+		$hash['uuid'] = $this->getUid();
+		$hash['title'] = $this->getTitle();
+		$hash['content'] = $this->getContent();
+		$hash['link'] = $this->getLink();
+		$hash['date'] = $this->getDate();
+
+		return $hash;
+	}
+
 }

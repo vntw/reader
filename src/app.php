@@ -5,9 +5,12 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Reader\Controller\HomeController;
 use Reader\Controller\AboutController;
 use Reader\Controller\SubscriptionController;
+use Reader\Controller\TagController;
 use Reader\Controller\CollectController;
 use Reader\Controller\SearchController;
 use Reader\Controller\UserController;
+use Reader\Controller\ListController;
+use Reader\Controller\ItemController;
 use Reader\Provider\PjaxProvider;
 use Reader\Tag\TreeTwigExtension;
 use Silex\Application;
@@ -31,6 +34,9 @@ $app->mount('', new SubscriptionController());
 $app->mount('', new CollectController());
 $app->mount('', new SearchController());
 $app->mount('', new UserController());
+$app->mount('', new ListController());
+$app->mount('', new ItemController());
+$app->mount('', new TagController());
 
 
 $app['debug'] = true;

@@ -36,6 +36,17 @@ a:hover {
 body {
     overflow: hidden;
     font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+}
+
+.btn {
+    /*color: #676261;*/
+}
+
+h3 .btn-group .btn {
+    font-weight: normal;
+    font-size: 13px;
+    border-radius: 0 !important;
 }
 
 .modal-backdrop {
@@ -211,6 +222,9 @@ div.sidebar li.nav-sub-holder ul li a.tag-new-items:hover {
     border-top: 1px solid #EFEFEF;
     border-bottom: 1px solid #EFEFEF;
     display: block;
+}
+.item .item-container {
+    padding: 10px;
 }
 .item .item-collapsed {
     height: 30px;

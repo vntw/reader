@@ -10,6 +10,7 @@
 namespace Reader\Controller;
 
 use Reader\Entity\Item;
+use Reader\Item\ItemList;
 use Silex\ControllerCollection;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
@@ -34,10 +35,6 @@ class UserController implements ControllerProviderInterface
 		$router->match('/favs', array($this, 'createFavsView'));
 		$router->match('/saved', array($this, 'createSavedView'));
 
-		$router->match('/{func}/{action}/{id}', array($this, 'changeItem'))
-			->assert('func', 'favs|saved|read')
-			->assert('action', 'add|del');
-
 		return $router;
 	}
 
@@ -47,23 +44,18 @@ class UserController implements ControllerProviderInterface
 
 		/* @var $entityManager \Doctrine\ORM\EntityManager */
 
-		$qb = $entityManager->createQueryBuilder();
-		$items = $qb->select('i')
-			->from('Reader\\Entity\\Item', 'i')
-//			->where('i.date > ?1')
-			->where('i.favourite = 1')
-			->orderBy('i.date', 'DESC')
-			->setMaxResults(30);
-//			->setParameter(1, new \DateTime('-6 days'));
+		$list = new ItemList($entityManager, ItemList::TYPE_FAVOURITE);
 
 		if ($app['app.pjax']->hasHeader($request)) {
-			return $app['twig']->render('blocks/favs.inc.html.twig', array(
-				'items' => $items->getQuery()->getResult()
+			return $app['twig']->render('blocks/element/generic_list.html.twig', array(
+				'title' => 'title_favourites',
+				'items' => $list->getItems(30)
 			));
 		}
 
-		return $app['twig']->render('favs.html.twig', array(
-			'items' => $items->getQuery()->getResult()
+		return $app['twig']->render('generic_list.html.twig', array(
+			'title' => 'title_favourites',
+			'items' => $list->getItems(30)
 		));
 	}
 
@@ -73,62 +65,19 @@ class UserController implements ControllerProviderInterface
 
 		/* @var $entityManager \Doctrine\ORM\EntityManager */
 
-		$qb = $entityManager->createQueryBuilder();
-		$items = $qb->select('i')
-			->from('Reader\\Entity\\Item', 'i')
-//			->where('i.date > ?1')
-			->where('i.saved = 1')
-			->orderBy('i.date', 'DESC')
-			->setMaxResults(30);
-//			->setParameter(1, new \DateTime('-6 days'));
+		$list = new ItemList($entityManager, ItemList::TYPE_SAVED);
 
 		if ($app['app.pjax']->hasHeader($request)) {
-			return $app['twig']->render('blocks/favs.inc.html.twig', array(
-				'items' => $items->getQuery()->getResult()
+			return $app['twig']->render('blocks/element/generic_list.html.twig', array(
+				'title' => 'title_saved',
+				'items' => $list->getItems(30)
 			));
 		}
 
-		return $app['twig']->render('favs.html.twig', array(
-			'items' => $items->getQuery()->getResult()
+		return $app['twig']->render('generic_list.html.twig', array(
+			'title' => 'title_saved',
+			'items' => $list->getItems(30)
 		));
-	}
-
-	/**
-	 * @param Request     $request
-	 * @param Application $app
-	 */
-	public function changeItem(Request $request, Application $app)
-	{
-		$func = $request->attributes->get('func');
-		$add = ('add' === $request->attributes->get('action'));
-		$entityManager = $app['orm.em'];
-
-		/* @var $entityManager \Doctrine\ORM\EntityManager */
-
-		$itemId = (int) $request->attributes->get('id');
-
-		$item = $entityManager->getRepository('Reader\\Entity\\Item')->find($itemId);
-
-		if (!$item instanceof Item) {
-			exit;
-		}
-
-		switch ($func) {
-			case 'favs':
-				$item->setFavourite($add);
-				break;
-			case 'saved':
-				$item->setSaved($add);
-				break;
-			case 'read':
-				$item->setRead($add);
-				break;
-		}
-
-		$entityManager->persist($item);
-		$entityManager->flush();
-
-		return new JsonResponse(array('test' => 'dsfds'));
 	}
 
 }

@@ -7,7 +7,7 @@ use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class SubscriptionController implements ControllerProviderInterface
+class TagController implements ControllerProviderInterface
 {
 
 	/**
@@ -22,9 +22,9 @@ class SubscriptionController implements ControllerProviderInterface
 		$router = $app['controllers_factory'];
 		/* @var $router Application */
 
-		$router->match('/s/{name}/{id}', array($this, 'createSubscriptionView'))->bind('subscription_view');
+		$router->match('/t/{name}/{id}', array($this, 'createTagView'))->bind('tag_view');
 
-		$router->get('/s/add', function (Request $request) use ($app) {
+		$router->get('/t/add', function (Request $request) use ($app) {
 			if (!$request->isXmlHttpRequest()) {
 				$app->abort(400, 'LOL');
 			}
@@ -33,24 +33,24 @@ class SubscriptionController implements ControllerProviderInterface
 		return $router;
 	}
 
-	public function createSubscriptionView(Request $request, Application $app)
+	public function createTagView(Request $request, Application $app)
 	{
-		$subscriptionId = (int) $request->attributes->get('id');
+		$tagId = (int) $request->attributes->get('id');
 		$entityManager = $app['orm.em'];
 
 		/* @var $entityManager \Doctrine\ORM\EntityManager */
 
-		$list = new ItemList($entityManager, ItemList::TYPE_SUBSCRIPTION, $subscriptionId);
+		$list = new ItemList($entityManager, ItemList::TYPE_TAG, $tagId);
 
 		if ($app['app.pjax']->hasHeader($request)) {
 			return $app['twig']->render('blocks/generic_list.html.twig', array(
-				'title'=>'dsfsdfsf',
+				'title' => 'tag',
 				'items' => $list->getItems(30)
 			));
 		}
 
 		return $app['twig']->render('generic_list.html.twig', array(
-			'title'=>'dsfsdfsf',
+			'title' => 'tag',
 			'items' => $list->getItems(30)
 		));
 	}

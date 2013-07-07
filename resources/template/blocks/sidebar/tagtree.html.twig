@@ -1,18 +1,18 @@
 <ul class="nav nav-list tag-tree">
-    <li class="nav-header">Subscriptions</li>
+    <li class="nav-header">{{ 'sidebar_header_subscriptions'|trans }}</li>
 
     {% set tagTree = buildTagTree() %}
     {% for tag in tagTree %}
         {% if tag.subs|length > 0 %}
             <li class="nav-sub-holder">
-                <a href="/tag/{{ tag.id }}" class="tag-container">
+                <a href="{{ path('tag_view', {'name': tag.name|url_encode, 'id': tag.id}) }}" class="tag-container">
                     <i class="icon-folder-close"></i> {{ tag.name }}
                     <span class="tag-count">({{ tag.unread }})</span>
                 </a>
                 <ul class="nav-collapse">
                     {% for sub in tag.subs %}
                         <li>
-                            <a href="/subscription/{{ sub.id }}"{% if sub.unread > 0 %} class="tag-new-items"{% endif %}>
+                            <a href="{{ path('subscription_view', {'name': sub.host|url_encode, 'id': sub.id}) }}"{% if sub.unread > 0 %} class="tag-new-items"{% endif %}>
                                 {% if sub.icon %}
                                     <img src="/static/img/subscription-icons/gen/{{ sub.icon }}.png" alt=""/>
                                 {% else %}
