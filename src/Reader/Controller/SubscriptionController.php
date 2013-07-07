@@ -2,7 +2,9 @@
 
 namespace Reader\Controller;
 
+use Reader\Entity\Subscription;
 use Reader\Item\ItemList;
+use Reader\DataCollector\DataCollectorInterface;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +30,15 @@ class SubscriptionController implements ControllerProviderInterface
 			if (!$request->isXmlHttpRequest()) {
 				$app->abort(400, 'LOL');
 			}
+
+			$url = null;
+			$feedUrl = null;
+
+			$subscription = new Subscription();
+			$subscription->setName('Test')
+				->setType(DataCollectorInterface::TYPE_RSS)
+				->setUrl($url)
+				->setFeedUrl($feedUrl);
 		});
 
 		return $router;
@@ -43,14 +54,14 @@ class SubscriptionController implements ControllerProviderInterface
 		$list = new ItemList($entityManager, ItemList::TYPE_SUBSCRIPTION, $subscriptionId);
 
 		if ($app['app.pjax']->hasHeader($request)) {
-			return $app['twig']->render('blocks/generic_list.html.twig', array(
-				'title'=>'dsfsdfsf',
+			return $app['twig']->render('blocks/element/generic_list.html.twig', array(
+				'title' => 'dsfsdfsf',
 				'items' => $list->getItems(30)
 			));
 		}
 
 		return $app['twig']->render('generic_list.html.twig', array(
-			'title'=>'dsfsdfsf',
+			'title' => 'dsfsdfsf',
 			'items' => $list->getItems(30)
 		));
 	}

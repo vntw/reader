@@ -43,7 +43,7 @@ class TagController implements ControllerProviderInterface
 		$list = new ItemList($entityManager, ItemList::TYPE_TAG, $tagId);
 
 		if ($app['app.pjax']->hasHeader($request)) {
-			return $app['twig']->render('blocks/generic_list.html.twig', array(
+			return $app['twig']->render('blocks/element/generic_list.html.twig', array(
 				'title' => 'tag',
 				'items' => $list->getItems(30)
 			));

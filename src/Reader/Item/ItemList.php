@@ -120,9 +120,9 @@ class ItemList
 
 		$qb->orderBy('i.date', ($sort === SORT_DESC) ? 'DESC' : 'ASC')
 			->setMaxResults($itemAmount);
-		echo "<pre>";
-		var_dump($qb->getQuery());
-		exit;
+//		echo "<pre>";
+//		var_dump($qb->getQuery());
+//		exit;
 
 		return $qb;
 	}
