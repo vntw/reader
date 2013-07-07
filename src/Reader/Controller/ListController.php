@@ -24,7 +24,7 @@ class ListController implements ControllerProviderInterface
 		$router = $app['controllers_factory'];
 		/* @var $router Application */
 
-		$router->match('/l/{type}', array($this, 'getList'))->bind('list');
+		$router->match('/l/{type}', array($this, 'getList'))->bind('get_list');
 
 		return $router;
 	}
@@ -32,18 +32,48 @@ class ListController implements ControllerProviderInterface
 	public function getList(Application $app, Request $request)
 	{
 		$entityManager = $app['orm.em'];
-		$list = new ItemList($entityManager, $request->attributes->get('type'));
+
+		$type = $request->attributes->get('type');
+		$typeId = (int) $request->get('type-id') ? : null;
+		$lastId = (int) $request->get('last-id') ? : null;
+		$itemAmount = (int) $request->get('amount') ? : 5;
+		$sort = $request->get('sort') === 'asc' ? 'asc' : 'desc';
+		$format = $request->get('format');
+
+		$list = new ItemList($entityManager);
+		$list->setType($type)
+			->setTypeId($typeId)
+			->setItemAmount($itemAmount)
+			->setSort($sort)
+			->setLastId($lastId);
 
 		$items = array();
-		$sort = $request->get('sort');
-		$lastId = (int) $request->get('last-id');
 
-		foreach ($list->getItems(5, $sort, $lastId) as $item) {
+		foreach ($list->getItems() as $item) {
 			/* @var Item $item */
-			$items[] = $item->toArray();
+			$items[] = $item;
 		}
 
-		return new JsonResponse(array('data' => $items));
+		switch ($format) {
+			case 'view':
+				if ($app['app.pjax']->hasHeader($request)) {
+					return $app['twig']->render('blocks/element/generic_list.html.twig', array(
+						'title' => $type,
+						'items' => $items
+					));
+				}
+
+				return $app['twig']->render('generic_list.html.twig', array(
+					'title' => $type,
+					'items' => $items
+				));
+
+				break;
+			case 'json':
+			default:
+				return new JsonResponse(array('data' => $items));
+				break;
+		}
 	}
 
 }

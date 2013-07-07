@@ -14,29 +14,87 @@ class ItemList
 {
 	const TYPE_SUBSCRIPTION = 'subscription';
 	const TYPE_TAG = 'tag';
-	const TYPE_FAVOURITE = 'favourite';
+	const TYPE_FAVOURITES = 'favourites';
 	const TYPE_SAVED = 'saved';
 
 	private $em;
 	private $type;
 	private $typeId;
+	private $sort;
+	private $itemAmount;
+	private $lastId;
 
-	public function __construct(EntityManager $em, $type, $typeId = null)
+	public function __construct(EntityManager $em)
 	{
 		$this->em = $em;
+	}
+
+	public function setItemAmount($itemAmount)
+	{
+		$this->itemAmount = $itemAmount;
+
+		return $this;
+	}
+
+	public function getItemAmount()
+	{
+		return $this->itemAmount;
+	}
+
+	public function setSort($sort)
+	{
+		$this->sort = $sort;
+
+		return $this;
+	}
+
+	public function getSort()
+	{
+		return $this->sort;
+	}
+
+	public function setType($type)
+	{
 		$this->type = $type;
+
+		return $this;
+	}
+
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	public function setTypeId($typeId)
+	{
 		$this->typeId = $typeId;
+
+		return $this;
+	}
+
+	public function getTypeId()
+	{
+		return $this->typeId;
+	}
+
+	public function setLastId($lastId)
+	{
+		$this->lastId = $lastId;
+
+		return $this;
+	}
+
+	public function getLastId()
+	{
+		return $this->lastId;
 	}
 
 	/**
-	 * @param      $itemAmount
-	 * @param int  $sort
-	 * @param null $lastId
 	 * @return array
 	 */
-	public function getItems($itemAmount, $sort = SORT_DESC, $lastId = null)
+	public function getItems()
 	{
-		$qb = $this->buildQuery($itemAmount, $sort, $lastId);
+		$qb = $this->buildQuery();
 
 		if ($qb instanceof AbstractQuery) {
 			return $qb->getResult();
@@ -45,7 +103,7 @@ class ItemList
 		}
 	}
 
-	protected function buildQuery($itemAmount, $sort = SORT_DESC, $lastId = null)
+	protected function buildQuery()
 	{
 		$qb = $this->em->createQueryBuilder();
 		$qb->select('i')
@@ -53,7 +111,9 @@ class ItemList
 
 		switch ($this->type) {
 			case self::TYPE_TAG:
-
+				echo "<pre>";
+				var_dump(2211);
+				exit;
 				// TODO: FIX
 
 				$rsm = new ResultSetMapping();
@@ -96,7 +156,7 @@ class ItemList
 				$qb->where('i.subscription = ?1')
 					->setParameter(1, $this->typeId);
 				break;
-			case self::TYPE_FAVOURITE:
+			case self::TYPE_FAVOURITES:
 				$qb->where('i.favourite = ?1')
 					->setParameter(1, true);
 				break;
@@ -114,12 +174,13 @@ class ItemList
 //
 //		}
 
-		if ($lastId) {
-			$qb->andWhere('i.id > ?2')->setParameter(2, $lastId);
+		if ($this->lastId) {
+			$qb->andWhere('i.id > ?2')->setParameter(2, $this->lastId);
 		}
 
-		$qb->orderBy('i.date', ($sort === SORT_DESC) ? 'DESC' : 'ASC')
-			->setMaxResults($itemAmount);
+		$qb->orderBy('i.date', ($this->sort === SORT_DESC) ? 'DESC' : 'ASC')
+			->setMaxResults($this->itemAmount);
+
 //		echo "<pre>";
 //		var_dump($qb->getQuery());
 //		exit;

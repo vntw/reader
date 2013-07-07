@@ -44,7 +44,7 @@ class UserController implements ControllerProviderInterface
 
 		/* @var $entityManager \Doctrine\ORM\EntityManager */
 
-		$list = new ItemList($entityManager, ItemList::TYPE_FAVOURITE);
+		$list = new ItemList($entityManager, ItemList::TYPE_FAVOURITES);
 
 		if ($app['app.pjax']->hasHeader($request)) {
 			return $app['twig']->render('blocks/element/generic_list.html.twig', array(

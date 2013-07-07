@@ -28,6 +28,8 @@ class TagController implements ControllerProviderInterface
 			if (!$request->isXmlHttpRequest()) {
 				$app->abort(400, 'LOL');
 			}
+
+			// TODO discover url
 		});
 
 		return $router;
