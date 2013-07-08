@@ -2,9 +2,10 @@
     <div class="span12">
 
         {% if type == 'subscription' or type == 'tag' %}
-        <h3>Feed: {{ title|trans }}</h3>
+            <h3>Feed: {{ title|trans }}</h3>
         {% else %}
-        <h3>{{ 'feed_type_title_'~type|trans }}</h3>
+            {% set title = 'feed_type_title_'~type %}
+            <h3>{{ title|trans }}</h3>
         {% endif %}
 
         {% if items|length > 0 %}

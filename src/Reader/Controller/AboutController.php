@@ -23,7 +23,6 @@ class AboutController implements ControllerProviderInterface
 		/* @var $router Application */
 
 		$router->get('/about', function (Request $request) use ($app) {
-
 			if ($app['app.pjax']->hasHeader($request)) {
 				$data = $app['twig']->render('blocks/about.inc.html.twig');
 			} else {

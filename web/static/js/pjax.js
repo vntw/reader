@@ -1,4 +1,4 @@
-$(document).pjax('.sidebar_inner ul li a', 'div.main-content');
+$(document).pjax('.pjaxable, .sidebar_inner ul li a', 'div.main-content');
 
 $(document).on('pjax:send', function () {
     Reader.Site.Loader(true);

@@ -34,7 +34,7 @@ Reader.Items = {
     Mark: function (func, action, id) {
         Reader.Site.Loader(true);
 
-        $.post('/' + [func, action, id].join('/'), null, function (result) {
+        $.post('/i/' + [func, action, id].join('/'), null, function (result) {
             Reader.Site.Loader(false);
         }, 'json');
     }

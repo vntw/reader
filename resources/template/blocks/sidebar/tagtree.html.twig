@@ -14,7 +14,7 @@
                         <li>
                             <a href="{{ path('list_view', {'type': 's', 'name': sub.host|url_encode, 'typeId': sub.id}) }}"{% if sub.unread > 0 %} class="tag-new-items"{% endif %}>
                                 {% if sub.icon %}
-                                    <img src="/static/img/subscription-icons/gen/{{ sub.icon }}.png" alt=""/>
+                                    <img src="/static/img/subscription-icons/gen/{{ sub.icon }}" alt=""/>
                                 {% else %}
                                     <img src="/static/img/subscription-icons/default.png" alt=""/>
                                 {% endif %}

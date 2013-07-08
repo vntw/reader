@@ -3,22 +3,25 @@
         <h3>Collect Subscriptions</h3>
 
         <form action="" method="post">
-            <ul class="inline">
+            <ul class="inline nav nav-pills">
                 {% for sub in subscriptions %}
                     <li>
-                        <label>
-                            <input type="checkbox"/>
+                        <a href="#">
+                            {#<input type="checkbox"/>#}
                             {% if sub.icon %}
-                                <img src="/static/img/subscription-icons/gen/{{ sub.icon }}.png" alt=""/>
+                                <img src="/static/img/subscription-icons/gen/{{ sub.icon }}" alt=""/>
                             {% else %}
                                 <img src="/static/img/subscription-icons/default.png" alt=""/>
                             {% endif %}
                             {{ sub.name }}
-                        </label>
+                        </a>
                     </li>
                 {% endfor %}
             </ul>
             <button type="submit" name="collect" class="btn">Collect Subsriptions</button>
         </form>
+        <div class="progress progress-striped active">
+            <div class="bar" style="width: 98%;"></div>
+        </div>
     </div>
 </div>

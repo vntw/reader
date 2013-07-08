@@ -10,8 +10,8 @@ sidebar_header_reader: Reader
 sidebar_favourites: Favoriten
 sidebar_read_later: Später lesen
 
-title_favourites: Meine Favoriten
-title_saved: Später lesen
+feed_type_title_favourites: Meine Favoriten
+feed_type_title_saved: Später lesen
 
 sidebar_header_subscriptions: Subscriptions
 

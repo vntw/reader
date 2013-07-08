@@ -23,7 +23,7 @@ class ItemController implements ControllerProviderInterface
 		$router = $app['controllers_factory'];
 		/* @var $router Application */
 
-		$router->match('/{func}/{action}/{id}', array($this, 'changeItem'))
+		$router->match('/i/{func}/{action}/{id}', array($this, 'changeItem'))
 			->bind('change_item')
 			->assert('func', 'favs|saved|read')
 			->assert('action', 'add|del');

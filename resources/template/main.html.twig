@@ -33,7 +33,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="/"><i class="icon-cogs"></i> Settings</a></li>
+                        <li><a href="{{ path('settings_view') }}" class="pjaxable"><i class="icon-cogs"></i> Settings</a></li>
                     </ul>
 
                     <ul class="nav">
@@ -70,9 +70,7 @@
     </header>
 
     <div class="main-content">
-        <div class="row-fluid">
         {% block content %}{% endblock %}
-    </div>
     </div>
 
     {% block sidebar %}{% endblock %}
