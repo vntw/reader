@@ -263,6 +263,12 @@ class Item
 		$hash['link'] = $this->getLink();
 		$hash['date'] = $this->getDate();
 
+		$hash['favourite'] = $this->getFavourite();
+		$hash['saved'] = $this->getSaved();
+		$hash['read'] = $this->getRead();
+
+		$hash['subscription'] = $this->getSubscription();
+
 		return $hash;
 	}
 

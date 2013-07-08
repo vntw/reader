@@ -26,7 +26,7 @@
         <div class="item-sub-name">{{ item.subscription.name }}</div>
         <div>
             <span class="item-title{% if not item.read %} unread{% endif %}">
-                {{ item.title }}
+                {{ item.title|raw }}
             </span>
             <span class="item-preview">
                 &nbsp;-&nbsp;{{ item.content|striptags|truncate(120) }}

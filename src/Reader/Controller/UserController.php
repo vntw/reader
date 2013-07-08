@@ -32,52 +32,10 @@ class UserController implements ControllerProviderInterface
 		$router = $app['controllers_factory'];
 		/* @var $router Application */
 
-		$router->match('/favs', array($this, 'createFavsView'));
-		$router->match('/saved', array($this, 'createSavedView'));
+//		$router->match('/favs', array($this, 'createFavsView'));
+//		$router->match('/saved', array($this, 'createSavedView'));
 
 		return $router;
-	}
-
-	public function createFavsView(Request $request, Application $app)
-	{
-		$entityManager = $app['orm.em'];
-
-		/* @var $entityManager \Doctrine\ORM\EntityManager */
-
-		$list = new ItemList($entityManager, ItemList::TYPE_FAVOURITES);
-
-		if ($app['app.pjax']->hasHeader($request)) {
-			return $app['twig']->render('blocks/element/generic_list.html.twig', array(
-				'title' => 'title_favourites',
-				'items' => $list->getItems(30)
-			));
-		}
-
-		return $app['twig']->render('generic_list.html.twig', array(
-			'title' => 'title_favourites',
-			'items' => $list->getItems(30)
-		));
-	}
-
-	public function createSavedView(Request $request, Application $app)
-	{
-		$entityManager = $app['orm.em'];
-
-		/* @var $entityManager \Doctrine\ORM\EntityManager */
-
-		$list = new ItemList($entityManager, ItemList::TYPE_SAVED);
-
-		if ($app['app.pjax']->hasHeader($request)) {
-			return $app['twig']->render('blocks/element/generic_list.html.twig', array(
-				'title' => 'title_saved',
-				'items' => $list->getItems(30)
-			));
-		}
-
-		return $app['twig']->render('generic_list.html.twig', array(
-			'title' => 'title_saved',
-			'items' => $list->getItems(30)
-		));
 	}
 
 }

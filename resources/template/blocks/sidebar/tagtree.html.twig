@@ -5,14 +5,14 @@
     {% for tag in tagTree %}
         {% if tag.subs|length > 0 %}
             <li class="nav-sub-holder">
-                <a href="{{ path('tag_view', {'name': tag.name|url_encode, 'id': tag.id}) }}" class="tag-container">
+                <a href="{{ path('list_view', {'type': 't', 'name': tag.name|url_encode, 'typeId': tag.id}) }}" class="tag-container">
                     <i class="icon-folder-close"></i> {{ tag.name }}
                     <span class="tag-count">({{ tag.unread }})</span>
                 </a>
                 <ul class="nav-collapse">
                     {% for sub in tag.subs %}
                         <li>
-                            <a href="{{ path('subscription_view', {'name': sub.host|url_encode, 'id': sub.id}) }}"{% if sub.unread > 0 %} class="tag-new-items"{% endif %}>
+                            <a href="{{ path('list_view', {'type': 's', 'name': sub.host|url_encode, 'typeId': sub.id}) }}"{% if sub.unread > 0 %} class="tag-new-items"{% endif %}>
                                 {% if sub.icon %}
                                     <img src="/static/img/subscription-icons/gen/{{ sub.icon }}.png" alt=""/>
                                 {% else %}
