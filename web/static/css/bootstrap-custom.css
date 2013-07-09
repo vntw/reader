@@ -288,11 +288,13 @@ div.sidebar li.nav-sub-holder ul li a.tag-new-items:hover {
 .item .item-title {
     font-size: 13px;
     line-height: 30px;
-    font-weight: 700;
     font-family: inherit;
     color: #999;
 }
 
+.item .item-title.unread {
+    font-weight: 700;
+}
 .item .unread {
     color: #111;
 }

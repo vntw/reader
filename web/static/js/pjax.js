@@ -7,7 +7,6 @@ $(document).on('pjax:complete', function () {
     Reader.Site.Loader(false);
 });
 $(document).on('pjax:click', function (e) {
-    console.log('re');
     $('.sidebar_inner ul li').removeClass('active');
     $(e.target).parent('li').addClass('active');
 });

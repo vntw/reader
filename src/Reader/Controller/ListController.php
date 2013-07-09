@@ -30,8 +30,7 @@ class ListController implements ControllerProviderInterface
 			->value('typeId', null)
 			->bind('list_view');
 
-		$router->match('/l/{type}/{name}/{typeId}', array($this, 'fromList'))
-			->value('name', null)
+		$router->match('/l/{type}/{typeId}', array($this, 'fromList'))
 			->value('typeId', null)
 			->bind('list_get');
 
@@ -90,7 +89,7 @@ class ListController implements ControllerProviderInterface
 		$list = new ItemList($entityManager);
 		$list->setType($type)
 			->setTypeId($typeId)
-			->setItemAmount($itemAmount ? : 10)
+			->setItemAmount($itemAmount ? : 35)
 			->setSort($sort)
 			->setLastId($lastId);
 
