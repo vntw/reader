@@ -5,6 +5,34 @@ $(window).resize(function () {
 });
 Reader.Layout.Fix();
 
+$(document).on('click', '#site-collect ul.nav-pills li a', function (e) {
+	e.preventDefault();
+});
+$(document).on('click', '#site-collect ul.nav-pills li', function (e) {
+	$(this).toggleClass('active');
+});
+$(document).on('click', '#site-collect button[type=submit]', function (e) {
+	e.preventDefault();
+
+	var processable = $('#site-collect ul.nav-pills li.active'),
+		progressBar = $('#site-collect .progress .bar'),
+		percentParts = Math.ceil(100 / processable.length),
+		percent = 0;
+
+	progressBar.css('width', 0);
+
+	processable.each(function () {
+		percent += percentParts;//(i === processable.length ? 100 : percentParts);
+
+		$.get('/collect/' + $(this).data('sub-id'), null, function (results) {
+			//console.log(result);
+			$('div.collect-result').append(results[0].subscription.name + ': ' + JSON.stringify(results) + '<br />');
+		}, 'json');
+
+		progressBar.animate({width: percent + '%'}, 250);
+	});
+});
+
 $(document).on('click', 'a.tag-container', function (e) {
     e.preventDefault();
 
