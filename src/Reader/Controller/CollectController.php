@@ -6,6 +6,7 @@ use Silex\Application;
 use Reader\Entity\Subscription;
 use Reader\DataCollector\Factory;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -88,14 +89,14 @@ class CollectController implements ControllerProviderInterface
             $result = $collector->collect();
 
             $results[$subscription->getId()] = $result;
-            $results[$subscription->getId()]['subscription'] = $subscription;
+            $results[$subscription->getId()]['subscription'] = $subscription->toArray();
         }
-
-        $data = $app['twig']->render('collect.html.twig', array('results' => $results));
 
         if ($request->isXmlHttpRequest()) {
-            return new Response($data);
+            return new JsonResponse(array_values($results));
         }
+
+		$data = $app['twig']->render('collect.html.twig', array('results' => $results));
 
         return $data;
     }
