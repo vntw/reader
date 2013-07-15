@@ -6,31 +6,29 @@ $(window).resize(function () {
 Reader.Layout.Fix();
 
 $(document).on('click', '#site-collect ul.nav-pills li a', function (e) {
-	e.preventDefault();
+    e.preventDefault();
 });
 $(document).on('click', '#site-collect ul.nav-pills li', function (e) {
-	$(this).toggleClass('active');
+    $(this).toggleClass('active');
 });
-$(document).on('click', '#site-collect button[type=submit]', function (e) {
-	e.preventDefault();
+$(document).on('click', '#site-collect button', function (e) {
+    var processable = $('#site-collect ul.nav-pills li.active'),
+        progressBar = $('#site-collect .progress .bar'),
+        percentParts = Math.ceil(100 / processable.length),
+        percent = 0;
 
-	var processable = $('#site-collect ul.nav-pills li.active'),
-		progressBar = $('#site-collect .progress .bar'),
-		percentParts = Math.ceil(100 / processable.length),
-		percent = 0;
+    progressBar.css('width', 0);
 
-	progressBar.css('width', 0);
+    processable.each(function (i) {
+        percent += (i === processable.length ? 100 : percentParts);
 
-	processable.each(function () {
-		percent += percentParts;//(i === processable.length ? 100 : percentParts);
+        $('div.collect-result').append('<b>' + $(this).text() + '</b><br />');
 
 		$.get('/collect/' + $(this).data('sub-id'), null, function (results) {
-			//console.log(result);
+//            progressBar.animate({width: percent + '%'}, 250);
 			$('div.collect-result').append(results[0].subscription.name + ': ' + JSON.stringify(results) + '<br />');
 		}, 'json');
-
-		progressBar.animate({width: percent + '%'}, 250);
-	});
+    });
 });
 
 $(document).on('click', 'a.tag-container', function (e) {
@@ -106,7 +104,7 @@ $('div.main-content').scroll(function () {
     var type = 'subscription',
         typeId = 2,
         lastId = 59;
-console.log($('div.main-content div.span12').height());
+    console.log($('div.main-content div.span12').height());
     if (needLoad($('div.main-content div.span12').height(), $('div.main-content').scrollTop(), loadPercent)) {
         console.log('LOAD!');
     } else {

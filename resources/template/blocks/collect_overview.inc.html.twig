@@ -1,25 +1,22 @@
 <div class="row-fluid">
     <div id="site-collect" class="span12">
         <h3>Collect Subscriptions</h3>
-
-        <form action="" method="post">
-            <ul class="inline nav nav-pills">
-                {% for sub in subscriptions %}
-                    <li data-sub-id="{{ sub.id }}">
-                        <a href="">
-                            {#<input type="checkbox"/>#}
-                            {% if sub.icon %}
-                                <img src="/static/img/subscription-icons/gen/{{ sub.icon }}" alt=""/>
-                            {% else %}
-                                <img src="/static/img/subscription-icons/default.png" alt=""/>
-                            {% endif %}
-                            {{ sub.name }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-            <button type="submit" name="collect" class="btn">Collect Subsriptions</button>
-        </form>
+        <ul class="inline nav nav-pills">
+            {% for sub in subscriptions %}
+                <li data-sub-id="{{ sub.id }}">
+                    <a href="">
+                        {#<input type="checkbox"/>#}
+                        {% if sub.icon %}
+                            <img src="/static/img/subscription-icons/gen/{{ sub.icon }}" alt=""/>
+                        {% else %}
+                            <img src="/static/img/subscription-icons/default.png" alt=""/>
+                        {% endif %}
+                        {{ sub.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <button name="collect" class="btn">Collect Subsriptions</button>
         <div class="progress progress-striped active">
             <div class="bar"></div>
         </div>
