@@ -68,8 +68,27 @@ $(document).on('click', 'span.item-title, span.item-preview, div.item-sub-name, 
 //    console.log(321);
 //}
 
-$('div#main-content').scroll(function () {
-    console.log('sdfesfsdfsdfsdf');
+var loadPercent = 75;
+
+function needLoad(totalHeight, currentHeight, tolerance) {
+    return (currentHeight / totalHeight) * 100 > tolerance;
+}
+
+$('div.main-content').scroll(function () {
+    var type = 'subscription',
+        typeId = 2,
+        lastId = 59;
+console.log($('div.main-content div.span12').height());
+    if (needLoad($('div.main-content div.span12').height(), $('div.main-content').scrollTop(), loadPercent)) {
+        console.log('LOAD!');
+    } else {
+        console.log('NOT LOAD!');
+        return;
+    }
+
+    Reader.Items.fetchData(type, typeId, lastId, function (result) {
+        $('div.main-content div.span12').append(result);
+    });
 //    console.log($(window).scrollTop());
 //    console.log($(document).height());
 //    console.log($(window).height());

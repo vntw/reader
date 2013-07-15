@@ -77,13 +77,15 @@ Reader.Items = {
             $icon.addClass('icon-star-empty').removeClass('icon-star');
         }
     },
-    fetchData: function (type, typeId, lastId) {
-        this.Site.Loader(true);
+    fetchData: function (type, typeId, lastId, callback) {
+        Reader.Site.Loader(true);
 
-        var url = '/l/' + type + '/def/' + typeId + '?format=json&last-id=' + lastId + '&amount=1';
+        var format = 'html';
+        var url = '/l/' + type + '/' + typeId + '?format=' + format + '&last-id=' + lastId + '&amount=5';
 
         $.get(url, null, function (result) {
-            this.Site.Loader(false);
-        }, 'json');
+            Reader.Site.Loader(false);
+            callback(result);
+        }, (format === 'json') ? 'json' : null);
     }
 }

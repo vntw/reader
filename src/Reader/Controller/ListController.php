@@ -114,6 +114,19 @@ class ListController implements ControllerProviderInterface
 			case 'json':
 				return new JsonResponse(array('data' => $items));
 				break;
+			case 'html':
+//				if ($app['app.pjax']->hasHeader($request)) {
+//					return $app['twig']->render('blocks/element/generic_list.html.twig', $data);
+//				}
+
+				$html = '';
+				foreach ($data['items'] as $pitem) {
+					$html .= $app['twig']->render('blocks/element/item.html.twig', array('item' => $pitem));
+				}
+
+				return $html;
+
+				break;
 			case 'view':
 			default:
 				if ($app['app.pjax']->hasHeader($request)) {
