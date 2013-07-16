@@ -45,12 +45,13 @@ class ListController implements ControllerProviderInterface
 	public function fromFunc(Application $app, Request $request)
 	{
 		$type = $this->getTypeForAlias($request->attributes->get('type'));
+		$typeId = $request->attributes->get('typeId') ? : (int) $request->get('type-id');
 
 		if (!$type) {
 			exit;
 		}
 
-		return $this->fetchList($app, $request, $type, $request->attributes->get('typeId'));
+		return $this->fetchList($app, $request, $type, $typeId, null, null, SORT_DESC);
 	}
 
 	/**
@@ -62,12 +63,12 @@ class ListController implements ControllerProviderInterface
 	{
 		$type = $request->attributes->get('type');
 		$typeId = $request->attributes->get('typeId') ? : (int) $request->get('type-id');
-		$lastId = (int) $request->get('last-id') ? : null;
+		$lastDate = (int) $request->get('last-date') ? : null;
 		$itemAmount = (int) $request->get('amount') ? : 5;
-		$sort = $request->get('sort') === 'asc' ? 'asc' : 'desc';
+		$sort = $request->get('sort') === 'asc' ? SORT_ASC : SORT_DESC;
 		$format = $request->get('format');
 
-		return $this->fetchList($app, $request, $type, $typeId, $lastId, $itemAmount, $sort, $format);
+		return $this->fetchList($app, $request, $type, $typeId, $lastDate, $itemAmount, $sort, $format);
 	}
 
 	/**
@@ -75,13 +76,13 @@ class ListController implements ControllerProviderInterface
 	 * @param Request     $request
 	 * @param string      $type
 	 * @param int         $typeId
-	 * @param int         $lastId
+	 * @param int         $lastDate
 	 * @param int         $itemAmount
 	 * @param int         $sort
 	 * @param string      $format
 	 * @return JsonResponse
 	 */
-	public function fetchList(Application $app, Request $request, $type, $typeId = null, $lastId = null, $itemAmount = null, $sort = null, $format = null)
+	public function fetchList(Application $app, Request $request, $type, $typeId = null, $lastDate = null, $itemAmount = null, $sort = null, $format = null)
 	{
 		$entityManager = $app['orm.em'];
 		/* @var $entityManager \Doctrine\ORM\EntityManager */
@@ -91,7 +92,7 @@ class ListController implements ControllerProviderInterface
 			->setTypeId($typeId)
 			->setItemAmount($itemAmount ? : 35)
 			->setSort($sort)
-			->setLastId($lastId);
+			->setLastDate($lastDate);
 
 		$items = array();
 
@@ -107,6 +108,7 @@ class ListController implements ControllerProviderInterface
 
 		if ($type === ItemList::TYPE_SUBSCRIPTION) {
 			$sub = $entityManager->getRepository('Reader\\Entity\\Subscription')->find($typeId);
+			$data['typeId'] = $sub->getId();
 			$data['title'] = $sub->getName();
 		}
 

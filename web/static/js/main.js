@@ -24,10 +24,10 @@ $(document).on('click', '#site-collect button', function (e) {
 
         $('div.collect-result').append('<b>' + $(this).text() + '</b><br />');
 
-		$.get('/collect/' + $(this).data('sub-id'), null, function (results) {
+        $.get('/collect/' + $(this).data('sub-id'), null, function (results) {
 //            progressBar.animate({width: percent + '%'}, 250);
-			$('div.collect-result').append(results[0].subscription.name + ': ' + JSON.stringify(results) + '<br />');
-		}, 'json');
+            $('div.collect-result').append(results[0].subscription.name + ': ' + JSON.stringify(results) + '<br />');
+        }, 'json');
     });
 });
 
@@ -78,51 +78,55 @@ $(document).on('click', 'div.item a.item-save i', function (e) {
 
 $(document).on('click', 'span.item-title, span.item-preview, div.item-sub-name, div.item-date', function (e) {
     var $this = $(this),
-        $item = $this.parents('div.item');
+        $item = $this.parents('div.item'),
+        prevItem = $('div.item.selected');
 
+    if (prevItem.length > 0) {
+        $('div.item-container', prevItem).addClass('hide');
+        $('div.item-collapsed', prevItem).removeClass('collapsed');
+    }
+
+    $item.toggleClass('selected');
     $('div.item-collapsed', $item).toggleClass('collapsed');
     $('div.item-container', $item).toggleClass('hide');
 
     Reader.Items.Mark(Reader.Items.Funcs.READ, 'add', $item.data('item-id'), $item, $('a.item-markread i', $item));
 });
 
-//$(window).scroll(function () {
-//    console.log(123);
-//});
-//
-//window.onscroll = function (oEvent) {
-//    console.log(321);
-//}
-
-var loadPercent = 75;
+var loadTolerance = 98,
+    loadLock = false;
 
 function needLoad(totalHeight, currentHeight, tolerance) {
+    console.log(totalHeight, currentHeight, tolerance);
     return (currentHeight / totalHeight) * 100 > tolerance;
 }
 
 $('div.main-content').scroll(function () {
     var type = 'subscription',
-        typeId = 2,
-        lastId = 59;
-    console.log($('div.main-content div.span12').height());
-    if (needLoad($('div.main-content div.span12').height(), $('div.main-content').scrollTop(), loadPercent)) {
+        typeId = $('div.item-list').data('type-id'),
+        lastDate = $('div.item-list div.item:last').data('item-date');
+
+    var currentLoad = ($('div.main-content div.span12').offset().top * -1) + $(window).height();
+
+    if (needLoad($('div.main-content div.span12').height(), currentLoad, loadTolerance)) {
         console.log('LOAD!');
     } else {
         console.log('NOT LOAD!');
         return;
     }
 
-    Reader.Items.fetchData(type, typeId, lastId, function (result) {
+    if (loadLock) {
+        return;
+    }
+
+    loadLock = true;
+
+    console.log('+ LOCKED!');
+
+    Reader.Items.fetchData(type, typeId, lastDate, function (result) {
         $('div.main-content div.span12').append(result);
+        loadLock = false;
+        console.log('- UNLOCKED!');
     });
-//    console.log($(window).scrollTop());
-//    console.log($(document).height());
-//    console.log($(window).height());
-//    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-//        var type = 'subscription',
-//            typeId = 98,
-//            lastId = $('div#main-content div.item:last').data('item-id');
-//
-//        Reader.Items.fetchData(type, typeId, lastId);
-//    }
+
 });

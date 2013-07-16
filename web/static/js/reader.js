@@ -77,11 +77,11 @@ Reader.Items = {
             $icon.addClass('icon-star-empty').removeClass('icon-star');
         }
     },
-    fetchData: function (type, typeId, lastId, callback) {
+    fetchData: function (type, typeId, lastDate, callback) {
         Reader.Site.Loader(true);
 
         var format = 'html';
-        var url = '/l/' + type + '/' + typeId + '?format=' + format + '&last-id=' + lastId + '&amount=5';
+        var url = '/l/' + type + '/' + typeId + '?format=' + format + '&last-date=' + lastDate + '&amount=25&sort=desc';
 
         $.get(url, null, function (result) {
             Reader.Site.Loader(false);

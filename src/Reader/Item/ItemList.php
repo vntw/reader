@@ -4,11 +4,11 @@ namespace Reader\Item;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\AST\Join;
 use Doctrine\ORM\Query;
 use Symfony\Component\Finder\Expression\Expression;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class ItemList
 {
@@ -22,7 +22,7 @@ class ItemList
 	private $typeId;
 	private $sort;
 	private $itemAmount;
-	private $lastId;
+	private $lastDate;
 
 	public function __construct(EntityManager $em)
 	{
@@ -77,16 +77,16 @@ class ItemList
 		return $this->typeId;
 	}
 
-	public function setLastId($lastId)
+	public function setLastDate($lastDate)
 	{
-		$this->lastId = $lastId;
+		$this->lastDate = $lastDate;
 
 		return $this;
 	}
 
-	public function getLastId()
+	public function getLastDate()
 	{
-		return $this->lastId;
+		return $this->lastDate;
 	}
 
 	/**
@@ -168,14 +168,14 @@ class ItemList
 				throw new \InvalidArgumentException('Invalid type.');
 		}
 
-//		if ($this->type === self::TYPE_SUBSCRIPTION) {
-//			$qb->setParameter(1, $this->typeId);
-//		} else if ($this->type !== self::TYPE_TAG) {
-//
-//		}
+		if ($this->lastDate) {
+			$lastDate = date("Y-m-d H:i:s", $this->lastDate);
 
-		if ($this->lastId) {
-			$qb->andWhere('i.id > ?2')->setParameter(2, $this->lastId);
+			if ($this->sort === SORT_DESC) {
+				$qb->andWhere('i.date < ?2')->setParameter(2, $lastDate);
+			} else {
+				$qb->andWhere('i.date > ?2')->setParameter(2, $lastDate);
+			}
 		}
 
 		$qb->orderBy('i.date', ($this->sort === SORT_DESC) ? 'DESC' : 'ASC')

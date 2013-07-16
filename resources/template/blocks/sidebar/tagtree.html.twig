@@ -3,12 +3,12 @@
 
     {% set tagTree = buildTagTree() %}
     {% for tag in tagTree %}
-        {% if tag.subs|length > 0 %}
-            <li class="nav-sub-holder">
-                <a href="{{ path('list_view', {'type': 't', 'name': tag.name|url_encode, 'typeId': tag.id}) }}" class="tag-container">
-                    <i class="icon-folder-close"></i> {{ tag.name }}
-                    <span class="tag-count">({{ tag.unread }})</span>
-                </a>
+        <li class="nav-sub-holder">
+            <a href="{{ path('list_view', {'type': 't', 'name': tag.name|url_encode, 'typeId': tag.id}) }}" class="tag-container">
+                <i class="icon-folder-close"></i> {{ tag.name }}
+                <span class="tag-count">({{ tag.unread }})</span>
+            </a>
+            {% if tag.subs|length > 0 %}
                 <ul class="nav-collapse">
                     {% for sub in tag.subs %}
                         <li>
@@ -25,11 +25,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-            </li>
-        {% else %}
-            <li>
-                <a href="/"><i class="icon-folder-close"></i> Games</a>
-            </li>
-        {% endif %}
+            {% endif %}
+        </li>
     {% endfor %}
 </ul>
