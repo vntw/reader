@@ -14,33 +14,33 @@ use Doctrine\ORM\EntityManager;
 class Tree
 {
 
-	private $em;
+    private $em;
 
-	public function __construct(EntityManager $em)
-	{
-		$this->em = $em;
-	}
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
-	public function build()
-	{
-		$tagTree = array();
+    public function build()
+    {
+        $tagTree = array();
 
-		foreach ($this->em->getRepository('Reader\\Entity\\Tag')->findAll() as $tag) {
-			/* @var $tag \Reader\Entity\Tag */
-			$tagTree[$tag->getId()] = $tag->toArray();
+        foreach ($this->em->getRepository('Reader\\Entity\\Tag')->findAll() as $tag) {
+            /* @var $tag \Reader\Entity\Tag */
+            $tagTree[$tag->getId()] = $tag->toArray();
 
-			$unread = 0;
-			foreach ($tag->getSubscriptions() as $subscription) {
-				$unread += $subscription->countUnreadItems($this->em);
+            $unread = 0;
+            foreach ($tag->getSubscriptions() as $subscription) {
+                $unread += $subscription->countUnreadItems($this->em);
 
-				$tagTree[$tag->getId()]['subs'][$subscription->getId()] = $subscription->toArray();
-				$tagTree[$tag->getId()]['subs'][$subscription->getId()]['unread'] = $subscription->countUnreadItems($this->em);
-			}
+                $tagTree[$tag->getId()]['subs'][$subscription->getId()] = $subscription->toArray();
+                $tagTree[$tag->getId()]['subs'][$subscription->getId()]['unread'] = $subscription->countUnreadItems($this->em);
+            }
 
-			$tagTree[$tag->getId()]['unread'] = $unread;
-		}
+            $tagTree[$tag->getId()]['unread'] = $unread;
+        }
 
-		return $tagTree;
-	}
+        return $tagTree;
+    }
 
 }

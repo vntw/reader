@@ -8,131 +8,130 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\AST\Join;
 use Doctrine\ORM\Query;
 use Symfony\Component\Finder\Expression\Expression;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class ItemList
 {
-	const TYPE_SUBSCRIPTION = 'subscription';
-	const TYPE_TAG = 'tag';
-	const TYPE_FAVOURITES = 'favourites';
-	const TYPE_SAVED = 'saved';
+    const TYPE_SUBSCRIPTION = 'subscription';
+    const TYPE_TAG = 'tag';
+    const TYPE_FAVOURITES = 'favourites';
+    const TYPE_SAVED = 'saved';
 
-	private $em;
-	private $type;
-	private $typeId;
-	private $sort;
-	private $itemAmount;
-	private $lastDate;
+    private $em;
+    private $type;
+    private $typeId;
+    private $sort;
+    private $itemAmount;
+    private $lastDate;
 
-	public function __construct(EntityManager $em)
-	{
-		$this->em = $em;
-	}
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
-	public function setItemAmount($itemAmount)
-	{
-		$this->itemAmount = $itemAmount;
+    public function setItemAmount($itemAmount)
+    {
+        $this->itemAmount = $itemAmount;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getItemAmount()
-	{
-		return $this->itemAmount;
-	}
+    public function getItemAmount()
+    {
+        return $this->itemAmount;
+    }
 
-	public function setSort($sort)
-	{
-		$this->sort = $sort;
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getSort()
-	{
-		return $this->sort;
-	}
+    public function getSort()
+    {
+        return $this->sort;
+    }
 
-	public function setType($type)
-	{
-		$this->type = $type;
+    public function setType($type)
+    {
+        $this->type = $type;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getType()
-	{
-		return $this->type;
-	}
+    public function getType()
+    {
+        return $this->type;
+    }
 
-	public function setTypeId($typeId)
-	{
-		$this->typeId = $typeId;
+    public function setTypeId($typeId)
+    {
+        $this->typeId = $typeId;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getTypeId()
-	{
-		return $this->typeId;
-	}
+    public function getTypeId()
+    {
+        return $this->typeId;
+    }
 
-	public function setLastDate($lastDate)
-	{
-		$this->lastDate = $lastDate;
+    public function setLastDate($lastDate)
+    {
+        $this->lastDate = $lastDate;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getLastDate()
-	{
-		return $this->lastDate;
-	}
+    public function getLastDate()
+    {
+        return $this->lastDate;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getItems()
-	{
-		$qb = $this->buildQuery();
+    /**
+     * @return array
+     */
+    public function getItems()
+    {
+        $qb = $this->buildQuery();
 
-		if ($qb instanceof AbstractQuery) {
-			return $qb->getResult();
-		} else {
-			return $qb->getQuery()->getResult();
-		}
-	}
+        if ($qb instanceof AbstractQuery) {
+            return $qb->getResult();
+        } else {
+            return $qb->getQuery()->getResult();
+        }
+    }
 
-	protected function buildQuery()
-	{
-		$qb = $this->em->createQueryBuilder();
-		$qb->select('i')
-			->from('Reader\\Entity\\Item', 'i');
+    protected function buildQuery()
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('i')
+            ->from('Reader\\Entity\\Item', 'i');
 
-		switch ($this->type) {
-			case self::TYPE_TAG:
-				echo "<pre>";
-				var_dump(2211);
-				exit;
-				// TODO: FIX
+        switch ($this->type) {
+            case self::TYPE_TAG:
+                echo "<pre>";
+                var_dump(2211);
+                exit;
+                // TODO: FIX
 
-				$rsm = new ResultSetMapping();
-				$rsm->addEntityResult('Reader\\Entity\\Item', 'i')
-					->addFieldResult('i', 'id', 'id')
-					->addFieldResult('i', 'subscription_id', 'subscription_id')
-					->addFieldResult('i', 'uid', 'uid')
-					->addFieldResult('i', 'title', 'title')
-					->addFieldResult('i', 'content', 'content')
-					->addFieldResult('i', 'link', 'link')
-					->addFieldResult('i', 'date', 'date')
-					->addFieldResult('i', 'rread', 'rread')
-					->addFieldResult('i', 'saved', 'saved')
-					->addFieldResult('i', 'favourite', 'favourite');
+                $rsm = new ResultSetMapping();
+                $rsm->addEntityResult('Reader\\Entity\\Item', 'i')
+                    ->addFieldResult('i', 'id', 'id')
+                    ->addFieldResult('i', 'subscription_id', 'subscription_id')
+                    ->addFieldResult('i', 'uid', 'uid')
+                    ->addFieldResult('i', 'title', 'title')
+                    ->addFieldResult('i', 'content', 'content')
+                    ->addFieldResult('i', 'link', 'link')
+                    ->addFieldResult('i', 'date', 'date')
+                    ->addFieldResult('i', 'rread', 'rread')
+                    ->addFieldResult('i', 'saved', 'saved')
+                    ->addFieldResult('i', 'favourite', 'favourite');
 
-				unset($qb);
-				$qb = $this->em
-					->createNativeQuery('SELECT i.id, i.title FROM item i JOIN tag_subscription ts ON ts.tag_id = i.subscription_id WHERE ts.tag_id = ?1', $rsm)
-					->setParameter(1, $this->typeId);
+                unset($qb);
+                $qb = $this->em
+                    ->createNativeQuery('SELECT i.id, i.title FROM item i JOIN tag_subscription ts ON ts.tag_id = i.subscription_id WHERE ts.tag_id = ?1', $rsm)
+                    ->setParameter(1, $this->typeId);
 
 //				$rsm = new Query\ResultSetMappingBuilder($this->em);
 
@@ -141,8 +140,7 @@ class ItemList
 //				echo "<pre>";
 //				var_dump($this->typeId, $qb->getResult(), $qb);
 //				exit;
-
-				return $qb;
+                return $qb;
 //				$values = array(2);
 
 //				$qb->join('Reader\\Entity\\Subscription', 's', \Doctrine\ORM\Query\Expr\Join::WITH, 's.id = i.subscription')
@@ -151,41 +149,40 @@ class ItemList
 //					->where('t.id = ?1')
 //					->andWhere($qb->expr()->in('t.id', $values)) // here $values['value'] will be a collection of objects so maybe you will have to transform it into an array of ids to make the `in` expression work correctly.
 //					->setParameter(1, $this->typeId);
-				break;
-			case self::TYPE_SUBSCRIPTION:
-				$qb->where('i.subscription = ?1')
-					->setParameter(1, $this->typeId);
-				break;
-			case self::TYPE_FAVOURITES:
-				$qb->where('i.favourite = ?1')
-					->setParameter(1, true);
-				break;
-			case self::TYPE_SAVED:
-				$qb->where('i.saved = ?1')
-					->setParameter(1, true);
-				break;
-			default:
-				throw new \InvalidArgumentException('Invalid type.');
-		}
+                break;
+            case self::TYPE_SUBSCRIPTION:
+                $qb->where('i.subscription = ?1')
+                    ->setParameter(1, $this->typeId);
+                break;
+            case self::TYPE_FAVOURITES:
+                $qb->where('i.favourite = ?1')
+                    ->setParameter(1, true);
+                break;
+            case self::TYPE_SAVED:
+                $qb->where('i.saved = ?1')
+                    ->setParameter(1, true);
+                break;
+            default:
+                throw new \InvalidArgumentException('Invalid type.');
+        }
 
-		if ($this->lastDate) {
-			$lastDate = date("Y-m-d H:i:s", $this->lastDate);
+        if ($this->lastDate) {
+            $lastDate = date("Y-m-d H:i:s", $this->lastDate);
 
-			if ($this->sort === SORT_DESC) {
-				$qb->andWhere('i.date < ?2')->setParameter(2, $lastDate);
-			} else {
-				$qb->andWhere('i.date > ?2')->setParameter(2, $lastDate);
-			}
-		}
+            if ($this->sort === SORT_DESC) {
+                $qb->andWhere('i.date < ?2')->setParameter(2, $lastDate);
+            } else {
+                $qb->andWhere('i.date > ?2')->setParameter(2, $lastDate);
+            }
+        }
 
-		$qb->orderBy('i.date', ($this->sort === SORT_DESC) ? 'DESC' : 'ASC')
-			->setMaxResults($this->itemAmount);
+        $qb->orderBy('i.date', ($this->sort === SORT_DESC) ? 'DESC' : 'ASC')
+            ->setMaxResults($this->itemAmount);
 
 //		echo "<pre>";
 //		var_dump($qb->getQuery());
 //		exit;
-
-		return $qb;
-	}
+        return $qb;
+    }
 
 }

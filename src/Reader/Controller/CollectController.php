@@ -8,7 +8,6 @@ use Reader\DataCollector\Factory;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class CollectController implements ControllerProviderInterface
 {
@@ -56,7 +55,7 @@ class CollectController implements ControllerProviderInterface
 
         if ($app['app.pjax']->hasHeader($request)) {
             return $app['twig']->render('blocks/collect_overview.inc.html.twig', array('subscriptions' => $results));
-        }else{
+        } else {
             return $app['twig']->render('collect/collect_overview.html.twig', array('subscriptions' => $results));
         }
     }
@@ -96,7 +95,7 @@ class CollectController implements ControllerProviderInterface
             return new JsonResponse(array_values($results));
         }
 
-		$data = $app['twig']->render('collect.html.twig', array('results' => $results));
+        $data = $app['twig']->render('collect.html.twig', array('results' => $results));
 
         return $data;
     }

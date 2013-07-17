@@ -14,12 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 class Pjax
 {
 
-	/**
-	 * @param Request $request
-	 * @return bool
-	 */
-	public function hasHeader(Request $request)
-	{
-		return $request->server->has('HTTP_X_PJAX');
-	}
+    /**
+     * @param  Request $request
+     * @return bool
+     */
+    public function hasHeader(Request $request)
+    {
+        return $request->server->has('HTTP_X_PJAX');
+    }
 }
