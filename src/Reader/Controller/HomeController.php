@@ -43,12 +43,14 @@ class HomeController implements ControllerProviderInterface
 
         if ($app['app.pjax']->hasHeader($request)) {
             return $app['twig']->render('blocks/home.inc.html.twig', array(
-                'items' => $items->getQuery()->getResult()
+                'items' => $items->getQuery()->getResult(),
+                'type' => 'home'
             ));
         }
 
         return $app['twig']->render('home.html.twig', array(
-            'items' => $items->getQuery()->getResult()
+            'items' => $items->getQuery()->getResult(),
+            'type' => 'home'
         ));
     }
 

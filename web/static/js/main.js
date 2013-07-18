@@ -102,9 +102,10 @@ function needLoad(totalHeight, currentHeight, tolerance) {
 }
 
 $('div.main-content').scroll(function () {
-    var type = 'subscription',
-        typeId = $('div.item-list').data('type-id'),
-        lastDate = $('div.item-list div.item:last').data('item-date');
+    var list = $('div.item-list'),
+		type = list.data('type'),
+        typeId = list.data('type-id') || null,
+        lastDate = $('div.item:last', list).data('item-date');
 
     var currentLoad = ($('div.main-content div.span12').offset().top * -1) + $(window).height();
 

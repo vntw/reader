@@ -15,6 +15,7 @@ class ItemList
     const TYPE_TAG = 'tag';
     const TYPE_FAVOURITES = 'favourites';
     const TYPE_SAVED = 'saved';
+    const TYPE_HOME = 'home';
 
     private $em;
     private $type;
@@ -54,6 +55,10 @@ class ItemList
 
     public function setType($type)
     {
+        if (!$this->isValidType($type)) {
+            throw new \InvalidArgumentException('Invalid type.');
+        }
+
         $this->type = $type;
 
         return $this;
@@ -162,8 +167,6 @@ class ItemList
                 $qb->where('i.saved = ?1')
                     ->setParameter(1, true);
                 break;
-            default:
-                throw new \InvalidArgumentException('Invalid type.');
         }
 
         if ($this->lastDate) {
@@ -183,6 +186,17 @@ class ItemList
 //		var_dump($qb->getQuery());
 //		exit;
         return $qb;
+    }
+
+    private function isValidType($type)
+    {
+        return in_array($type, array(
+            self::TYPE_FAVOURITES,
+            self::TYPE_SAVED,
+            self::TYPE_TAG,
+            self::TYPE_SUBSCRIPTION,
+            self::TYPE_HOME
+        ));
     }
 
 }

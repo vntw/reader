@@ -25,7 +25,7 @@ class ListController implements ControllerProviderInterface
         /* @var $router Application */
 
         $router->match('/{type}/{name}/{typeId}', array($this, 'fromFunc'))
-            ->assert('type', 's|t|saved|favs')
+            ->assert('type', 's|t|saved|favs|home')
             ->value('name', null)
             ->value('typeId', null)
             ->bind('list_view');
@@ -61,7 +61,7 @@ class ListController implements ControllerProviderInterface
      */
     public function fromList(Application $app, Request $request)
     {
-        $type = $request->attributes->get('type');
+        $type = $this->getTypeForAlias($request->attributes->get('type'));
         $typeId = $request->attributes->get('typeId') ? : (int) $request->get('type-id');
         $lastDate = (int) $request->get('last-date') ? : null;
         $itemAmount = (int) $request->get('amount') ? : 5;
@@ -154,7 +154,7 @@ class ListController implements ControllerProviderInterface
             'favs' => ItemList::TYPE_FAVOURITES,
         );
 
-        return $aliases[$alias];
+        return (isset($aliases[$alias]) ? $aliases[$alias] : $alias);
     }
 
 }

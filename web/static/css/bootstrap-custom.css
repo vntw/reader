@@ -328,3 +328,15 @@ html.page-login div.content {
     width: 300px;
     margin: 0 auto;
 }
+
+@media (max-width: 850px) {
+    div.main-content {
+        margin-left: 0;
+    }
+    div.sidebar {
+        display: none;
+    }
+    header .navbar form input {
+        width: auto;
+    }
+}

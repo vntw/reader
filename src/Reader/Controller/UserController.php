@@ -2,7 +2,6 @@
 
 namespace Reader\Controller;
 
-use Reader\Entity\Item;
 use Silex\ControllerCollection;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
