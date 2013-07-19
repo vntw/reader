@@ -1,5 +1,7 @@
 title_latest_items: What´s New?
 
+nav_header_settings: Settings
+
 sidebar_header_general: General
 sidebar_home: What´s New?
 sidebar_about: About Reader
@@ -10,6 +12,7 @@ sidebar_header_reader: Reader
 sidebar_favourites: Favourites
 sidebar_read_later: Read Later
 
+feed_type_title_home: New Stuff
 feed_type_title_favourites: Favourites
 feed_type_title_saved: Read Later
 

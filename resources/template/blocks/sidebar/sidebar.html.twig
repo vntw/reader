@@ -16,11 +16,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/about" data-section="filter">
-                                <i class="icon-filter"></i> {{ 'sidebar_filter'|trans }}
-                            </a>
-                        </li>
-                        <li>
                             <a href="/collect" data-section="collect">
                                 <i class="icon-refresh"></i> {{ 'sidebar_collect'|trans }}
                             </a>
@@ -35,6 +30,11 @@
                         <li>
                             <a href="{{ path('list_view', {'type': 'saved'}) }}" data-section="saved">
                                 <i class="icon-time"></i> {{ 'sidebar_read_later'|trans }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/about" data-section="filter">
+                                <i class="icon-filter"></i> {{ 'sidebar_filter'|trans }}
                             </a>
                         </li>
                         <li class="divider"></li>

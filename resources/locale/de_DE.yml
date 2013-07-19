@@ -1,5 +1,7 @@
 title_latest_items: Neue Artikel
 
+nav_header_settings: Einstellungen
+
 sidebar_header_general: Übersicht
 sidebar_home: Neues
 sidebar_about: Über Reader
@@ -10,6 +12,7 @@ sidebar_header_reader: Reader
 sidebar_favourites: Favoriten
 sidebar_read_later: Später lesen
 
+feed_type_title_home: Neues
 feed_type_title_favourites: Meine Favoriten
 feed_type_title_saved: Später lesen
 

@@ -332,11 +332,18 @@ html.page-login div.content {
 @media (max-width: 850px) {
     div.main-content {
         margin-left: 0;
+        margin-top: 0;
+        padding: 0 5px 20px;
     }
     div.sidebar {
         display: none;
     }
     header .navbar form input {
         width: auto;
+    }
+    div.item div.item-sub-name,
+    div.item div.item-icons,
+    div.item div.item-date {
+        display: none;
     }
 }

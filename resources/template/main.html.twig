@@ -35,7 +35,7 @@
                         </li>
                         <li class="hidden-phone">
                             <a href="{{ path('settings_view') }}" class="pjaxable">
-                                <i class="icon-cogs"></i> Settings
+                                <i class="icon-cogs"></i> {{ 'nav_header_settings'|trans }}
                             </a>
                         </li>
                         <li>
@@ -47,7 +47,11 @@
                         </li>
                     </ul>
                     <div class="nav-collapse collapse visible-phone">
-                        sdfsdfsdf
+                        <ul class="nav">
+                            <li>
+                                <a href="/settings">{{ 'nav_header_settings'|trans }}</a>
+                            </li>
+                        </ul>
                     </div>
 
                     <ul class="nav hidden-phone">
