@@ -12,21 +12,15 @@ $(document).on('click', '#site-collect ul.nav-pills li', function (e) {
     $(this).toggleClass('active');
 });
 $(document).on('click', '#site-collect button', function (e) {
-    var processable = $('#site-collect ul.nav-pills li.active'),
-        progressBar = $('#site-collect .progress .bar'),
-        percentParts = Math.ceil(100 / processable.length),
-        percent = 0;
-
-    progressBar.css('width', 0);
+    var processable = $('#site-collect ul.nav-pills li.active');
 
     processable.each(function (i) {
-        percent += (i === processable.length ? 100 : percentParts);
+		var $sub = $(this);
+		$('div.collect-result').append('<b>' + $sub.text() + '...</b><br />');
 
-        $('div.collect-result').append('<b>' + $(this).text() + '</b><br />');
-
+		// async
         $.get('/collect/' + $(this).data('sub-id'), null, function (results) {
-//            progressBar.animate({width: percent + '%'}, 250);
-            $('div.collect-result').append(results[0].subscription.name + ': ' + JSON.stringify(results) + '<br />');
+            $('div.collect-result').append('Inserted: ' + results[0].inserted + ' | Existed' + results[0].existing + ' | Error: ' + (results[0].error ? results[0].error : 'None!') + '<br /><br />');
         }, 'json');
     });
 });
@@ -81,7 +75,7 @@ $(document).on('click', 'span.item-title, span.item-preview, div.item-sub-name, 
         $item = $this.parents('div.item'),
         prevItem = $('div.item.selected');
 
-    if (prevItem.length > 0) {
+    if (prevItem.length > 0 && prevItem.data('item-id') !== $item.data('item-id')) {
         $('div.item-container', prevItem).addClass('hide');
         $('div.item-collapsed', prevItem).removeClass('collapsed');
     }
@@ -90,7 +84,9 @@ $(document).on('click', 'span.item-title, span.item-preview, div.item-sub-name, 
     $('div.item-collapsed', $item).toggleClass('collapsed');
     $('div.item-container', $item).toggleClass('hide');
 
-    Reader.Items.Mark(Reader.Items.Funcs.READ, 'add', $item.data('item-id'), $item, $('a.item-markread i', $item));
+	if ($item.hasClass('selected')) {
+		Reader.Items.Mark(Reader.Items.Funcs.READ, 'add', $item.data('item-id'), $item, $('a.item-markread i', $item));
+	}
 });
 
 var loadTolerance = 98,
@@ -107,6 +103,10 @@ $('div.main-content').scroll(function () {
         typeId = list.data('type-id') || null,
         lastDate = $('div.item:last', list).data('item-date');
 
+	if (loadLock || list.data('end')) {
+		return;
+	}
+
     var currentLoad = ($('div.main-content div.span12').offset().top * -1) + $(window).height();
 
     if (needLoad($('div.main-content div.span12').height(), currentLoad, loadTolerance)) {
@@ -116,15 +116,17 @@ $('div.main-content').scroll(function () {
         return;
     }
 
-    if (loadLock) {
-        return;
-    }
-
     loadLock = true;
 
     console.log('+ LOCKED!');
 
     Reader.Items.fetchData(type, typeId, lastDate, function (result) {
+		if (result === '') {
+			list.data('end', true);
+			list.append('<div class="alert text-center">End reached. No more items for you!</div>');
+			return;
+		}
+
         $('div.main-content div.span12').append(result);
         loadLock = false;
         console.log('- UNLOCKED!');
