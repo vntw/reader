@@ -1,11 +1,17 @@
 <div class="row-fluid">
     <div class="span12 item-list" data-type="{{ type }}" {% if typeId is defined %}data-type-id="{{ typeId }}"{% endif %}>
         {% if type == 'subscription' or type == 'tag' %}
-            <h3>Feed: {{ title|trans }}</h3>
+            <h3 class="pull-left">Feed: {{ title|trans }}</h3>
         {% else %}
             {% set title = 'feed_type_title_'~type %}
-            <h3>{{ title|trans }}</h3>
+            <h3 class="pull-left">{{ title|trans }}</h3>
         {% endif %}
+
+        <div class="pull-right">
+            {% include 'blocks/element/list-control-btns.html.twig' %}
+        </div>
+
+        <div class="clearfix"></div>
 
         {% if items|length > 0 %}
             {% for item in items %}

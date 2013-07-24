@@ -85,10 +85,9 @@ $(document).on('click', 'span.item-title, span.item-preview, div.item-sub-name, 
     $('div.item-container', $item).toggleClass('hide');
 
 	if ($item.hasClass('selected')) {
-		Reader.Items.Mark(Reader.Items.Funcs.READ, 'add', $item.data('item-id'), $item, $('a.item-markread i', $item));
+        Reader.Items.scrollToItem($item);
+        Reader.Items.Mark(Reader.Items.Funcs.READ, 'add', $item.data('item-id'), $item, $('a.item-markread i', $item));
 	}
-
-	Reader.Items.scrollToItem($item);
 });
 
 var loadTolerance = 98,
