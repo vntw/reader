@@ -87,5 +87,10 @@ Reader.Items = {
             Reader.Site.Loader(false);
             callback(result);
         }, (format === 'json') ? 'json' : null);
-    }
+    },
+	scrollToItem: function ($item) {
+		var pos = ($('div.main-content .item-list').offset().top * -1) + $item.offset().top + 10;
+		$('div.main-content').animate({ scrollTop: pos + "px" }, 350);
+		//$('div.main-content').scrollTop(($('div.main-content .item-list').offset().top * -1) + $item.offset().top + 10)
+	}
 }
