@@ -63,6 +63,10 @@ Reader.Items = {
             $item.find('span.item-title').addClass('unread');
         }
     },
+    markReadAll: function () {
+        $('i.icon-eye-open').addClass('icon-eye-close').removeClass('icon-eye-open');
+        $('span.item-title').removeClass('unread');
+    },
     markSaved: function ($icon, add) {
         if (add) {
             $icon.addClass('icon-ok-sign').removeClass('icon-time');
@@ -88,9 +92,9 @@ Reader.Items = {
             callback(result);
         }, (format === 'json') ? 'json' : null);
     },
-	scrollToItem: function ($item) {
-		var pos = ($('div.main-content .item-list').offset().top * -1) + $item.offset().top + 10;
-		$('div.main-content').animate({ scrollTop: pos + "px" }, 350);
-		//$('div.main-content').scrollTop(($('div.main-content .item-list').offset().top * -1) + $item.offset().top + 10)
-	}
+    scrollToItem: function ($item) {
+        var pos = ($('div.main-content .item-list').offset().top * -1) + $item.offset().top + 10;
+        $('div.main-content').animate({ scrollTop: pos + "px" }, 350);
+        //$('div.main-content').scrollTop(($('div.main-content .item-list').offset().top * -1) + $item.offset().top + 10)
+    }
 }

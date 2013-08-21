@@ -50,6 +50,10 @@ $(document).on('click', 'div.item a.item-favourite i', function (e) {
     Reader.Items.Mark(Reader.Items.Funcs.FAVOURITES, (add ? 'add' : 'del'), $item.data('item-id'), $item, $this);
 });
 
+$(document).on('click', 'div.list-toolbar button.mark-read-all', function (e) {
+    console.log(1);
+    Reader.Items.markReadAll();
+});
 $(document).on('click', 'div.item a.item-markread i', function (e) {
     e.preventDefault();
 
