@@ -206,26 +206,40 @@ class Subscription
         return $this->getItems()->count() > 0;
     }
 
-    /**
-     * @param  EntityManager $em
-     * @param  bool          $force
-     * @return int
-     */
-    public function countUnreadItems(EntityManager $em, $force = false)
-    {
-        if (null === $this->unreadItems || $force) {
-            $qb = $em->createQueryBuilder();
-            $qb->select('count(i.read)')
-                ->from('Reader\\Entity\\Item', 'i')
-                ->where('i.read = 0')
-                ->andWhere('i.subscription = :id')
-                ->setParameter('id', $this->getId(), Type::INTEGER);
+	/**
+	 * @param  EntityManager $em
+	 * @param  bool          $force
+	 * @return int
+	 */
+	public function countUnreadItems(EntityManager $em, $force = false)
+	{
+		if (null === $this->unreadItems || $force) {
+			$qb = $em->createQueryBuilder();
+			$qb->select('count(i.read)')
+				->from('Reader\\Entity\\Item', 'i')
+				->where('i.read = 0')
+				->andWhere('i.subscription = :id')
+				->setParameter('id', $this->getId(), Type::INTEGER);
 
-            $this->unreadItems = $qb->getQuery()->getSingleScalarResult();
-        }
+			$this->unreadItems = $qb->getQuery()->getSingleScalarResult();
+		}
 
-        return $this->unreadItems;
-    }
+		return $this->unreadItems;
+	}
+
+	/**
+	 * @param  EntityManager $em
+	 */
+	public function markItemsRead(EntityManager $em)
+	{
+		$qb = $em->createQueryBuilder();
+		$q = $qb->update('Reader\\Entity\\Item', 'i')
+			->set('i.read', true)
+			->where('i.subscription = :id')
+			->setParameter('id', $this->getId())
+			->getQuery();
+		$q->execute();
+	}
 
     public function countItems()
     {

@@ -11,7 +11,7 @@
             {% if tag.subs|length > 0 %}
                 <ul class="nav-collapse">
                     {% for sub in tag.subs %}
-                        <li>
+                        <li class="subid-{{ sub.id }}">
                             <a href="{{ path('list_view', {'type': 's', 'name': sub.host|url_encode, 'typeId': sub.id}) }}"{% if sub.unread > 0 %} class="tag-new-items"{% endif %}>
                                 {% if sub.icon %}
                                     <img src="/static/img/subscription-icons/gen/{{ sub.icon }}" alt=""/>

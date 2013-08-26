@@ -51,8 +51,20 @@ $(document).on('click', 'div.item a.item-favourite i', function (e) {
 });
 
 $(document).on('click', 'div.list-toolbar button.mark-read-all', function (e) {
-    console.log(1);
-    Reader.Items.markReadAll();
+	var list = $('div.item-list'),
+		type = list.data('type'),
+		typeId = list.data('type-id') || null;
+
+	if (type !== 'subscription') {
+		alert('wrong type');
+		return;
+	}
+
+    Reader.Items.markReadAll('markread', typeId);
+
+	var tagTreeItem = $('ul.tag-tree li.subid-' + typeId);
+	$('a', tagTreeItem).removeClass('tag-new-items');
+	$('span.tag-sub-count', tagTreeItem).text('(0)');
 });
 $(document).on('click', 'div.item a.item-markread i', function (e) {
     e.preventDefault();
