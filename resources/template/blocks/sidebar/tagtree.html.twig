@@ -5,7 +5,7 @@
     {% for tag in tagTree %}
         <li class="nav-sub-holder">
             <a href="{{ path('list_view', {'type': 't', 'name': tag.name|url_encode, 'typeId': tag.id}) }}" class="tag-container">
-                <i class="icon-folder-close"></i> {{ tag.name }}
+                <i class="tag-container-state icon-angle-right"></i> <i class="icon-folder-close"></i> {{ tag.name }}
                 <span class="tag-count">({{ tag.unread }})</span>
             </a>
             {% if tag.subs|length > 0 %}

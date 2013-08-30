@@ -25,6 +25,22 @@ $(document).on('click', '#site-collect button', function (e) {
     });
 });
 
+$(document).on('click', 'a.tag-container i.tag-container-state', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+
+	var icon = $(this),
+		tag = icon.parents('li.nav-sub-holder:first');
+
+	if (icon.hasClass('icon-angle-right')) {
+		$('ul.nav-collapse', tag).show();
+		icon.addClass('icon-angle-down').removeClass('icon-angle-right');
+	} else {
+		$('ul.nav-collapse', tag).hide();
+		icon.addClass('icon-angle-right').removeClass('icon-angle-down');
+	}
+});
+
 $(document).on('click', 'a.tag-container', function (e) {
     e.preventDefault();
 

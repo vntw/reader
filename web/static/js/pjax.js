@@ -1,14 +1,14 @@
 $(document).pjax('.pjaxable, .sidebar_inner ul li a', 'div.main-content');
 
 $(document).on('pjax:send', function () {
-    Reader.Site.Loader(true);
+	Reader.Site.Loader(true);
 });
 $(document).on('pjax:complete', function () {
-    Reader.Site.Loader(false);
+	Reader.Site.Loader(false);
 });
 $(document).on('pjax:click', function (e) {
-    $('.sidebar_inner ul li').removeClass('active');
-    $(e.target).parent('li').addClass('active');
+	$('.sidebar_inner ul li').removeClass('active');
+	$(e.target).parent('li').addClass('active');
 });
 
 var pathArray = window.location.pathname.split('/');
