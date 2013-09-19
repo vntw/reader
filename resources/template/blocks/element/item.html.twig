@@ -23,13 +23,17 @@
                 <i class="icon-share"></i>
             </a>
         </div>
+
+        {% if type != 'subscription' %}
         <div class="item-sub-name">{{ item.subscription.name }}</div>
+        {% endif %}
+
         <div>
             <span class="item-title{% if not item.read %} unread{% endif %}">
                 {{ item.title|raw }}
             </span>
             <span class="item-preview">
-                &nbsp;-&nbsp;{# item.content|striptags|truncate(120) #}
+                &nbsp;-&nbsp;{{ item.content|striptags|truncate(120) }}
             </span>
         </div>
     </div>

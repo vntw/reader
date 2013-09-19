@@ -95,6 +95,11 @@ Reader.Items = {
 	fetchData: function (type, typeId, lastDate, callback) {
 		Reader.Site.Loader(true);
 
+        if (!type) {
+            alert('Trying to load undefined type!');
+            return false;
+        }
+
 		var format = 'html';
 		var url = '/l/' + type + '/' + typeId + '?format=' + format + '&last-date=' + lastDate + '&amount=25&sort=desc';
 

@@ -156,7 +156,7 @@ $('div.main-content').scroll(function () {
     Reader.Items.fetchData(type, typeId, lastDate, function (result) {
 		if (result === '') {
 			list.data('end', true);
-			list.append('<div class="alert text-center">End reached. No more items for you!</div>');
+			list.append('<div class="alert text-center load-end">End reached. No more items for you!</div>');
 			return;
 		}
 

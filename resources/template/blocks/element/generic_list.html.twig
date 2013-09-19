@@ -1,7 +1,7 @@
 <div class="row-fluid">
     <div class="span12 item-list" data-type="{{ type }}" {% if typeId is defined %}data-type-id="{{ typeId }}"{% endif %}>
         {% if type == 'subscription' or type == 'tag' %}
-            <h3 class="pull-left">Feed: {{ title|trans }}</h3>
+            <h3 class="pull-left">{{ title }}</h3>
         {% else %}
             {% set title = 'feed_type_title_'~type %}
             <h3 class="pull-left">{{ title|trans }}</h3>
