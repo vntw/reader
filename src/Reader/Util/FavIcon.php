@@ -68,7 +68,7 @@ class FavIcon
      */
     private function getCacheDir()
     {
-        $dir = __DIR__ . '/../../../cache/static/img/subscription-icons';
+        $dir = __DIR__ . '/../../../resources/cache/static/img/subscription-icons';
 
         if (!is_dir($dir)) {
             $this->fs->mkdir($dir);

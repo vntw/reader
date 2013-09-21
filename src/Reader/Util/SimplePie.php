@@ -13,12 +13,10 @@ class SimplePie extends \SimplePie
         parent::__construct();
 
         $this->initCache();
-        $this->force_feed(true);
 
         if (null !== $url) {
             $this->set_feed_url($url);
         }
-
     }
 
     /**
@@ -26,7 +24,7 @@ class SimplePie extends \SimplePie
      */
     private function initCache()
     {
-        $cache = __DIR__ . '/../../../cache/simplepie';
+        $cache = __DIR__ . '/../../../resources/cache/simplepie';
 
         if (!is_dir($cache)) {
             mkdir($cache, 0777, true);

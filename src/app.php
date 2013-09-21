@@ -11,6 +11,7 @@ use Reader\Controller\SearchController;
 use Reader\Controller\UserController;
 use Reader\Controller\ListController;
 use Reader\Controller\ItemController;
+use Reader\Controller\DiscoveryController;
 use Reader\Provider\PjaxProvider;
 use Reader\Tag\TreeTwigExtension;
 use Silex\Application;
@@ -37,6 +38,7 @@ $app->mount('', new UserController());
 $app->mount('', new ListController());
 $app->mount('', new ItemController());
 $app->mount('', new TagController());
+$app->mount('', new DiscoveryController());
 
 $app['debug'] = true;
 

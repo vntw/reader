@@ -22,9 +22,9 @@ class TagController implements ControllerProviderInterface
         $router = $app['controllers_factory'];
         /* @var $router Application */
 
-		$router->match('/t/{func}/{action}/{id}', array($this, 'changeTag'))
-			->bind('change_tag')
-			->assert('func', 'read');
+        $router->match('/t/{func}/{action}/{id}', array($this, 'changeTag'))
+            ->bind('change_tag')
+            ->assert('func', 'read');
 
         $router->get('/t/add', function (Request $request) use ($app) {
             if (!$request->isXmlHttpRequest()) {
@@ -37,40 +37,40 @@ class TagController implements ControllerProviderInterface
         return $router;
     }
 
-	/**
-	 * @param  Request      $request
-	 * @param  Application  $app
-	 * @return JsonResponse
-	 */
-	public function changeTag(Request $request, Application $app)
-	{
-		$func = $request->attributes->get('func');
-		$add = $request->attributes->get('action');
-		$entityManager = $app['orm.em'];
+    /**
+     * @param  Request      $request
+     * @param  Application  $app
+     * @return JsonResponse
+     */
+    public function changeTag(Request $request, Application $app)
+    {
+        $func = $request->attributes->get('func');
+        $add = $request->attributes->get('action');
+        $entityManager = $app['orm.em'];
 
-		/* @var $entityManager \Doctrine\ORM\EntityManager */
+        /* @var $entityManager \Doctrine\ORM\EntityManager */
 
-		$tagId = (int) $request->attributes->get('id');
+        $tagId = (int) $request->attributes->get('id');
 
-		$tag = $entityManager->getRepository('Reader\\Entity\\Tag')->find($tagId);
+        $tag = $entityManager->getRepository('Reader\\Entity\\Tag')->find($tagId);
 
-		if (!$tag instanceof Tag) {
-			return new JsonResponse(array('error' => 'Invalid tag.'));
-		}
+        if (!$tag instanceof Tag) {
+            return new JsonResponse(array('error' => 'Invalid tag.'));
+        }
 
-		switch ($func) {
-			case 'read':
+        switch ($func) {
+            case 'read':
 
-				//"UPDATE item AS i JOIN subscription AS s ON s.id = i.subscriptionId JOIN tag AS t ON s.tagId = i.id SET read=1";
+                //"UPDATE item AS i JOIN subscription AS s ON s.id = i.subscriptionId JOIN tag AS t ON s.tagId = i.id SET read=1";
 
-				$tag->setRead($add);
-				break;
-		}
+                $tag->setRead($add);
+                break;
+        }
 
-		$entityManager->persist($tag);
-		$entityManager->flush();
+        $entityManager->persist($tag);
+        $entityManager->flush();
 
-		return new JsonResponse(array('test' => 'dsfds'));
-	}
+        return new JsonResponse(array('test' => 'dsfds'));
+    }
 
 }

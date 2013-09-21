@@ -1,0 +1,13 @@
+{% if feeds|length > 0 %}
+    <ul>
+        {% for feed in feeds %}
+            <li>
+                <label>
+                    <input type="checkbox"/> <strong>{{ feed.title }}</strong> ({{ feed.url }})
+                </label>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="alert">No feeds for you!</div>
+{% endif %}

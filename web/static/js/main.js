@@ -15,10 +15,10 @@ $(document).on('click', '#site-collect button', function (e) {
     var processable = $('#site-collect ul.nav-pills li.active');
 
     processable.each(function (i) {
-		var $sub = $(this);
-		$('div.collect-result').append('<b>' + $sub.text() + '...</b><br />');
+        var $sub = $(this);
+        $('div.collect-result').append('<b>' + $sub.text() + '...</b><br />');
 
-		// async
+        // async
         $.get('/collect/' + $(this).data('sub-id'), null, function (results) {
             $('div.collect-result').append('Inserted: ' + results[0].inserted + ' | Existed' + results[0].existing + ' | Error: ' + (results[0].error ? results[0].error : 'None!') + '<br /><br />');
         }, 'json');
@@ -26,19 +26,19 @@ $(document).on('click', '#site-collect button', function (e) {
 });
 
 $(document).on('click', 'a.tag-container i.tag-container-state', function (e) {
-	e.preventDefault();
-	e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
 
-	var icon = $(this),
-		tag = icon.parents('li.nav-sub-holder:first');
+    var icon = $(this),
+        tag = icon.parents('li.nav-sub-holder:first');
 
-	if (icon.hasClass('icon-angle-right')) {
-		$('ul.nav-collapse', tag).show();
-		icon.addClass('icon-angle-down').removeClass('icon-angle-right');
-	} else {
-		$('ul.nav-collapse', tag).hide();
-		icon.addClass('icon-angle-right').removeClass('icon-angle-down');
-	}
+    if (icon.hasClass('icon-angle-right')) {
+        $('ul.nav-collapse', tag).show();
+        icon.addClass('icon-angle-down').removeClass('icon-angle-right');
+    } else {
+        $('ul.nav-collapse', tag).hide();
+        icon.addClass('icon-angle-right').removeClass('icon-angle-down');
+    }
 });
 
 $(document).on('click', 'a.tag-container', function (e) {
@@ -67,20 +67,20 @@ $(document).on('click', 'div.item a.item-favourite i', function (e) {
 });
 
 $(document).on('click', 'div.list-toolbar button.mark-read-all', function (e) {
-	var list = $('div.item-list'),
-		type = list.data('type'),
-		typeId = list.data('type-id') || null;
+    var list = $('div.item-list'),
+        type = list.data('type'),
+        typeId = list.data('type-id') || null;
 
-	if (type !== 'subscription') {
-		alert('wrong type');
-		return;
-	}
+    if (type !== 'subscription') {
+        alert('wrong type');
+        return;
+    }
 
     Reader.Items.markReadAll('markread', typeId);
 
-	var tagTreeItem = $('ul.tag-tree li.subid-' + typeId);
-	$('a', tagTreeItem).removeClass('tag-new-items');
-	$('span.tag-sub-count', tagTreeItem).text('(0)');
+    var tagTreeItem = $('ul.tag-tree li.subid-' + typeId);
+    $('a', tagTreeItem).removeClass('tag-new-items');
+    $('span.tag-sub-count', tagTreeItem).text('(0)');
 });
 $(document).on('click', 'div.item a.item-markread i', function (e) {
     e.preventDefault();
@@ -116,10 +116,10 @@ $(document).on('click', 'span.item-title, span.item-preview, div.item-sub-name, 
     $('div.item-collapsed', $item).toggleClass('collapsed');
     $('div.item-container', $item).toggleClass('hide');
 
-	if ($item.hasClass('selected')) {
+    if ($item.hasClass('selected')) {
         Reader.Items.scrollToItem($item);
         Reader.Items.Mark(Reader.Items.Funcs.READ, 'add', $item.data('item-id'), $item, $('a.item-markread i', $item));
-	}
+    }
 });
 
 var loadTolerance = 98,
@@ -132,13 +132,13 @@ function needLoad(totalHeight, currentHeight, tolerance) {
 
 $('div.main-content').scroll(function () {
     var list = $('div.item-list'),
-		type = list.data('type'),
+        type = list.data('type'),
         typeId = list.data('type-id') || null,
         lastDate = $('div.item:last', list).data('item-date');
 
-	if (loadLock || list.data('end')) {
-		return;
-	}
+    if (loadLock || list.data('end')) {
+        return;
+    }
 
     var currentLoad = ($('div.main-content div.span12').offset().top * -1) + $(window).height();
 
@@ -154,15 +154,48 @@ $('div.main-content').scroll(function () {
     console.log('+ LOCKED!');
 
     Reader.Items.fetchData(type, typeId, lastDate, function (result) {
-		if (result === '') {
-			list.data('end', true);
-			list.append('<div class="alert text-center load-end">End reached. No more items for you!</div>');
-			return;
-		}
+        if (result === '') {
+            list.data('end', true);
+            list.append('<div class="alert text-center load-end">End reached. No more items for you!</div>');
+            return;
+        }
 
         $('div.main-content div.span12').append(result);
         loadLock = false;
         console.log('- UNLOCKED!');
     });
 
+});
+
+$(document).on('click', 'button.discover-fetch', function () {
+    var url = $(this).prev().val(),
+        discoveredContainer = $('div.discovered-feeds'),
+        discoverSave = $('.modal div.discover-add-box div.discover-save');
+
+    discoveredContainer.fadeOut(400, function () {
+        discoveredContainer.empty();
+        discoverSave.addClass('hidden');
+
+        $.post('/discover', { url: url }, function (feeds) {
+//            if (feeds.length > 0) {
+//                for (var i = 0; i < feeds.length; i++) {
+//                    discoveredContainer.append("<input type=\"checkbox\" />" + feeds[i].title + "(" + feeds[i].url + ")" + "<br />");
+//                }
+//            } else {
+            discoveredContainer.html(feeds.html);
+//            }
+
+            if (feeds.valid > 0) {
+                discoverSave.removeClass('hidden');
+            }
+
+            discoveredContainer.fadeIn(400);
+        }, 'json');
+    });
+});
+
+$(document).on('click', '.modal div.discover-add-box button.discover-reset', function () {
+    $('div.discovered-feeds').empty();
+    $('.modal div.discover-add-box div.discover-save').addClass('hidden');
+    $('input.discover-url').val('');
 });

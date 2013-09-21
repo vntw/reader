@@ -33,6 +33,8 @@ class Rss extends DataCollector
         $simplePie = new SimplePie($this->subscription->getFeedUrl());
         $simplePie->init();
 
+        $simplePie->force_feed(true);
+
         if ($simplePie->error()) {
             $stats['error'] = $simplePie->error();
 

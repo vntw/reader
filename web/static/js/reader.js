@@ -5,13 +5,13 @@ Reader.Site = {
 		var logo = $('a.brand > i');
 
 		if (show) {
-			NProgress.start();
+			//NProgress.start();
 			logo.addClass('icon-spin');
 			logo.css('color', '#ccc');
 		} else {
 			logo.removeClass('icon-spin');
 			logo.css('color', '#777');
-			NProgress.done();
+			//NProgress.done();
 		}
 	}
 }

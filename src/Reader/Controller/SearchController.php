@@ -22,30 +22,25 @@ class SearchController implements ControllerProviderInterface
         $router = $app['controllers_factory'];
         /* @var $router Application */
 
-        $router->post('/search', function (Request $request) use ($app) {
-            $data = $app['twig']->render('search.html.twig', array(
-                'query' => htmlspecialchars(trim($request->get('query')))
-            ));
-
-            if ($request->isXmlHttpRequest()) {
-                return new Response($data);
-            }
-
-            return $data;
-        });
-
-        $router->get('/search', function (Request $request) use ($app) {
-            $data = $app['twig']->render('search.html.twig', array(
-                'query' => htmlspecialchars(trim($request->get('query')))
-            ));
-
-            if ($request->isXmlHttpRequest()) {
-                return new Response($data);
-            }
-
-            return $data;
-        });
+        $router->match('/search', array($this, 'searchByQuery'))
+            ->bind('search');
 
         return $router;
     }
+
+    public function searchByQuery(Request $request, Application $app)
+    {
+        $query = trim($request->get('query'));
+
+        $data = $app['twig']->render('search.html.twig', array(
+            'query' => $query
+        ));
+
+        if ($app['app.pjax']->hasHeader($request)) {
+            return new Response($data);
+        }
+
+        return $data;
+    }
+
 }

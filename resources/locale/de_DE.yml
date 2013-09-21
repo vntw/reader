@@ -3,7 +3,7 @@ title_latest_items: Neue Artikel
 nav_header_settings: Einstellungen
 
 sidebar_header_general: Übersicht
-sidebar_home: Neues
+sidebar_home: Aktuelles
 sidebar_about: Über Reader
 sidebar_filter: Filter
 sidebar_collect: Feeds aktualisieren
@@ -17,6 +17,8 @@ feed_type_title_favourites: Meine Favoriten
 feed_type_title_saved: Später lesen
 
 sidebar_header_subscriptions: Subscriptions
+
+collect_cron_info: Es wird empfohlen einen Cronjob einzurichten bla bla bla...
 
 locale_de_DE: Deutsch (de_DE)
 locale_en_GB: Englisch (en_GB)
