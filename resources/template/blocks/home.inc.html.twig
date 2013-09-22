@@ -1,8 +1,6 @@
 <div class="row-fluid">
     <div class="span12">
-        <h3>
-            {{ 'title_latest_items'|trans }}
-        </h3>
+        <h3 class="page-title">{{ 'title_latest_items'|trans }}</h3>
 
         {% if items|length > 0 %}
             {% for item in items %}

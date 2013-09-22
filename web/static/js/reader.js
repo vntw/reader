@@ -2,7 +2,7 @@ var Reader = {}
 
 Reader.Site = {
 	Loader: function (show) {
-		var logo = $('a.brand > i');
+		var logo = $('a.navbar-brand > i');
 
 		if (show) {
 			//NProgress.start();
@@ -21,8 +21,8 @@ Reader.Layout = {
 		var height = $(window).height(),
 			headerForm = $('header div.navbar form');
 
-		$('div.sidebar').height(height - 43);
-		$('div.main-content').height(height - 88);
+		$('div.sidebar').height(height - 51);
+		$('div.main-content').height(height - 51);
 		headerForm.css('margin-left', -headerForm.outerWidth() / 2);
 	}
 }

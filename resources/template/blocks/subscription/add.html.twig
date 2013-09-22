@@ -1,10 +1,14 @@
 <div class="form-horizontal discover-add-box">
-    <div class="control-group">
-        <label class="control-label" for="sub-url">Feed-URL</label>
-        <div class="controls">
-            <input type="url" class="discover-url" placeholder="URL" value="http://yahoo.com">
-            <button type="button" class="btn discover-fetch">GO</button>
-        </div>
+    <label for="lbl-discover-url" class="control-label">Feed-URL</label>
+
+    <div class="input-group discover-set">
+        <input type="url" class="discover-url form-control" name="url" id="lbl-discover-url" placeholder="URL" value="http://yahoo.com">
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-rdef discover-fetch">
+                <i class="icon-chevron-sign-right"></i>
+                <i class='icon-refresh icon-spin hide'></i>
+            </button>
+        </span>
     </div>
     <!--<div class="control-group">
         <label class="control-label" for="sub-name">Name</label>
@@ -13,10 +17,12 @@
         </div>
     </div>-->
     <div class="discovered-feeds"></div>
-    <div class="control-group hidden discover-save">
-        <div class="controls">
-            <button class="btn discover-reset">Cancel</button>
-            <button class="btn btn-primary">Save Subscription</button>
-        </div>
+
+    <div class="form-group hidden discover-reset text-center">
+        <button class="btn btn-cinde discover-reset-btn">Reset</button>
+    </div>
+    <div class="form-group hidden discover-save">
+        <button class="btn btn-cinde discover-reset-btn">Reset</button>
+        <button class="btn btn-primary pull-right">Save Subscription</button>
     </div>
 </div>

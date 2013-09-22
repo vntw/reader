@@ -156,7 +156,7 @@ $('div.main-content').scroll(function () {
     Reader.Items.fetchData(type, typeId, lastDate, function (result) {
         if (result === '') {
             list.data('end', true);
-            list.append('<div class="alert text-center load-end">End reached. No more items for you!</div>');
+            list.append('<div class="alert alert-warning text-center load-end">End reached. No more items for you!</div>');
             return;
         }
 
@@ -168,25 +168,26 @@ $('div.main-content').scroll(function () {
 });
 
 $(document).on('click', 'button.discover-fetch', function () {
-    var url = $(this).prev().val(),
+    var $this = $(this),
+        url = $this.parents().prev().val(),
         discoveredContainer = $('div.discovered-feeds'),
         discoverSave = $('.modal div.discover-add-box div.discover-save');
+
+    $('i', $this).addClass('hide');
+    $('i.icon-refresh', $this).removeClass('hide');
+    $(this).prop('disabled', true);
 
     discoveredContainer.fadeOut(400, function () {
         discoveredContainer.empty();
         discoverSave.addClass('hidden');
 
         $.post('/discover', { url: url }, function (feeds) {
-//            if (feeds.length > 0) {
-//                for (var i = 0; i < feeds.length; i++) {
-//                    discoveredContainer.append("<input type=\"checkbox\" />" + feeds[i].title + "(" + feeds[i].url + ")" + "<br />");
-//                }
-//            } else {
             discoveredContainer.html(feeds.html);
-//            }
 
             if (feeds.valid > 0) {
                 discoverSave.removeClass('hidden');
+            } else {
+                $('div.discover-reset').removeClass('hidden');
             }
 
             discoveredContainer.fadeIn(400);
@@ -194,8 +195,14 @@ $(document).on('click', 'button.discover-fetch', function () {
     });
 });
 
-$(document).on('click', '.modal div.discover-add-box button.discover-reset', function () {
+$(document).on('click', '.modal div.discover-add-box button.discover-reset-btn', function () {
     $('div.discovered-feeds').empty();
     $('.modal div.discover-add-box div.discover-save').addClass('hidden');
     $('input.discover-url').val('');
+
+    $('div.discover-set i').addClass('hide');
+    $('div.discover-set i.icon-chevron-sign-right').removeClass('hide');
+    $('div.discover-set button.discover-fetch').prop('disabled', false);
+
+    $('div.discover-reset').addClass('hidden');
 });

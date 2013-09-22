@@ -12,5 +12,5 @@ $(document).on('pjax:click', function (e) {
 });
 
 var pathArray = window.location.pathname.split('/');
-$('ul#proto li').removeClass('active');
-$('ul#proto li a[data-section="' + (pathArray[1] ? pathArray[1] : 'home') + '"]').parent('li').addClass('active');
+$('ul#main-nav li').removeClass('active');
+$('ul#main-nav li a[data-section="' + (pathArray[1] ? pathArray[1] : 'home') + '"]').parent('li').addClass('active');

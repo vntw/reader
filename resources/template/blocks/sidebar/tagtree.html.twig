@@ -1,5 +1,5 @@
 <ul class="nav nav-list tag-tree">
-    <li class="nav-header">{{ 'sidebar_header_subscriptions'|trans }}</li>
+    <li class="dropdown-header">{{ 'sidebar_header_subscriptions'|trans }}</li>
 
     {% set tagTree = buildTagTree() %}
     {% for tag in tagTree %}
@@ -11,7 +11,7 @@
             {% if tag.subs|length > 0 %}
                 <ul class="nav-collapse">
                     {% for sub in tag.subs %}
-                        <li class="subid-{{ sub.id }}">
+                        <li class="sub subid-{{ sub.id }}">
                             <a href="{{ path('list_view', {'type': 's', 'name': sub.host|url_encode, 'typeId': sub.id}) }}"{% if sub.unread > 0 %} class="tag-new-items"{% endif %}>
                                 {% if sub.icon %}
                                     <img src="/static/img/subscription-icons/gen/{{ sub.icon }}" alt=""/>
