@@ -4,7 +4,7 @@ namespace Reader\Importer\OPML;
 
 class Result
 {
-    const TYPE_TAGS = 'tags';
+    const TYPE_CATEGORIES = 'categories';
     const TYPE_SUBSCRIPTIONS = 'subscriptions';
 
     private $errors;

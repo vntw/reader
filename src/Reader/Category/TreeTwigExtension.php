@@ -1,6 +1,6 @@
 <?php
 
-namespace Reader\Tag;
+namespace Reader\Category;
 
 use Silex\Application;
 
@@ -17,11 +17,11 @@ class TreeTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('buildTagTree', array($this, 'getTagTree')),
+            new \Twig_SimpleFunction('buildTree', array($this, 'getTree')),
         );
     }
 
-    public function getTagTree()
+    public function getTree()
     {
         $tree = new Tree($this->app['orm.em']);
 
@@ -30,6 +30,6 @@ class TreeTwigExtension extends \Twig_Extension
 
     public function getName()
     {
-        return 'tagTree';
+        return 'categoryTree';
     }
 }

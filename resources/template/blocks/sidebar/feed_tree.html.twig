@@ -1,0 +1,31 @@
+<ul class="nav nav-list cat-tree">
+    <li class="dropdown-header">{{ 'sidebar_header_subscriptions'|trans }}</li>
+
+    {% set tree = buildTree() %}
+    {% for category in tree %}
+        <li class="nav-sub-holder">
+            <a href="{{ path('list_view', {'type': 'c', 'name': category.name|url_encode, 'typeId': category.id}) }}" class="cat-container">
+                <i class="cat-container-state icon-angle-right"></i> <i class="icon-folder-close"></i> {{ category.name }}
+                <span class="cat-count">({{ category.unread }})</span>
+            </a>
+            {% if category.subs|length > 0 %}
+                <ul class="nav-collapse">
+                    {% for sub in category.subs %}
+                        <li class="sub subid-{{ sub.id }}">
+                            <a href="{{ path('list_view', {'type': 's', 'name': sub.host|url_encode, 'typeId': sub.id}) }}"{% if sub.unread > 0 %} class="cat-new-items"{% endif %}>
+                                {% if sub.icon %}
+                                    <img src="/static/img/subscription-icons/gen/{{ sub.icon }}" alt=""/>
+                                {% else %}
+                                    <img src="/static/img/subscription-icons/default.png" alt=""/>
+                                {% endif %}
+
+                                <span class="cat-sub-name">{{ sub.name }}</span>
+                                <span class="cat-sub-count">({{ sub.unread }})</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

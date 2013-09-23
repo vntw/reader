@@ -28,27 +28,15 @@ class SubscriptionController implements ControllerProviderInterface
             ->bind('change_subscription')
             ->assert('func', 'markread');
 
-        $router->get('/s/add', function (Request $request) use ($app) {
-            if (!$request->isXmlHttpRequest()) {
-                $app->abort(400, 'LOL');
-            }
-
-            $url = null;
-            $feedUrl = null;
-
-            $subscription = new Subscription();
-            $subscription->setName('Test')
-                ->setType(DataCollectorInterface::TYPE_RSS)
-                ->setUrl($url)
-                ->setFeedUrl($feedUrl);
-        });
+        $router->match('/s/addform', array($this, 'getAddForm'))
+            ->bind('add_subscription_form');
 
         return $router;
     }
 
     /**
-     * @param  Request      $request
-     * @param  Application  $app
+     * @param  Request     $request
+     * @param  Application $app
      * @return JsonResponse
      */
     public function changeSubscription(Request $request, Application $app)
@@ -80,6 +68,18 @@ class SubscriptionController implements ControllerProviderInterface
         $entityManager->flush();
 
         return new JsonResponse(array('test' => 'dsfds'));
+    }
+
+    public function getAddForm(Request $request, Application $app)
+    {
+        $url = null;
+        $feedUrl = null;
+
+        $subscription = new Subscription();
+        $subscription->setName('Test')
+            ->setType(DataCollectorInterface::TYPE_RSS)
+            ->setUrl($url)
+            ->setFeedUrl($feedUrl);
     }
 
 }

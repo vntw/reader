@@ -43,9 +43,9 @@ div.sidebar ul.nav-list li.dropdown-header:first-of-type {
     background-color: rgba(238, 238, 238, 0.5);
 }
 
-.nav-pills > .active > a,
-.nav-pills > .active > a:hover,
-.nav-pills > .active > a:focus {
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
     color: #696969;
     background-color: #E6E6E6;
 }
@@ -243,7 +243,7 @@ div.sidebar li.nav-sub-holder > a {
     /*display: block;*/
 }
 
-div.sidebar li.nav-sub-holder span.tag-count {
+div.sidebar li.nav-sub-holder span.cat-count {
     position: absolute;
     top: 4px;
     right: 5px;
@@ -270,7 +270,7 @@ div.sidebar li.nav-sub-holder ul li a {
     display: block;
 }
 
-div.sidebar li.nav-sub-holder ul li a > span.tag-sub-name {
+div.sidebar li.nav-sub-holder ul li a > span.cat-sub-name {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -279,7 +279,7 @@ div.sidebar li.nav-sub-holder ul li a > span.tag-sub-name {
     margin-left: 3px;
 }
 
-div.sidebar li.nav-sub-holder ul li a > span.tag-sub-count {
+div.sidebar li.nav-sub-holder ul li a > span.cat-sub-count {
     position: absolute;
     top: 2px;
     right: 5px;
@@ -287,31 +287,31 @@ div.sidebar li.nav-sub-holder ul li a > span.tag-sub-count {
     font-size: 13px;
 }
 
-ul.tag-tree a.tag-container {
+ul.cat-tree a.cat-container {
     padding-left: 10px;
 }
-ul.tag-tree a.tag-container i.tag-container-state {
+ul.cat-tree a.cat-container i.cat-container-state {
     padding: 5px 5px 5px 0px;
     margin-right: 0;
 }
-ul.tag-tree a.tag-container i.tag-container-state.icon-angle-right {
+ul.cat-tree a.cat-container i.cat-container-state.icon-angle-right {
     padding: 5px 5px 5px 3px;
 }
 
-div.sidebar li.nav-sub-holder a:hover span.tag-count,
-div.sidebar li.nav-sub-holder ul li a:hover > span.tag-sub-count {
+div.sidebar li.nav-sub-holder a:hover span.cat-count,
+div.sidebar li.nav-sub-holder ul li a:hover > span.cat-sub-count {
     color: #666;
 }
 
-div.sidebar li.nav-sub-holder a:hover span.tag-count {
+div.sidebar li.nav-sub-holder a:hover span.cat-count {
     color: #ccc;
 }
 
-div.sidebar li.nav-sub-holder ul li a.tag-new-items {
+div.sidebar li.nav-sub-holder ul li a.cat-new-items {
     color: #333;
 }
 
-div.sidebar li.nav-sub-holder ul li a.tag-new-items:hover {
+div.sidebar li.nav-sub-holder ul li a.cat-new-items:hover {
     color: #000;
 }
 

@@ -2,7 +2,7 @@
     <div class="span12 item-list" data-type="{{ type }}" {% if typeId is defined %}data-type-id="{{ typeId }}"{% endif %}>
 
         <div class="item-list-control">
-            {% if type == 'subscription' or type == 'tag' %}
+            {% if type == 'subscription' or type == 'category' %}
                 <h3 class="page-title pull-left">{{ title }}</h3>
             {% else %}
                 {% set title = 'feed_type_title_'~type %}

@@ -14,6 +14,10 @@ $(document).on('click', '#site-collect ul.nav-pills li', function (e) {
 $(document).on('click', '#site-collect button', function (e) {
     var processable = $('#site-collect ul.nav-pills li.active');
 
+    processable = $('#collect-ms').val();
+
+    return;
+
     processable.each(function (i) {
         var $sub = $(this);
         $('div.collect-result').append('<b>' + $sub.text() + '...</b><br />');
@@ -25,23 +29,23 @@ $(document).on('click', '#site-collect button', function (e) {
     });
 });
 
-$(document).on('click', 'a.tag-container i.tag-container-state', function (e) {
+$(document).on('click', 'a.cat-container i.cat-container-state', function (e) {
     e.preventDefault();
     e.stopPropagation();
 
     var icon = $(this),
-        tag = icon.parents('li.nav-sub-holder:first');
+        cat = icon.parents('li.nav-sub-holder:first');
 
     if (icon.hasClass('icon-angle-right')) {
-        $('ul.nav-collapse', tag).show();
+        $('ul.nav-collapse', cat).show();
         icon.addClass('icon-angle-down').removeClass('icon-angle-right');
     } else {
-        $('ul.nav-collapse', tag).hide();
+        $('ul.nav-collapse', cat).hide();
         icon.addClass('icon-angle-right').removeClass('icon-angle-down');
     }
 });
 
-$(document).on('click', 'a.tag-container', function (e) {
+$(document).on('click', 'a.cat-container', function (e) {
     e.preventDefault();
 
     var $this = $(this),
@@ -78,9 +82,9 @@ $(document).on('click', 'div.list-toolbar button.mark-read-all', function (e) {
 
     Reader.Items.markReadAll('markread', typeId);
 
-    var tagTreeItem = $('ul.tag-tree li.subid-' + typeId);
-    $('a', tagTreeItem).removeClass('tag-new-items');
-    $('span.tag-sub-count', tagTreeItem).text('(0)');
+    var catTreeItem = $('ul.cat-tree li.subid-' + typeId);
+    $('a', catTreeItem).removeClass('cat-new-items');
+    $('span.cat-sub-count', catTreeItem).text('(0)');
 });
 $(document).on('click', 'div.item a.item-markread i', function (e) {
     e.preventDefault();

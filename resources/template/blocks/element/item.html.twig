@@ -8,7 +8,7 @@
                 <i class="icon-share"></i>
             </a>
         </div>
-        <div class="item-date">{{ item.date|date('Y-m-d') }}</div>
+        <div class="item-date">{{ item.date|date('Y-m-d H:i:s') }}11</div>
         <div class="item-icons">
             <a class="item-favourite" href="">
                 <i class="{% if item.favourite %}icon-star{% else %}icon-star-empty{% endif %}"></i>
