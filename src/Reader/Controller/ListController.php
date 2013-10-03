@@ -38,8 +38,8 @@ class ListController implements ControllerProviderInterface
     }
 
     /**
-     * @param  Application $app
-     * @param  Request     $request
+     * @param  Application  $app
+     * @param  Request      $request
      * @return JsonResponse
      */
     public function fromFunc(Application $app, Request $request)
@@ -55,8 +55,8 @@ class ListController implements ControllerProviderInterface
     }
 
     /**
-     * @param  Application $app
-     * @param  Request     $request
+     * @param  Application  $app
+     * @param  Request      $request
      * @return JsonResponse
      */
     public function fromList(Application $app, Request $request)
@@ -72,14 +72,14 @@ class ListController implements ControllerProviderInterface
     }
 
     /**
-     * @param  Application $app
-     * @param  Request     $request
-     * @param  string      $type
-     * @param  int         $typeId
-     * @param  int         $lastDate
-     * @param  int         $itemAmount
-     * @param  int         $sort
-     * @param  string      $format
+     * @param  Application  $app
+     * @param  Request      $request
+     * @param  string       $type
+     * @param  int          $typeId
+     * @param  int          $lastDate
+     * @param  int          $itemAmount
+     * @param  int          $sort
+     * @param  string       $format
      * @return JsonResponse
      */
     public function fetchList(Application $app, Request $request, $type, $typeId = null, $lastDate = null, $itemAmount = null, $sort = null, $format = null)

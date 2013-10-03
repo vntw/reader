@@ -29,8 +29,8 @@ class DiscoveryController implements ControllerProviderInterface
     }
 
     /**
-     * @param  Request     $request
-     * @param  Application $app
+     * @param  Request      $request
+     * @param  Application  $app
      * @return JsonResponse
      */
     public function discoverUrl(Request $request, Application $app)

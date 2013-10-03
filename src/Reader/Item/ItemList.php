@@ -4,10 +4,8 @@ namespace Reader\Item;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\AST\Join;
 use Doctrine\ORM\Query;
-use Symfony\Component\Finder\Expression\Expression;
 
 class ItemList
 {
@@ -154,7 +152,6 @@ class ItemList
 //        echo "<pre>";
 //        var_dump($qb->getQuery());
 //        exit;
-
         return $qb;
     }
 

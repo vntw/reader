@@ -120,7 +120,7 @@ class Parser
     }
 
     /**
-     * @param  string $name
+     * @param  string   $name
      * @return Category
      */
     private function getCategory($name)

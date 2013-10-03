@@ -3,7 +3,6 @@
 namespace Reader\Controller;
 
 use Reader\Entity\Subscription;
-use Reader\DataCollector\DataCollectorInterface;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,8 +35,8 @@ class SubscriptionController implements ControllerProviderInterface
     }
 
     /**
-     * @param  Request     $request
-     * @param  Application $app
+     * @param  Request      $request
+     * @param  Application  $app
      * @return JsonResponse
      */
     public function changeSubscription(Request $request, Application $app)
@@ -72,8 +71,8 @@ class SubscriptionController implements ControllerProviderInterface
     }
 
     /**
-     * @param Request     $request
-     * @param Application $app
+     * @param  Request     $request
+     * @param  Application $app
      * @return Response
      */
     public function getAddForm(Request $request, Application $app)
