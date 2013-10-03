@@ -2,8 +2,10 @@ db:
   host: localhost
   dbname: rssreader
   user: root
-  password: is4g
+  password: ssc7
 
-locales:
-  - de_DE
-  - en_GB
+locale:
+  default: en_GB
+  locales:
+    - de_DE
+    - en_GB

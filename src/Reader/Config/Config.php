@@ -19,35 +19,6 @@ class Config implements \ArrayAccess
         $this->values = $values;
     }
 
-    /**
-     *
-     * @param  string            $file
-     * @throws \RuntimeException
-     */
-    public static function load($file)
-    {
-        if (!file_exists($file)) {
-            throw new \RuntimeException('Config file not found.');
-        }
-
-        $ext = 'yml';
-
-        switch ($ext) {
-            case 'yml':
-                $loader = new YamlLoader();
-                break;
-            case 'json':
-                $loader = new JsonLoader();
-                break;
-            default:
-                throw new \RuntimeException('Unknown file type.');
-        }
-
-        $config = new self($loader->load($file));
-
-        return $config;
-    }
-
     public function offsetExists($offset)
     {
         return isset($this->values[$offset]);

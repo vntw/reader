@@ -7,7 +7,7 @@ use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class TagController implements ControllerProviderInterface
+class CategoryController implements ControllerProviderInterface
 {
 
     /**
@@ -22,8 +22,8 @@ class TagController implements ControllerProviderInterface
         $router = $app['controllers_factory'];
         /* @var $router Application */
 
-        $router->match('/t/{func}/{action}/{id}', array($this, 'changeTag'))
-            ->bind('change_tag')
+        $router->match('/c/{func}/{action}/{id}', array($this, 'changeCategory'))
+            ->bind('change_category')
             ->assert('func', 'read');
 
         $router->get('/t/add', function (Request $request) use ($app) {
@@ -42,7 +42,7 @@ class TagController implements ControllerProviderInterface
      * @param  Application  $app
      * @return JsonResponse
      */
-    public function changeTag(Request $request, Application $app)
+    public function changeCategory(Request $request, Application $app)
     {
         $func = $request->attributes->get('func');
         $add = $request->attributes->get('action');

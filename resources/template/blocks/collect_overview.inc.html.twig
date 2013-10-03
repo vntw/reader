@@ -1,20 +1,19 @@
 <div class="row-fluid">
     <div id="site-collect" class="span12">
-        <h3>Collect Subscriptions</h3>
+        <h3 class="page-title">Collect Subscriptions</h3>
 
-        <div class="alert">
+        <div class="alert alert-warning">
             {{ 'collect_cron_info'|trans }}
         </div>
 
         <div class="btn-toolbar list-toolbar">
-
             <div class="btn-group">
-                <button class="btn collect-select-all"><i class="icon-check"></i></button>
-                <button class="btn collect-select-all"><i class="icon-check-empty"></i></button>
+                <button class="btn btn-rdef collect-select-all"><i class="icon-check"></i></button>
+                <button class="btn btn-rdef collect-select-all"><i class="icon-check-empty"></i></button>
             </div>
 
             <div class="btn-group">
-                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                <button class="btn btn-rdef dropdown-toggle" data-toggle="dropdown">
                     <i class="icon-cog"></i>
                     <span class="caret"></span>
                 </button>
@@ -30,14 +29,20 @@
                     </li>
                 </ul>
             </div>
-
         </div>
+
+        {#
+        <select multiple class="form-control" id="collect-ms" name="asdf" size="12">
+            {% for sub in subscriptions %}
+            <option value="{{ sub.id }}">{{ sub.name }}</option>
+            {% endfor %}
+        </select>
+        #}
 
         <ul class="inline nav nav-pills">
             {% for sub in subscriptions %}
                 <li data-sub-id="{{ sub.id }}">
                     <a href="">
-                        {#<input type="checkbox"/>#}
                         {% if sub.icon %}
                             <img src="/static/img/subscription-icons/gen/{{ sub.icon }}" alt=""/>
                         {% else %}
@@ -53,7 +58,8 @@
                 </li>
             {% endfor %}
         </ul>
-        <button name="collect" class="btn">Collect Subsriptions</button>
+
+        <button name="collect" class="btn btn-rdef">Collect Subsriptions</button>
         <div class="collect-result"></div>
     </div>
 </div>

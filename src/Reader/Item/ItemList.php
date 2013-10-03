@@ -12,7 +12,7 @@ use Symfony\Component\Finder\Expression\Expression;
 class ItemList
 {
     const TYPE_SUBSCRIPTION = 'subscription';
-    const TYPE_TAG = 'tag';
+    const TYPE_CATEGORY = 'category';
     const TYPE_FAVOURITES = 'favourites';
     const TYPE_SAVED = 'saved';
     const TYPE_HOME = 'home';
@@ -114,46 +114,15 @@ class ItemList
             ->from('Reader\\Entity\\Item', 'i');
 
         switch ($this->type) {
-            case self::TYPE_TAG:
-                echo "<pre>";
-                var_dump(2211);
-                exit;
-                // TODO: FIX
+            case self::TYPE_CATEGORY:
 
-                $rsm = new ResultSetMapping();
-                $rsm->addEntityResult('Reader\\Entity\\Item', 'i')
-                    ->addFieldResult('i', 'id', 'id')
-                    ->addFieldResult('i', 'subscription_id', 'subscription_id')
-                    ->addFieldResult('i', 'uid', 'uid')
-                    ->addFieldResult('i', 'title', 'title')
-                    ->addFieldResult('i', 'content', 'content')
-                    ->addFieldResult('i', 'link', 'link')
-                    ->addFieldResult('i', 'date', 'date')
-                    ->addFieldResult('i', 'rread', 'rread')
-                    ->addFieldResult('i', 'saved', 'saved')
-                    ->addFieldResult('i', 'favourite', 'favourite');
-
-                unset($qb);
-                $qb = $this->em
-                    ->createNativeQuery('SELECT i.id, i.title FROM item i JOIN tag_subscription ts ON ts.tag_id = i.subscription_id WHERE ts.tag_id = ?1', $rsm)
+                $qb->join('Reader\\Entity\\Subscription', 's', \Doctrine\ORM\Query\Expr\Join::WITH, 's.id = i.subscription')
+                    ->join('Reader\\Entity\\Category', 'c', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = s.category')
+                    ->where('c.id = ?1')
                     ->setParameter(1, $this->typeId);
 
-//				$rsm = new Query\ResultSetMappingBuilder($this->em);
-
-//				$rsm->addRootEntityFromClassMetadata('Reader\\Entity\\Item', 'i');
-//				$rsm->addJoinedEntityFromClassMetadata('MyProject\Address', 'a', 'u', 'address', array('id' => 'address_id'));
-//				echo "<pre>";
-//				var_dump($this->typeId, $qb->getResult(), $qb);
-//				exit;
-                return $qb;
-//				$values = array(2);
-
-//				$qb->join('Reader\\Entity\\Subscription', 's', \Doctrine\ORM\Query\Expr\Join::WITH, 's.id = i.subscription')
-//					->join('t.tag_subscription', 't', \Doctrine\ORM\Query\Expr\Join::WITH, 't.tag_id = s.tags')
-//					->join('Reader\\Entity\\Tag', 't')
-//					->where('t.id = ?1')
-//					->andWhere($qb->expr()->in('t.id', $values)) // here $values['value'] will be a collection of objects so maybe you will have to transform it into an array of ids to make the `in` expression work correctly.
-//					->setParameter(1, $this->typeId);
+//                $qb->join('Reader\\Entity\\Subscription', 's', \Doctrine\ORM\Query\Expr\Join::WITH, 's.category = ?1')
+//                    ->setParameter(1, $this->typeId);
                 break;
             case self::TYPE_SUBSCRIPTION:
                 $qb->where('i.subscription = ?1')
@@ -182,9 +151,10 @@ class ItemList
         $qb->orderBy('i.date', ($this->sort === SORT_DESC) ? 'DESC' : 'ASC')
             ->setMaxResults($this->itemAmount);
 
-//		echo "<pre>";
-//		var_dump($qb->getQuery());
-//		exit;
+//        echo "<pre>";
+//        var_dump($qb->getQuery());
+//        exit;
+
         return $qb;
     }
 
@@ -193,7 +163,7 @@ class ItemList
         return in_array($type, array(
             self::TYPE_FAVOURITES,
             self::TYPE_SAVED,
-            self::TYPE_TAG,
+            self::TYPE_CATEGORY,
             self::TYPE_SUBSCRIPTION,
             self::TYPE_HOME
         ));

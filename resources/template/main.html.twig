@@ -2,96 +2,89 @@
 
 {% block main %}
     <header>
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container-fluid">
-                    <a class="brand" href="/"><i class="icon-book"></i> Reader</a>
+        <div class="navbar navbar-default navbar-static-top">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><i class="icon-book"></i> Reader</a>
+            </div>
 
-                    <form action="{{ path('search') }}" class="input-append" method="post" style="margin: 0 auto;">
-                        <input autocomplete="off" name="query" class="input-medium" type="text" placeholder="{{ 'Search'|trans }}" required />
-                        <button type="submit" class="btn">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#modal-addsub" data-toggle="modal">
+                            <i class="icon-plus"></i> Add Subscription
+                        </a>
+                    </li>
+                </ul>
+
+                <form action="{{ path('search') }}" class="input-group" method="post" style="width: 300px;">
+                    <input autocomplete="off" name="query" class="form-control" type="text" placeholder="{{ 'Search'|trans }}" required/>
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-rdef">
                             <i class="icon-search"></i>
                         </button>
-                    </form>
+                    </div>
+                </form>
 
-                    <ul class="nav user_menu pull-right">
-                        <li class="hidden-phone">
-                            <a href="#modal-info" data-toggle="modal">
-                                <i class="icon-info-sign"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown hidden-phone">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="icon-flag"></i> <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="/locale/de_DE">{{ 'locale_de_DE'|trans }}</a>
-                                </li>
-                                <li>
-                                    <a href="/locale/en_GB">{{ 'locale_en_GB'|trans }}</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="hidden-phone">
-                            <a href="{{ path('settings_view') }}" class="pjaxable">
-                                <i class="icon-cogs"></i> {{ 'nav_header_settings'|trans }}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="nav-collapse collapse visible-phone">
-                        <ul class="nav">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#modal-info" data-toggle="modal">
+                            <i class="icon-keyboard"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown hidden-phone">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-flag"></i> <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
                             <li>
-                                <a href="/settings">{{ 'nav_header_settings'|trans }}</a>
+                                <a href="/locale/de_DE">{{ 'locale_de_DE'|trans }}</a>
+                            </li>
+                            <li>
+                                <a href="/locale/en_GB">{{ 'locale_en_GB'|trans }}</a>
                             </li>
                         </ul>
-                    </div>
+                    </li>
+                    <li>
+                        <a href="{{ path('settings_view') }}" class="pjaxable">
+                            <i class="icon-cogs"></i> {{ 'nav_header_settings'|trans }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-                    <ul class="nav hidden-phone">
-                        <li>
-                            <a href="#modal-addsub" data-toggle="modal">
-                                <i class="icon-plus"></i> Add Subscription
-                            </a>
-                        </li>
-                        <!---<li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <i class="icon-list-alt icon-white"></i>
-                                Navigation <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/">Sub nav</a></li>
-                            </ul>
-                        </li>-->
-                    </ul>
+        </div>
+
+        <div id="modal-info" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Keyboard Shortcuts</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>One fine body…</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn">Got It!</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="modal-info" class="modal hide fade" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Keyboard Shortcuts</h3>
-            </div>
-            <div class="modal-body">
-                <p>One fine body…</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn">Got It!</button>
-            </div>
-        </div>
-        <div id="modal-addsub" class="modal hide fade" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Add Subscription</h3>
-            </div>
-            <div class="modal-body">
-                {% include 'blocks/subscription/add.html.twig' %}
+        <div id="modal-addsub" class="modal fade" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Add Subscription</h3>
+                    </div>
+                    <div class="modal-body"></div>
+                </div>
             </div>
         </div>
     </header>

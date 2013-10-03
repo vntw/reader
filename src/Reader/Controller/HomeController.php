@@ -42,7 +42,7 @@ class HomeController implements ControllerProviderInterface
             ->setParameter(1, new \DateTime('-6 days'));
 
         if ($app['app.pjax']->hasHeader($request)) {
-            return $app['twig']->render('blocks/home.inc.html.twig', array(
+            return $app['twig']->render('blocks/element/generic_list.html.twig', array(
                 'items' => $items->getQuery()->getResult(),
                 'type' => 'home'
             ));

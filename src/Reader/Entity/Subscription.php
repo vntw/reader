@@ -50,16 +50,15 @@ class Subscription
     private $items;
 
     /**
-     * @ManyToMany(targetEntity="Tag", mappedBy="subscriptions")
+     * @ManyToOne(targetEntity="Reader\Entity\Category", inversedBy="subscription")
      */
-    private $tags;
+    private $category;
 
     private $unreadItems;
 
     public function __construct()
     {
         $this->items = new ArrayCollection();
-        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -181,21 +180,15 @@ class Subscription
         return $this->items;
     }
 
-    /**
-     * @param Tag $tag
-     */
-    public function addTag(Tag $tag)
+    public function setCategory(Category $category)
     {
-        $tag->addSubscription($this);
-        $this->tags[] = $tag;
+//        $category->addSubscription($this);
+        $this->category = $category;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTags()
+    public function getCategory()
     {
-        return $this->tags;
+        return $this->category;
     }
 
     /**

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Reader\Controller\HomeController;
 use Reader\Controller\AboutController;
 use Reader\Controller\SubscriptionController;
-use Reader\Controller\TagController;
+use Reader\Controller\CategoryController;
 use Reader\Controller\CollectController;
 use Reader\Controller\SearchController;
 use Reader\Controller\UserController;
@@ -13,7 +13,7 @@ use Reader\Controller\ListController;
 use Reader\Controller\ItemController;
 use Reader\Controller\DiscoveryController;
 use Reader\Provider\PjaxProvider;
-use Reader\Tag\TreeTwigExtension;
+use Reader\Category\TreeTwigExtension;
 use Silex\Application;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\MonologServiceProvider;
@@ -26,6 +26,9 @@ use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 
+use Symfony\Component\Config\FileLocator as ConfigLocator;
+use Reader\Config\YamlFileLoader as ConfigLoader;
+
 $app = new Application();
 
 // routes
@@ -37,17 +40,26 @@ $app->mount('', new SearchController());
 $app->mount('', new UserController());
 $app->mount('', new ListController());
 $app->mount('', new ItemController());
-$app->mount('', new TagController());
+$app->mount('', new CategoryController());
 $app->mount('', new DiscoveryController());
 
 $app['debug'] = true;
 
+$app['rr.config'] = $app->share(function ($c) {
+    $configLoader = new ConfigLoader(new ConfigLocator(array(
+        dirname(__DIR__) . '/resources'
+    )));
+    $config = $configLoader->load('config.yml');
+
+    return $config;
+});
+
 $app->register(new SessionServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
-$app->register(new FormServiceProvider());
+//$app->register(new FormServiceProvider());
 $app->register(new PjaxProvider());
 
-$app->register(new DoctrineServiceProvider, array(
+$app->register(new DoctrineServiceProvider(), array(
     'db.options' => array(
 //		'driver' => 'pdo_sqlite',
 //		'path'   => __DIR__ . '/sqlite.db'
@@ -56,14 +68,14 @@ $app->register(new DoctrineServiceProvider, array(
 //		'host' => $config['db']['host'],
 //		'user' => $config['db']['user'],
 //		'password' => $config['db']['password'],
-        'dbname' => 'rssreader',
-        'host' => 'localhost',
-        'user' => 'root',
-        'password' => 'ssc7',
+        'dbname' => $app['rr.config']['db']['dbname'],
+        'host' => $app['rr.config']['db']['host'],
+        'user' => $app['rr.config']['db']['user'],
+        'password' => $app['rr.config']['db']['password'],
     )
 ));
 
-$app->register(new DoctrineOrmServiceProvider, array(
+$app->register(new DoctrineOrmServiceProvider(), array(
     'orm.em.options' => array(
         'mappings' => array(
             array(
@@ -100,15 +112,14 @@ $app->before(function () use ($app) {
     $app['twig']->addExtension(new TreeTwigExtension($app));
 });
 
-$app->register(new TranslationServiceProvider(), array(
-    'locale_fallback' => 'en_GB'
-));
+$app->register(new TranslationServiceProvider());
 $app['translator'] = $app->share($app->extend('translator', function ($translator, $app) {
-    /* @var \Symfony\Component\Translation\Trannslator $translator */
+    /* @var \Symfony\Component\Translation\Translator $translator */
     $translator->addLoader('yaml', new YamlFileLoader());
 
-    $translator->addResource('yaml', __DIR__ . '/../resources/locale/de_DE.yml', 'de_DE');
-    $translator->addResource('yaml', __DIR__ . '/../resources/locale/en_GB.yml', 'en_GB');
+    foreach ($app['rr.config']['locale']['locales'] as $locale) {
+        $translator->addResource('yaml', dirname(__DIR__) . sprintf('/resources/locale/%s.yml', $locale), $locale);
+    }
 
     return $translator;
 }));
@@ -118,7 +129,7 @@ $locale = $app['session']->get('session.locale');
 if ($locale) {
     $app['locale'] = $locale;
 } else {
-    $app['locale'] = $app['locale_fallback'];
+    $app['locale'] = $app['rr.config']['locale']['default'];
 }
 
 $app['translator']->setLocale($app['locale']);

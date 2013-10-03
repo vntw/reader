@@ -7,9 +7,9 @@ use Doctrine\ORM\EntityManager;
 
 /**
  * @Entity
- * @Table(name="tag")
+ * @Table(name="category")
  **/
-class Tag
+class Category
 {
     /**
      * @Id
@@ -24,18 +24,20 @@ class Tag
     private $name;
 
     /**
-     * @Column(type="string", length=7, nullable=true)
-     */
-    private $color;
-
-    /**
-     * @ManyToMany(targetEntity="Subscription", inversedBy="tags")
+     * @OneToMany(targetEntity="Reader\Entity\Subscription", mappedBy="category")
      */
     private $subscriptions;
 
     public function __construct()
     {
         $this->subscriptions = new ArrayCollection();
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getId()
@@ -53,18 +55,6 @@ class Tag
     public function getName()
     {
         return $this->name;
-    }
-
-    public function setColor($color)
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    public function getColor()
-    {
-        return $this->color;
     }
 
     public function addSubscription(Subscription $subscription)
@@ -94,7 +84,6 @@ class Tag
 
         $hash['id'] = $this->getId();
         $hash['name'] = $this->getName();
-        $hash['color'] = $this->getColor();
 
         return $hash;
     }

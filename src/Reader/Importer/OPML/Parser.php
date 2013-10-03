@@ -5,7 +5,7 @@ namespace Reader\Importer\OPML;
 use Doctrine\ORM\EntityManager;
 use Reader\Importer\OPML\Result;
 use Reader\Entity\Subscription;
-use Reader\Entity\Tag;
+use Reader\Entity\Category;
 use Reader\DataCollector\DataCollectorInterface;
 
 class Parser
@@ -14,13 +14,13 @@ class Parser
     private $xmlData;
     private $stats;
     private $result;
-    private $tagCache;
+    private $catCache;
 
     public function __construct(EntityManager $em, $xmlData)
     {
         $this->em = $em;
         $this->stats = array();
-        $this->tagCache = array();
+        $this->catCache = array();
         $this->result = new Result();
 
         if ($xmlData instanceof \SplFileInfo) {
@@ -53,34 +53,34 @@ class Parser
 
     /**
      * @param \SimpleXMLElement $group
-     * @param array             $tags
+     * @param array             $categories
      */
-    private function parseGroup(\SimpleXMLElement $group, array $tags = array())
+    private function parseGroup(\SimpleXMLElement $group, array $categories = array())
     {
         // tags are the words of the outline parent
         if ($group->getName() === 'outline' && (string) $group['title'] && $group['title'] != '/') {
-            $tags[] = (string) $group['title'];
+            $categories[] = (string) $group['title'];
         }
 
         // parse every outline item
         foreach ($group->outline as $outline) {
             if ((string) $outline['type']) {
                 if ($outline['type'] == 'folder') {
-                    $this->parseGroup($outline, $tags);
+                    $this->parseGroup($outline, $categories);
                 } else {
-                    $this->createSubscription($outline, $tags);
+                    $this->createSubscription($outline, $categories);
                 }
             } else {
-                $this->parseGroup($outline, $tags);
+                $this->parseGroup($outline, $categories);
             }
         }
     }
 
     /**
      * @param \SimpleXMLElement $outline
-     * @param array             $tags
+     * @param array             $categories
      */
-    private function createSubscription(\SimpleXMLElement $outline, array $tags)
+    private function createSubscription(\SimpleXMLElement $outline, array $categories)
     {
         $title = (string) $outline->attributes()->title;
         $url = (string) $outline->attributes()->htmlUrl;
@@ -98,9 +98,9 @@ class Parser
                 $subscription->setType(DataCollectorInterface::TYPE_RSS);
         }
 
-        foreach ($tags as $aTag) {
-            if (null !== ($tag = $this->getTag($aTag))) {
-                $subscription->addTag($tag);
+        foreach ($categories as $aCat) {
+            if (null !== ($cat = $this->getCategory($aCat))) {
+                $subscription->setCategory($cat);
             }
         }
 
@@ -121,28 +121,28 @@ class Parser
 
     /**
      * @param  string $name
-     * @return Tag
+     * @return Category
      */
-    private function getTag($name)
+    private function getCategory($name)
     {
-        if (isset($this->tagCache[$name])) {
-            return $this->tagCache[$name];
+        if (isset($this->catCache[$name])) {
+            return $this->catCache[$name];
         }
 
-        $tag = $this->em->getRepository('Reader\\Entity\\Tag')->findOneBy(array('name' => $name));
+        $category = $this->em->getRepository('Reader\\Entity\\Category')->findOneBy(array('name' => $name));
 
-        if (!$tag instanceof Tag && strlen($name) > 0) {
-            $tag = new Tag();
-            $tag->setName($name);
+        if (!$category) {
+            $category = new Category();
+            $category->setName($name);
 
-            $this->result->addAdded(Result::TYPE_TAGS, $name);
-            $this->em->persist($tag);
+            $this->result->addAdded(Result::TYPE_CATEGORIES, $name);
+            $this->em->persist($category);
+
+            $this->catCache[$name] = $category;
         } else {
-            $this->result->addDuplicate(Result::TYPE_TAGS, $name);
+            $this->result->addDuplicate(Result::TYPE_CATEGORIES, $name);
         }
 
-        $this->tagCache[$name] = $tag;
-
-        return $tag;
+        return $category;
     }
 }

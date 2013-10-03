@@ -10,7 +10,22 @@ a:hover {
     font-weight: bold;
 }
 
-div.sidebar ul.nav-list li.nav-header:first-of-type {
+.nav-list .divider {
+    height: 2px;
+    margin: 9px 12px;
+    overflow: hidden;
+    background-color: #e5e5e5;
+    border-bottom: 1px solid #FAFAFA;
+}
+
+div.sidebar ul.nav-list li.dropdown-header {
+    padding: 0 15px;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 20px;
+    text-transform: uppercase;
+}
+div.sidebar ul.nav-list li.dropdown-header:first-of-type {
     margin-top: 8px;
 }
 
@@ -28,18 +43,91 @@ div.sidebar ul.nav-list li.nav-header:first-of-type {
     background-color: rgba(238, 238, 238, 0.5);
 }
 
-.nav-pills > .active > a,
-.nav-pills > .active > a:hover,
-.nav-pills > .active > a:focus {
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
     color: #696969;
     background-color: #E6E6E6;
 }
+
+.btn {
+    border-radius: 2px;
+}
+
+.btn-cinde {
+    border: 1px solid transparent;
+    color: #444;
+
+    background-color: transparent;
+}
+
+.btn-rdef {
+    border: 1px solid #dcdcdc;
+    color: #444;
+
+    background-color: #f5f5f5;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#f1f1f1));
+    background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
+    background-image: -moz-linear-gradient(top,#f5f5f5,#f1f1f1);
+    background-image: -ms-linear-gradient(top,#f5f5f5,#f1f1f1);
+    background-image: -o-linear-gradient(top,#f5f5f5,#f1f1f1);
+    background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#f5f5f5',EndColorStr='#f1f1f1');
+}
+
+.btn-rdef:hover,
+.btn-rdef:focus,
+.btn-rdef:active,
+.btn-rdef.active,
+.open .dropdown-toggle.btn-rdef,
+.btn-cinde:hover,
+.btn-cinde:focus,
+.btn-cinde:active,
+.btn-cinde.active,
+.open .dropdown-toggle.btn-cinde {
+    background-color: #ebebeb;
+    border-color: #adadad;
+}
+
+.btn-rdef:active,
+.btn-rdef.active,
+.open .dropdown-toggle.btn-rdef {
+    background-image: none;
+}
+
+.btn-rdef.disabled,
+.btn-rdef[disabled],
+fieldset[disabled] .btn-rdef,
+.btn-rdef.disabled:hover,
+.btn-rdef[disabled]:hover,
+fieldset[disabled] .btn-rdef:hover,
+.btn-rdef.disabled:focus,
+.btn-rdef[disabled]:focus,
+fieldset[disabled] .btn-rdef:focus,
+.btn-rdef.disabled:active,
+.btn-rdef[disabled]:active,
+fieldset[disabled] .btn-rdef:active,
+.btn-rdef.disabled.active,
+.btn-rdef[disabled].active,
+fieldset[disabled] .btn-rdef.active {
+    background-color: #ffffff;
+    border-color: #cccccc;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
 /* CUSTOM STYLES */
 
 body {
     overflow: hidden;
     font-family: 'Roboto', sans-serif;
     font-size: 13px;
+}
+
+h3.page-title {
+    margin-top: 10px;
 }
 
 h3 .btn-group .btn {
@@ -54,39 +142,64 @@ h3 .btn-group .btn {
 .modal-backdrop.fade.in {
     opacity: 0.75;
 }
-.modal {
+.modal-content {
     -webkit-box-shadow: 0 4px 16px rgba(0,0,0,.2);
     box-shadow: 0 4px 16px rgba(0,0,0,.2);
     border: 1px solid rgba(0,0,0,.25);
     border-radius: 0;
-    padding: 25px 35px;
+    padding: 35px;
+}
+.modal-body {
+    padding: 0 15px 0;
+}
+body.modal-open {
+    margin-right: 0;
 }
 .modal-header {
     border: 0;
+    padding:  0 0 15px 5px;
+}
+.modal-header h3 {
+    margin: 0;
 }
 .modal-footer {
     background: 0;
     border: 0;
 }
 
+header .navbar {
+    margin-bottom: 0;
+    border-bottom: 1px solid #d4d4d4;
+
+    background: #f7f7f7; /* Old browsers */
+    background: -moz-linear-gradient(top, #f7f7f7 0%, #f8f8f8 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(100%, #f8f8f8)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #f7f7f7 0%, #f8f8f8 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f7f7f7 0%, #f8f8f8 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #f7f7f7 0%, #f8f8f8 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #f7f7f7 0%, #f8f8f8 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#f8f8f8', GradientType=0); /* IE6-9 */
+}
+
 header .navbar form {
     position: absolute;
     left: 50%;
     width: auto;
-    margin-top: 5px !important;
+    margin-top: 8px !important;
 }
 
 header .navbar form input {
     width: 300px;
 }
 
-header .navbar .brand {
-    font-weight: 400;
+header .navbar .navbar-brand {
+    padding: 13px 15px 0;
+    font-size: 23px;
 }
 
 .sidebar {
     position: fixed;
-    top: 43px;
+    top: 51px;
     left: 0;
     margin-left: 0;
     width: 240px;
@@ -97,32 +210,46 @@ header .navbar .brand {
 }
 
 .main-content {
-    padding: 15px 30px 30px;
+    padding: 15px 30px 15px;
     background: #fff;
     border-left: 1px solid transparent;
     margin-left: 240px;
-    margin-top: 43px;
     overflow-y: auto;
+}
+
+div.sidebar li a {
+    padding: 4px 0 5px 12px;
+}
+
+ul#main-nav li a i {
+    margin-right: 4px;
 }
 
 div.sidebar li.nav-sub-holder {
     position: relative;
 }
 
-div.sidebar li.nav-sub-holder > a {
-    /*overflow: hidden;*/
-    /*white-space: nowrap;*/
-    /*text-overflow: ellipsis;*/
-    /*max-width: 140px;*/
-    /*display: block;*/
+div.sidebar li.nav-sub-holder ul.nav-collapse {
+    padding-left: 8px;
+}
+div.sidebar li.nav-sub-holder ul.nav-collapse li a {
+    padding: 2px 0 2px 12px;
 }
 
-div.sidebar li.nav-sub-holder span.tag-count {
+div.sidebar li.nav-sub-holder span.cat-count {
     position: absolute;
-    top: 3px;
-    right: 0px;
+    top: 4px;
+    right: 5px;
     color: #ccc;
     font-size: 13px;
+}
+
+div.sidebar li.nav-sub-holder ul.nav-sub-lonely {
+    padding-left: 0;
+}
+
+div.sidebar li.nav-sub-holder ul.nav-sub-lonely li a {
+    padding-left: 3px;
 }
 
 div.sidebar li.nav-sub-holder ul {
@@ -135,49 +262,57 @@ div.sidebar li.nav-sub-holder ul li {
     position: relative;
 }
 
+div.sidebar li.nav-sub-holder ul li.sub img {
+    float: left;
+}
+
 div.sidebar li.nav-sub-holder ul li a {
     text-decoration: none;
     display: block;
 }
 
-div.sidebar li.nav-sub-holder ul li a > span.tag-sub-name {
+div.sidebar li.nav-sub-holder ul li a > span.cat-sub-name {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: 140px;
     display: inline-block;
+    margin-left: 5px;
 }
 
-div.sidebar li.nav-sub-holder ul li a > span.tag-sub-count {
+div.sidebar li.nav-sub-holder ul li a > span.cat-sub-count {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 2px;
+    right: 5px;
     color: #ccc;
     font-size: 13px;
 }
 
-ul.tag-tree a.tag-container {
+ul.cat-tree a.cat-container {
     padding-left: 10px;
 }
-ul.tag-tree a.tag-container i.tag-container-state {
-    padding: 5px 5px 5px 7px;
+ul.cat-tree a.cat-container i.cat-container-state {
+    padding: 5px 5px 5px 0px;
     margin-right: 0;
 }
+ul.cat-tree a.cat-container i.cat-container-state.icon-angle-right {
+    padding: 5px 7px 5px 3px;
+}
 
-div.sidebar li.nav-sub-holder a:hover span.tag-count,
-div.sidebar li.nav-sub-holder ul li a:hover > span.tag-sub-count {
+div.sidebar li.nav-sub-holder a:hover span.cat-count,
+div.sidebar li.nav-sub-holder ul li a:hover > span.cat-sub-count {
     color: #666;
 }
 
-div.sidebar li.nav-sub-holder a:hover span.tag-count {
+div.sidebar li.nav-sub-holder a:hover span.cat-count {
     color: #ccc;
 }
 
-div.sidebar li.nav-sub-holder ul li a.tag-new-items {
+div.sidebar li.nav-sub-holder ul li a.cat-new-items {
     color: #333;
 }
 
-div.sidebar li.nav-sub-holder ul li a.tag-new-items:hover {
+div.sidebar li.nav-sub-holder ul li a.cat-new-items:hover {
     color: #000;
 }
 
@@ -234,6 +369,18 @@ div.sidebar li.nav-sub-holder ul li a.tag-new-items:hover {
     border-bottom: 1px solid #EFEFEF;
     display: block;
 }
+
+div.item-list-control .list-toolbar {
+    margin-top: 5px;
+}
+
+div.item-list-container .item:first-of-type {
+    border-top: 0;
+}
+div.item-list-container .item:last-of-type {
+    border-bottom: 0;
+}
+
 .item .item-container {
     padding: 10px;
 }
@@ -320,7 +467,22 @@ div.sidebar li.nav-sub-holder ul li a.tag-new-items:hover {
 
 div.load-end {
     margin-top: 15px;
+    margin-bottom: 0;
 }
+
+
+div.discovered-feeds {
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+div.discovered-feeds label {
+    font-weight: normal;
+}
+div.discover-save {
+    margin-bottom: 0;
+}
+
+
 
 /* LOGIN */
 html.page-login {

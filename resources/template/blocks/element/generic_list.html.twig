@@ -1,22 +1,29 @@
 <div class="row-fluid">
     <div class="span12 item-list" data-type="{{ type }}" {% if typeId is defined %}data-type-id="{{ typeId }}"{% endif %}>
-        {% if type == 'subscription' or type == 'tag' %}
-            <h3 class="pull-left">{{ title }}</h3>
-        {% else %}
-            {% set title = 'feed_type_title_'~type %}
-            <h3 class="pull-left">{{ title|trans }}</h3>
-        {% endif %}
 
-        <div class="pull-right">
-            {% include 'blocks/element/list_control_btns.html.twig' %}
+        <div class="item-list-control">
+            {% if type == 'subscription' or type == 'category' %}
+                <h3 class="page-title pull-left">{{ title }}</h3>
+            {% else %}
+                {% set title = 'feed_type_title_'~type %}
+                <h3 class="page-title pull-left">{{ title|trans }}</h3>
+            {% endif %}
+
+            <div class="pull-right">
+                {% include 'blocks/element/list_control_btns.html.twig' %}
+            </div>
+
+            <div class="clearfix"></div>
         </div>
 
         <div class="clearfix"></div>
 
         {% if items|length > 0 %}
-            {% for item in items %}
-                {% include 'blocks/element/item.html.twig' %}
-            {% endfor %}
+            <div class="item-list-container">
+                {% for item in items %}
+                    {% include 'blocks/element/item.html.twig' %}
+                {% endfor %}
+            </div>
         {% else %}
             Nothing to see here...
         {% endif %}

@@ -25,7 +25,7 @@ class ListController implements ControllerProviderInterface
         /* @var $router Application */
 
         $router->match('/{type}/{name}/{typeId}', array($this, 'fromFunc'))
-            ->assert('type', 's|t|saved|favs|home')
+            ->assert('type', 's|c|saved|favs|home')
             ->value('name', null)
             ->value('typeId', null)
             ->bind('list_view');
@@ -38,8 +38,8 @@ class ListController implements ControllerProviderInterface
     }
 
     /**
-     * @param  Application  $app
-     * @param  Request      $request
+     * @param  Application $app
+     * @param  Request     $request
      * @return JsonResponse
      */
     public function fromFunc(Application $app, Request $request)
@@ -55,8 +55,8 @@ class ListController implements ControllerProviderInterface
     }
 
     /**
-     * @param  Application  $app
-     * @param  Request      $request
+     * @param  Application $app
+     * @param  Request     $request
      * @return JsonResponse
      */
     public function fromList(Application $app, Request $request)
@@ -72,14 +72,14 @@ class ListController implements ControllerProviderInterface
     }
 
     /**
-     * @param  Application  $app
-     * @param  Request      $request
-     * @param  string       $type
-     * @param  int          $typeId
-     * @param  int          $lastDate
-     * @param  int          $itemAmount
-     * @param  int          $sort
-     * @param  string       $format
+     * @param  Application $app
+     * @param  Request     $request
+     * @param  string      $type
+     * @param  int         $typeId
+     * @param  int         $lastDate
+     * @param  int         $itemAmount
+     * @param  int         $sort
+     * @param  string      $format
      * @return JsonResponse
      */
     public function fetchList(Application $app, Request $request, $type, $typeId = null, $lastDate = null, $itemAmount = null, $sort = null, $format = null)
@@ -110,6 +110,11 @@ class ListController implements ControllerProviderInterface
             $sub = $entityManager->getRepository('Reader\\Entity\\Subscription')->find($typeId);
             $data['typeId'] = $sub->getId();
             $data['title'] = $sub->getName();
+        }
+        if ($type === ItemList::TYPE_CATEGORY) {
+            $cat = $entityManager->getRepository('Reader\\Entity\\Category')->find($typeId);
+            $data['typeId'] = $cat->getId();
+            $data['title'] = $cat->getName();
         }
 
         switch ($format) {
@@ -149,7 +154,7 @@ class ListController implements ControllerProviderInterface
     {
         $aliases = array(
             's' => ItemList::TYPE_SUBSCRIPTION,
-            't' => ItemList::TYPE_TAG,
+            'c' => ItemList::TYPE_CATEGORY,
             'saved' => ItemList::TYPE_SAVED,
             'favs' => ItemList::TYPE_FAVOURITES,
         );

@@ -1,13 +1,52 @@
-{% if feeds|length > 0 %}
-    <ul>
-        {% for feed in feeds %}
-            <li>
-                <label>
-                    <input type="checkbox"/> <strong>{{ feed.title }}</strong> ({{ feed.url }})
-                </label>
-            </li>
-        {% endfor %}
-    </ul>
+{% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
 {% else %}
-    <div class="alert">No feeds for you!</div>
+
+    {% if discovery.feeds|length == 0 %}
+
+        <div class="alert alert-warning">No feeds for you!</div>
+
+        <div class="form-group discover-reset text-center">
+            <button class="btn btn-rdef discover-reset-btn">Try again</button>
+        </div>
+
+    {% else %}
+
+        {% if discovery.type == 'multi' %}
+
+            <div class="discovered-feeds">
+                <h4><i class="icon-rss"></i> Discovered Feeds</h4>
+                <ul>
+                    {% for feed in discovery.feeds %}
+                        <li>
+                            <label>
+                                <input type="checkbox"/> {{ feed.title }}
+                            </label>
+                            <i data-toggle="tooltip" title="{{ feed.url }}" class="icon-question-sign"></i>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="form-group discover-save">
+                <button class="btn btn-cinde discover-reset-btn">Reset</button>
+                <button class="btn btn-rdef pull-right">Add Subscription</button>
+            </div>
+
+        {% else %}
+
+            <div class="discovered-feeds">
+                <h4><i class="icon-rss"></i> Discovered Feed</h4>
+                {{ discovery.feeds.0.title }}
+            </div>
+
+            <div class="form-group discover-save">
+                <button class="btn btn-cinde discover-reset-btn">Reset</button>
+                <button class="btn btn-rdef pull-right">Add Subscription</button>
+            </div>
+
+        {% endif %}
+
+    {% endif %}
+
 {% endif %}

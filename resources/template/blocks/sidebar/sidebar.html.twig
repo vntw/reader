@@ -1,46 +1,44 @@
 <div class="sidebar">
-    <div class="antiScroll">
-        <div class="antiscroll-inner">
-            <div class="antiscroll-content">
-                <div class="sidebar_inner">
-                    <ul id="proto" class="nav nav-list">
-                        <li class="nav-header">{{ 'sidebar_header_general'|trans }}</li>
-                        <li class="active">
-                            <a href="{{ index_url }}" data-section="home">
-                                <i class="icon-home"></i> {{ 'sidebar_home'|trans }}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/about" data-section="about">
-                                <i class="icon-info-sign"></i> {{ 'sidebar_about'|trans }}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/collect" data-section="collect">
-                                <i class="icon-refresh"></i> {{ 'sidebar_collect'|trans }}
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li class="nav-header">{{ 'sidebar_header_reader'|trans }}</li>
-                        <li>
-                            <a href="{{ path('list_view', {'type': 'favs'}) }}" data-section="favs">
-                                <i class="icon-star"></i> {{ 'sidebar_favourites'|trans }}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ path('list_view', {'type': 'saved'}) }}" data-section="saved">
-                                <i class="icon-time"></i> {{ 'sidebar_read_later'|trans }}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/about" data-section="filter">
-                                <i class="icon-filter"></i> {{ 'sidebar_filter'|trans }}
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                    </ul>
-                    {% include 'blocks/sidebar/tagtree.html.twig' %}
-                </div>
+    <div class="antiscroll-inner">
+        <div class="antiscroll-content">
+            <div class="sidebar_inner">
+                <ul id="main-nav" class="nav nav-list">
+                    <li class="dropdown-header">{{ 'sidebar_header_general'|trans }}</li>
+                    <li class="active">
+                        <a href="{{ index_url }}" data-section="home">
+                            <i class="icon-home"></i> {{ 'sidebar_home'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about" data-section="about">
+                            <i class="icon-info-sign"></i> {{ 'sidebar_about'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/collect" data-section="collect">
+                            <i class="icon-refresh"></i> {{ 'sidebar_collect'|trans }}
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">{{ 'sidebar_header_reader'|trans }}</li>
+                    <li>
+                        <a href="{{ path('list_view', {'type': 'favs'}) }}" data-section="favs">
+                            <i class="icon-star"></i> {{ 'sidebar_favourites'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('list_view', {'type': 'saved'}) }}" data-section="saved">
+                            <i class="icon-time"></i> {{ 'sidebar_read_later'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about" data-section="filter">
+                            <i class="icon-filter"></i> {{ 'sidebar_filter'|trans }}
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                </ul>
+                {% include 'blocks/sidebar/tree/tree.html.twig' %}
             </div>
         </div>
     </div>

@@ -1,0 +1,12 @@
+<li class="sub subid-{{ sub.id }}">
+    <a href="{{ path('list_view', {'type': 's', 'name': sub.host|url_encode, 'typeId': sub.id}) }}"{% if sub.unread > 0 %} class="cat-new-items"{% endif %}>
+        {% if sub.icon %}
+            <img src="/static/img/subscription-icons/gen/{{ sub.icon }}" alt=""/>
+        {% else %}
+            <img src="/static/img/subscription-icons/default.png" alt=""/>
+        {% endif %}
+
+        <span class="cat-sub-name">{{ sub.name }}</span>
+        <span class="cat-sub-count">({{ sub.unread }})</span>
+    </a>
+</li>

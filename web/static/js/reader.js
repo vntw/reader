@@ -2,7 +2,7 @@ var Reader = {}
 
 Reader.Site = {
 	Loader: function (show) {
-		var logo = $('a.brand > i');
+		var logo = $('a.navbar-brand > i');
 
 		if (show) {
 			//NProgress.start();
@@ -21,8 +21,8 @@ Reader.Layout = {
 		var height = $(window).height(),
 			headerForm = $('header div.navbar form');
 
-		$('div.sidebar').height(height - 43);
-		$('div.main-content').height(height - 88);
+		$('div.sidebar').height(height - 51);
+		$('div.main-content').height(height - 51);
 		headerForm.css('margin-left', -headerForm.outerWidth() / 2);
 	}
 }
@@ -113,4 +113,18 @@ Reader.Items = {
 		$('div.main-content').animate({ scrollTop: pos + "px" }, 350);
 		//$('div.main-content').scrollTop(($('div.main-content .item-list').offset().top * -1) + $item.offset().top + 10)
 	}
+}
+
+Reader.Discover = {
+    resetForm: function () {
+        $('div.discovered-feeds-container').empty();
+        $('.modal div.discover-add-box div.discover-save').addClass('hidden');
+        $('input.discover-url').val('');
+
+        $('div.discover-set i').addClass('hide');
+        $('div.discover-set i.discover-go').removeClass('hide');
+        $('div.discover-set button.discover-fetch').prop('disabled', false);
+
+        $('div.discover-reset').addClass('hidden');
+    }
 }
