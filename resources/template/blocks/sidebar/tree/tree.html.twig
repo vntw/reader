@@ -1,0 +1,25 @@
+<ul class="nav nav-list cat-tree">
+    <li class="dropdown-header">{{ 'sidebar_header_subscriptions'|trans }}</li>
+
+    {% set tree = buildTree() %}
+    {% for category in tree %}
+        <li class="nav-sub-holder">
+
+            {% if category.id > 0 %}
+                <a href="{{ path('list_view', {'type': 'c', 'name': category.name|url_encode, 'typeId': category.id}) }}" class="cat-container">
+                    <i class="cat-container-state icon-angle-right"></i>
+                    <i class="icon-folder-close"></i> {{ category.name }}
+                    <span class="cat-count">({{ category.unread }})</span>
+                </a>
+            {% endif %}
+
+            {% if category.subs|length > 0 %}
+                <ul class="nav-collapse{% if category.id == 0 %} nav-sub-lonely show{% endif %}">
+                    {% for sub in category.subs %}
+                        {% include 'blocks/sidebar/tree/subitem.html.twig' %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

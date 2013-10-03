@@ -114,3 +114,17 @@ Reader.Items = {
 		//$('div.main-content').scrollTop(($('div.main-content .item-list').offset().top * -1) + $item.offset().top + 10)
 	}
 }
+
+Reader.Discover = {
+    resetForm: function () {
+        $('div.discovered-feeds-container').empty();
+        $('.modal div.discover-add-box div.discover-save').addClass('hidden');
+        $('input.discover-url').val('');
+
+        $('div.discover-set i').addClass('hide');
+        $('div.discover-set i.discover-go').removeClass('hide');
+        $('div.discover-set button.discover-fetch').prop('disabled', false);
+
+        $('div.discover-reset').addClass('hidden');
+    }
+}

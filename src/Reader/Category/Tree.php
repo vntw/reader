@@ -59,7 +59,7 @@ class Tree
             $category->setId(0)
                 ->setName('Lonely Subs');
 
-            $unread=0;
+            $unread = 0;
             $this->tree[$category->getId()] = $category->toArray();
 
             foreach ($lonelySubscriptions as $sub) {

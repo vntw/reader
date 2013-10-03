@@ -147,10 +147,10 @@ h3 .btn-group .btn {
     box-shadow: 0 4px 16px rgba(0,0,0,.2);
     border: 1px solid rgba(0,0,0,.25);
     border-radius: 0;
-    padding: 25px 35px;
+    padding: 35px;
 }
 .modal-body {
-    padding: 0 15px 12px;
+    padding: 0 15px 0;
 }
 body.modal-open {
     margin-right: 0;
@@ -235,13 +235,6 @@ div.sidebar li.nav-sub-holder ul.nav-collapse {
 div.sidebar li.nav-sub-holder ul.nav-collapse li a {
     padding: 2px 0 2px 12px;
 }
-div.sidebar li.nav-sub-holder > a {
-    /*overflow: hidden;*/
-    /*white-space: nowrap;*/
-    /*text-overflow: ellipsis;*/
-    /*max-width: 140px;*/
-    /*display: block;*/
-}
 
 div.sidebar li.nav-sub-holder span.cat-count {
     position: absolute;
@@ -249,6 +242,14 @@ div.sidebar li.nav-sub-holder span.cat-count {
     right: 5px;
     color: #ccc;
     font-size: 13px;
+}
+
+div.sidebar li.nav-sub-holder ul.nav-sub-lonely {
+    padding-left: 0;
+}
+
+div.sidebar li.nav-sub-holder ul.nav-sub-lonely li a {
+    padding-left: 3px;
 }
 
 div.sidebar li.nav-sub-holder ul {
@@ -276,7 +277,7 @@ div.sidebar li.nav-sub-holder ul li a > span.cat-sub-name {
     text-overflow: ellipsis;
     max-width: 140px;
     display: inline-block;
-    margin-left: 3px;
+    margin-left: 5px;
 }
 
 div.sidebar li.nav-sub-holder ul li a > span.cat-sub-count {
@@ -295,7 +296,7 @@ ul.cat-tree a.cat-container i.cat-container-state {
     margin-right: 0;
 }
 ul.cat-tree a.cat-container i.cat-container-state.icon-angle-right {
-    padding: 5px 5px 5px 3px;
+    padding: 5px 7px 5px 3px;
 }
 
 div.sidebar li.nav-sub-holder a:hover span.cat-count,
@@ -471,7 +472,11 @@ div.load-end {
 
 
 div.discovered-feeds {
-    margin-top: 15px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+div.discovered-feeds label {
+    font-weight: normal;
 }
 div.discover-save {
     margin-bottom: 0;

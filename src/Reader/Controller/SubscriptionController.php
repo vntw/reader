@@ -8,6 +8,7 @@ use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class SubscriptionController implements ControllerProviderInterface
 {
@@ -70,16 +71,14 @@ class SubscriptionController implements ControllerProviderInterface
         return new JsonResponse(array('test' => 'dsfds'));
     }
 
+    /**
+     * @param Request     $request
+     * @param Application $app
+     * @return Response
+     */
     public function getAddForm(Request $request, Application $app)
     {
-        $url = null;
-        $feedUrl = null;
-
-        $subscription = new Subscription();
-        $subscription->setName('Test')
-            ->setType(DataCollectorInterface::TYPE_RSS)
-            ->setUrl($url)
-            ->setFeedUrl($feedUrl);
+        return new Response($app['twig']->render('blocks/subscription/add.html.twig'));
     }
 
 }

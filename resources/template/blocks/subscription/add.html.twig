@@ -1,12 +1,12 @@
 <div class="form-horizontal discover-add-box">
-    <label for="lbl-discover-url" class="control-label">Feed-URL</label>
+    <h4>Website-/Feed-URL</h4>
 
     <div class="input-group discover-set">
-        <input type="url" class="discover-url form-control" name="url" id="lbl-discover-url" placeholder="URL" value="http://yahoo.com">
+        <input type="url" class="discover-url form-control" name="url" id="lbl-discover-url" placeholder="URL" value="http://zeit.de">
         <span class="input-group-btn">
             <button type="button" class="btn btn-rdef discover-fetch">
-                <i class="icon-chevron-sign-right"></i>
-                <i class='icon-refresh icon-spin hide'></i>
+                <i class="discover-go icon-chevron-sign-right"></i>
+                <i class='discover-inprogress icon-refresh icon-spin hide'></i>
             </button>
         </span>
     </div>
@@ -16,13 +16,5 @@
             <input type="text" id="sub-name" placeholder="Name">
         </div>
     </div>-->
-    <div class="discovered-feeds"></div>
-
-    <div class="form-group hidden discover-reset text-center">
-        <button class="btn btn-cinde discover-reset-btn">Reset</button>
-    </div>
-    <div class="form-group hidden discover-save">
-        <button class="btn btn-cinde discover-reset-btn">Reset</button>
-        <button class="btn btn-primary pull-right">Save Subscription</button>
-    </div>
+    <div class="discovered-feeds-container"></div>
 </div>

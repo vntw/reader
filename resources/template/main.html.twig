@@ -34,7 +34,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="#modal-info" data-toggle="modal">
-                            <i class="icon-info-sign"></i>
+                            <i class="icon-keyboard"></i>
                         </a>
                     </li>
                     <li class="dropdown hidden-phone">
@@ -76,16 +76,14 @@
                 </div>
             </div>
         </div>
-        <div id="modal-addsub" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="modal-addsub" class="modal fade" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h3 id="myModalLabel">Add Subscription</h3>
                     </div>
-                    <div class="modal-body">
-                        {% include 'blocks/subscription/add.html.twig' %}
-                    </div>
+                    <div class="modal-body"></div>
                 </div>
             </div>
         </div>

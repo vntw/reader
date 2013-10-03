@@ -29,8 +29,8 @@ class DiscoveryController implements ControllerProviderInterface
     }
 
     /**
-     * @param  Request      $request
-     * @param  Application  $app
+     * @param  Request     $request
+     * @param  Application $app
      * @return JsonResponse
      */
     public function discoverUrl(Request $request, Application $app)
@@ -40,25 +40,30 @@ class DiscoveryController implements ControllerProviderInterface
             $app->abort(400);
         }
 
-        $url = $request->get('url');
+        $url = trim($request->get('url'));
 
         if (false === filter_var($url, FILTER_VALIDATE_URL)) {
             $app->abort(400);
         }
 
+        $urlParts = parse_url($url);
+        if (empty($urlParts['scheme'])) {
+            $url = 'http://' . ltrim($url, '/');
+        }
+
         $feeds = array();
+        $error = null;
         $discovery = new Discovery($url);
 
         try {
             $feeds = $discovery->discover();
         } catch (\Exception $e) {
-//			echo "<pre>";
-//			var_dump('EEEEE', $e->getMessage());
-//			exit;
+            $error = $e->getMessage();
         }
 
         $result = $app['twig']->render('blocks/discover/result.html.twig', array(
-            'feeds' => $feeds
+            'error' => $error,
+            'discovery' => $feeds
         ));
 
         return new JsonResponse(array(
@@ -66,4 +71,5 @@ class DiscoveryController implements ControllerProviderInterface
             'valid' => count($feeds)
         ));
     }
+
 }

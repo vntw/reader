@@ -31,19 +31,18 @@
             </div>
         </div>
 
+        {#
         <select multiple class="form-control" id="collect-ms" name="asdf" size="12">
             {% for sub in subscriptions %}
             <option value="{{ sub.id }}">{{ sub.name }}</option>
             {% endfor %}
         </select>
+        #}
 
-        {#
         <ul class="inline nav nav-pills">
             {% for sub in subscriptions %}
                 <li data-sub-id="{{ sub.id }}">
                     <a href="">
-                        <i class="icon-check-empty"></i>
-
                         {% if sub.icon %}
                             <img src="/static/img/subscription-icons/gen/{{ sub.icon }}" alt=""/>
                         {% else %}
@@ -59,7 +58,6 @@
                 </li>
             {% endfor %}
         </ul>
-        #}
 
         <button name="collect" class="btn btn-rdef">Collect Subsriptions</button>
         <div class="collect-result"></div>

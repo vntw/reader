@@ -5,6 +5,10 @@ $(window).resize(function () {
 });
 Reader.Layout.Fix();
 
+$('body').tooltip({
+    selector: '[data-toggle=tooltip]'
+});
+
 $(document).on('click', '#site-collect ul.nav-pills li a', function (e) {
     e.preventDefault();
 });
@@ -171,15 +175,19 @@ $('div.main-content').scroll(function () {
 
 });
 
-$(document).on('click', 'button.discover-fetch', function () {
+$(document).on('click', 'button.discover-fetch', function (e) {
     var $this = $(this),
         url = $this.parents().prev().val(),
-        discoveredContainer = $('div.discovered-feeds'),
+        discoveredContainer = $('div.discovered-feeds-container'),
         discoverSave = $('.modal div.discover-add-box div.discover-save');
 
+    if ($.trim(url).length === 0) {
+        return false;
+    }
+
     $('i', $this).addClass('hide');
-    $('i.icon-refresh', $this).removeClass('hide');
-    $(this).prop('disabled', true);
+    $('i.discover-inprogress', $this).removeClass('hide');
+    $this.prop('disabled', true);
 
     discoveredContainer.fadeOut(400, function () {
         discoveredContainer.empty();
@@ -188,25 +196,37 @@ $(document).on('click', 'button.discover-fetch', function () {
         $.post('/discover', { url: url }, function (feeds) {
             discoveredContainer.html(feeds.html);
 
-            if (feeds.valid > 0) {
-                discoverSave.removeClass('hidden');
-            } else {
+            if (feeds.valid === 0) {
                 $('div.discover-reset').removeClass('hidden');
+            } else {
+                discoverSave.removeClass('hidden');
             }
+
+            $('i.discover-inprogress', $this).addClass('hide');
+            $('i.discover-go', $this).removeClass('hide');
+            $this.prop('disabled', false);
 
             discoveredContainer.fadeIn(400);
         }, 'json');
     });
 });
 
+$('div#modal-addsub').on('show.bs.modal', function () {
+    $.get('/s/addform', null, function (html) {
+        $('div#modal-addsub div.modal-body').html(html);
+    });
+});
+
 $(document).on('click', '.modal div.discover-add-box button.discover-reset-btn', function () {
-    $('div.discovered-feeds').empty();
+    $('div.discovered-feeds-container').empty();
     $('.modal div.discover-add-box div.discover-save').addClass('hidden');
     $('input.discover-url').val('');
 
     $('div.discover-set i').addClass('hide');
-    $('div.discover-set i.icon-chevron-sign-right').removeClass('hide');
+    $('div.discover-set i.discover-go').removeClass('hide');
     $('div.discover-set button.discover-fetch').prop('disabled', false);
 
     $('div.discover-reset').addClass('hidden');
+
+    $('input.discover-url').focus();
 });
